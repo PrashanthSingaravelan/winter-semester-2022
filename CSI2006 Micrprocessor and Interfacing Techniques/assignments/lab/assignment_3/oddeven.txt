@@ -1,0 +1,30 @@
+.model small
+.stack 64
+.data
+.code
+start : MOV AX, @data
+        MOV DS, AX
+        MOV SI, 3000h
+        MOV DI, 3500h
+        MOV CH, 00h
+        MOV AX, 0000h
+        MOV CL, [SI]
+        INC SI
+eve:    MOV BL, [SI]
+        TEST BL, 01
+        JNZ odd
+        ADD AL, BL
+        INC SI
+        LOOP eve
+        CMP CL,00h
+        JNC terminate
+odd:    ADD AH,BL
+        INC SI
+        LOOP eve
+        CMP CL,00h
+        JNC terminate
+terminate : MOV [DI], AL
+            INC DI
+            MOV [DI], AH
+            HLT
+            end

@@ -1,0 +1,18 @@
+
+https://www.geeksforgeeks.org/active-and-passive-attacks-in-information-security/
+https://www.geeksforgeeks.org/types-of-security-mechanism/
+
+
+Playfair Cipher
+https://towardsdatascience.com/playfair-cipher-encryption-fa8ed7df8ea5
+https://towardsdatascience.com/playfair-cipher-decryption-c43b698b45bd
+
+
+Hill Cipher
+Adjoint matrix calculator --> https://www.emathhelp.net/en/calculators/linear-algebra/adjoint-matrix-calculator/
+
+Buezout's coefficient using Extended Euclidian Algorithm --> https://www.dcode.fr/bezout-identity
+Multiplicative Inverse using Extended Euclidian Algorithm --> https://planetcalc.com/3311/
+
+DES (plain text to 64-bit text)
+https://www.rapidtables.com/convert/number/ascii-hex-bin-dec-converter.html
