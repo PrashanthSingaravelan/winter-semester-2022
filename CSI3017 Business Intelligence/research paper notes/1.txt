@@ -1,0 +1,37 @@
+“Social Media Analytics"
+is the discipline that helps companies 
+measure, assess, and explain the 
+performance of social media initiatives in the 
+context of specific business objectives
+
+"Social Media Intelligence"
+"Social Media Monitoring"
+"Social Competitive Analysis"
+"Image Analytics"
+"Social Media Sentiment Analysis"
+
+
+https://www.youtube.com/watch?v=vYkjTw2vbLs
+https://www.youtube.com/watch?v=1fg58Kjkme4
+
+
+Social media is a platform to share information which is liked by everyone nowdays with no age-bar. This is very easy to communicate with each other, 
+share documents, chats and even create a community.
+
+In-order to analyse the Social Media contents by using several methods in data-mining, we can get numerous in-sights to support the decision 
+making that bring benefits to individuals and companies, with the help of Social Media Analytics.
+
+Social media analytics is an excellent, interesing and emerging discipline that can help business firms, organizations to 
+formulate and implement measurement and analytics techniques for deriving insights from social media 
+interactions and for evaluating the success of their own social media initiatives. 
+
+However, businesses are yet struggling with adopting, implementing for an effective social media analytics programs, many effective statistic 
+strategies are adopted to improve the analytical performance.
+
+The purpose of this research, to create a business intelligence dash-board to observe the performance of each attributes and combinations of highly
+correlated attributes taken from Social media giants such as Facebook and Twitter.
+
+
+Ultimately, a 
+successful social media analytics program can enable businesses to improve their performance 
+management initiatives across various business functions.

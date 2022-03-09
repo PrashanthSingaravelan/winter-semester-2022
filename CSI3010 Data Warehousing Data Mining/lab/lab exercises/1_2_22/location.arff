@@ -1,0 +1,16 @@
+@relation location
+
+@attribute age {21,24,25}
+@attribute location {hyd,blr,kdp}
+
+@data
+21,hyd
+21,hyd
+24,blr
+24,blr
+24,blr
+24,blr
+21,hyd
+25,kdp
+25,kdp
+25,kdp
