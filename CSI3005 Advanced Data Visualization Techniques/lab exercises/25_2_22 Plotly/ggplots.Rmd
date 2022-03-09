@@ -1,0 +1,31 @@
+---
+title: "GGplots"
+output: html_notebook
+---
+
+```{r}
+```
+
+
+```{r}
+head(Marriage)
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+plot(cars)
+```
+
+

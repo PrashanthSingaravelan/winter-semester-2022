@@ -1,0 +1,3007 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\title{R Notebook}
+\author{}
+\date{\vspace{-2.5em}}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={R Notebook},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+Importing the packages
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{=}\NormalTok{ msleep}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 83 x 11
+##    name   genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##    <chr>  <chr> <chr> <chr> <chr>              <dbl>     <dbl>       <dbl> <dbl>
+##  1 Cheet~ Acin~ carni Carn~ lc                  12.1      NA        NA      11.9
+##  2 Owl m~ Aotus omni  Prim~ <NA>                17         1.8      NA       7  
+##  3 Mount~ Aplo~ herbi Rode~ nt                  14.4       2.4      NA       9.6
+##  4 Great~ Blar~ omni  Sori~ lc                  14.9       2.3       0.133   9.1
+##  5 Cow    Bos   herbi Arti~ domesticated         4         0.7       0.667  20  
+##  6 Three~ Brad~ herbi Pilo~ <NA>                14.4       2.2       0.767   9.6
+##  7 North~ Call~ carni Carn~ vu                   8.7       1.4       0.383  15.3
+##  8 Vespe~ Calo~ <NA>  Rode~ <NA>                 7        NA        NA      17  
+##  9 Dog    Canis carni Carn~ domesticated        10.1       2.9       0.333  13.9
+## 10 Roe d~ Capr~ herbi Arti~ lc                   3        NA        NA      21  
+## # ... with 73 more rows, and 2 more variables: brainwt <dbl>, bodywt <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 11
+##   name    genus vore  order conservation sleep_total sleep_rem sleep_cycle awake
+##   <chr>   <chr> <chr> <chr> <chr>              <dbl>     <dbl>       <dbl> <dbl>
+## 1 Cheetah Acin~ carni Carn~ lc                  12.1      NA        NA      11.9
+## 2 Owl mo~ Aotus omni  Prim~ <NA>                17         1.8      NA       7  
+## 3 Mounta~ Aplo~ herbi Rode~ nt                  14.4       2.4      NA       9.6
+## 4 Greate~ Blar~ omni  Sori~ lc                  14.9       2.3       0.133   9.1
+## 5 Cow     Bos   herbi Arti~ domesticated         4         0.7       0.667  20  
+## 6 Three-~ Brad~ herbi Pilo~ <NA>                14.4       2.2       0.767   9.6
+## # ... with 2 more variables: brainwt <dbl>, bodywt <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [83 x 11] (S3: tbl_df/tbl/data.frame)
+##  $ name        : chr [1:83] "Cheetah" "Owl monkey" "Mountain beaver" "Greater short-tailed shrew" ...
+##  $ genus       : chr [1:83] "Acinonyx" "Aotus" "Aplodontia" "Blarina" ...
+##  $ vore        : chr [1:83] "carni" "omni" "herbi" "omni" ...
+##  $ order       : chr [1:83] "Carnivora" "Primates" "Rodentia" "Soricomorpha" ...
+##  $ conservation: chr [1:83] "lc" NA "nt" "lc" ...
+##  $ sleep_total : num [1:83] 12.1 17 14.4 14.9 4 14.4 8.7 7 10.1 3 ...
+##  $ sleep_rem   : num [1:83] NA 1.8 2.4 2.3 0.7 2.2 1.4 NA 2.9 NA ...
+##  $ sleep_cycle : num [1:83] NA NA NA 0.133 0.667 ...
+##  $ awake       : num [1:83] 11.9 7 9.6 9.1 20 9.6 15.3 17 13.9 21 ...
+##  $ brainwt     : num [1:83] NA 0.0155 NA 0.00029 0.423 NA NA NA 0.07 0.0982 ...
+##  $ bodywt      : num [1:83] 50 0.48 1.35 0.019 600 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Number of Rows : "}\NormalTok{,}\FunctionTok{nrow}\NormalTok{(df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Number of Rows :  83
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Number of Columns : "}\NormalTok{,}\FunctionTok{ncol}\NormalTok{(df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Number of Columns :  11
+\end{verbatim}
+
+Scatter Plot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scatterplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bodywt, }\AttributeTok{y=}\NormalTok{sleep\_total))}\SpecialCharTok{+}
+              \FunctionTok{geom\_point}\NormalTok{()}
+
+\NormalTok{scatterplot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scatterplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bodywt, }\AttributeTok{y=}\NormalTok{sleep\_total, }\AttributeTok{col=}\NormalTok{vore)) }\SpecialCharTok{+} 
+             \FunctionTok{geom\_point}\NormalTok{()}
+
+\NormalTok{scatterplot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scatterplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\FunctionTok{log}\NormalTok{(bodywt), }\AttributeTok{y=}\NormalTok{sleep\_total, }\AttributeTok{col=}\NormalTok{vore)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{scatterplot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Scatterplot }\OtherTok{=}\NormalTok{ scatterplot }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{5}\NormalTok{)}\SpecialCharTok{+}
+              \FunctionTok{xlab}\NormalTok{(}\StringTok{"Log Body Weight"}\NormalTok{) }\SpecialCharTok{+} 
+              \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total Hours Sleep"}\NormalTok{)}\SpecialCharTok{+}
+              \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Some Sleep Data"}\NormalTok{)}
+
+\NormalTok{Scatterplot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scatterplot }\SpecialCharTok{+} \FunctionTok{scale\_colour\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"Set1"}\NormalTok{)}\SpecialCharTok{+}
+              \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{vjust=}\SpecialCharTok{+}\DecValTok{2}\NormalTok{))}\SpecialCharTok{+}
+              \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\SpecialCharTok{{-}}\DecValTok{5}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) }\CommentTok{\# x{-}scale {-}{-}\textgreater{} {-}5 to 10 (in{-}steps of 1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 7 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scatterplot }\SpecialCharTok{+} \FunctionTok{scale\_colour\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"Set1"}\NormalTok{)}\SpecialCharTok{+}
+              \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{vjust=}\SpecialCharTok{+}\DecValTok{2}\NormalTok{))}\SpecialCharTok{+}
+              \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\CommentTok{\# x{-}scale {-}{-}\textgreater{} {-}5 to 10 (in{-}steps of 2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 7 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\hypertarget{strip-chart}{%
+\subsection{Strip Chart}\label{strip-chart}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stripchart }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(vore, sleep\_total))}\SpecialCharTok{+}
+             \FunctionTok{geom\_point}\NormalTok{()}
+
+\NormalTok{stripchart}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stripchart }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df,}\FunctionTok{aes}\NormalTok{(vore,sleep\_total,}\AttributeTok{col=}\NormalTok{vore))}\SpecialCharTok{+} 
+             \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{,}\AttributeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+
+\NormalTok{stripchart}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stripchart }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(msleep, }\FunctionTok{aes}\NormalTok{(vore,sleep\_total,}\AttributeTok{col=}\NormalTok{vore))}\SpecialCharTok{+} 
+             \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.2}\NormalTok{),}\AttributeTok{size=}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{stripchart}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"/Users/prashanthsingaravelan/Desktop/github/winter\_semester{-}2022/CSI3005 Advanced Data Visualization Techniques/lab exercises/24\_1\_22"}\NormalTok{)}
+\NormalTok{df }\OtherTok{=} \FunctionTok{read.table}\NormalTok{(}\StringTok{"Festival.dat"}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\AttributeTok{header=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ticknumb gender day1 day2 day3
+## 1     2111   Male 2.64 1.35 1.61
+## 2     2229 Female 0.97 1.41 0.29
+## 3     2338   Male 0.84   NA   NA
+## 4     2384 Female 3.03   NA   NA
+## 5     2401 Female 0.88 0.08   NA
+## 6     2405   Male 0.85   NA   NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Number of Rows : "}\NormalTok{,}\FunctionTok{nrow}\NormalTok{(df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Number of Rows :  810
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Number of Columns : "}\NormalTok{,}\FunctionTok{ncol}\NormalTok{(df))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Number of Columns :  5
+\end{verbatim}
+
+\hypertarget{histogram}{%
+\subsection{Histogram}\label{histogram}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Day1Histogram }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(day1))}\SpecialCharTok{+}
+                \FunctionTok{geom\_histogram}\NormalTok{()}
+
+\NormalTok{Day1Histogram}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Day1Histogram }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(day1))}\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{()}
+\NormalTok{Day1Histogram }\OtherTok{=}\NormalTok{ Day1Histogram }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth=}\FloatTok{0.3}\NormalTok{,}\AttributeTok{color=}\StringTok{"black"}\NormalTok{,}\AttributeTok{fill=}\StringTok{"yellow"}\NormalTok{)}
+\NormalTok{Day1Histogram }\OtherTok{=}\NormalTok{ Day1Histogram }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Score"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Counts"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Hygiene at Day 1"}\NormalTok{)}
+
+\NormalTok{Day1Histogram}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(reshape2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df.stack }\OtherTok{=} \FunctionTok{melt}\NormalTok{(df, }\AttributeTok{id =} \FunctionTok{c}\NormalTok{(}\StringTok{"ticknumb"}\NormalTok{,}\StringTok{"gender"}\NormalTok{))}
+\NormalTok{df.stack}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      ticknumb gender variable value
+## 1        2111   Male     day1  2.64
+## 2        2229 Female     day1  0.97
+## 3        2338   Male     day1  0.84
+## 4        2384 Female     day1  3.03
+## 5        2401 Female     day1  0.88
+## 6        2405   Male     day1  0.85
+## 7        2467 Female     day1  1.56
+## 8        2478 Female     day1  3.02
+## 9        2490   Male     day1  2.29
+## 10       2504 Female     day1  1.11
+## 11       2509   Male     day1  2.17
+## 12       2510 Female     day1  0.82
+## 13       2514   Male     day1  1.41
+## 14       2515 Female     day1  1.76
+## 15       2520   Male     day1  1.38
+## 16       2521 Female     day1  2.79
+## 17       2529   Male     day1  1.50
+## 18       2533 Female     day1  1.91
+## 19       2535 Female     day1  2.32
+## 20       2538   Male     day1  2.05
+## 21       2549   Male     day1  2.17
+## 22       2551 Female     day1  2.05
+## 23       2558 Female     day1  1.61
+## 24       2562 Female     day1  1.66
+## 25       2565 Female     day1  2.30
+## 26       2566 Female     day1  2.76
+## 27       2568 Female     day1  1.44
+## 28       2586 Female     day1  1.06
+## 29       2601   Male     day1  3.23
+## 30       2602   Male     day1  0.97
+## 31       2604   Male     day1  2.57
+## 32       2606 Female     day1  0.26
+## 33       2609 Female     day1  0.47
+## 34       2611 Female     day1  1.73
+## 35       2612   Male     day1  1.94
+## 36       2616   Male     day1  1.91
+## 37       2624 Female     day1  2.08
+## 38       2633 Female     day1  1.91
+## 39       2642 Female     day1  1.42
+## 40       2644   Male     day1  1.50
+## 41       2662 Female     day1  0.11
+## 42       2663   Male     day1  1.67
+## 43       2664   Male     day1  2.08
+## 44       2669 Female     day1  2.05
+## 45       2670   Male     day1  2.00
+## 46       2675   Male     day1  1.52
+## 47       2676 Female     day1  1.58
+## 48       2677   Male     day1  1.28
+## 49       2681   Male     day1  1.88
+## 50       2685 Female     day1  1.32
+## 51       2686 Female     day1  2.09
+## 52       2687   Male     day1  2.00
+## 53       2688 Female     day1  2.64
+## 54       2689   Male     day1  0.85
+## 55       2692 Female     day1  2.47
+## 56       2698 Female     day1  1.79
+## 57       2709 Female     day1  1.64
+## 58       2710   Male     day1  1.32
+## 59       2712 Female     day1  2.97
+## 60       2726 Female     day1  1.44
+## 61       2727 Female     day1  2.02
+## 62       2728   Male     day1  1.79
+## 63       2730   Male     day1  1.34
+## 64       2731 Female     day1  2.29
+## 65       2732 Female     day1  1.66
+## 66       2734 Female     day1  0.60
+## 67       2735 Female     day1  1.76
+## 68       2736 Female     day1  1.50
+## 69       2737 Female     day1  2.08
+## 70       2748 Female     day1  1.00
+## 71       2752   Male     day1  1.73
+## 72       2756 Female     day1  1.05
+## 73       2758   Male     day1  2.81
+## 74       2759 Female     day1  1.52
+## 75       2768   Male     day1  1.47
+## 76       2769 Female     day1  2.64
+## 77       2770 Female     day1  2.20
+## 78       2771   Male     day1  0.55
+## 79       2772   Male     day1  2.29
+## 80       2773 Female     day1  2.00
+## 81       2775   Male     day1  2.23
+## 82       2779 Female     day1  2.45
+## 83       2780   Male     day1  1.20
+## 84       2783   Male     day1  2.91
+## 85       2784 Female     day1  1.14
+## 86       2788   Male     day1  1.88
+## 87       2789   Male     day1  0.94
+## 88       2791 Female     day1  1.85
+## 89       2794 Female     day1  2.58
+## 90       2796 Female     day1  0.61
+## 91       2799   Male     day1  0.70
+## 92       2806   Male     day1  1.38
+## 93       2807 Female     day1  1.94
+## 94       2811 Female     day1  2.29
+## 95       2812   Male     day1  1.59
+## 96       2813 Female     day1  2.46
+## 97       2814 Female     day1  1.67
+## 98       2825 Female     day1  2.02
+## 99       2827   Male     day1  1.50
+## 100      2828 Female     day1  2.70
+## 101      2829 Female     day1  1.61
+## 102      2830   Male     day1  2.29
+## 103      2831 Female     day1  0.97
+## 104      2839   Male     day1  1.85
+## 105      2842 Female     day1  2.76
+## 106      2857   Male     day1  1.64
+## 107      2858   Male     day1  1.17
+## 108      2859   Male     day1  1.57
+## 109      2862 Female     day1  2.23
+## 110      2863 Female     day1  2.05
+## 111      2875 Female     day1  2.05
+## 112      2876 Female     day1  2.94
+## 113      2883 Female     day1  2.39
+## 114      2890   Male     day1  1.94
+## 115      2894 Female     day1  2.12
+## 116      2895 Female     day1  1.11
+## 117      2897 Female     day1  0.97
+## 118      2898 Female     day1  1.35
+## 119      2899 Female     day1  2.81
+## 120      2900 Female     day1  2.50
+## 121      2901   Male     day1  1.87
+## 122      2920   Male     day1  1.33
+## 123      2921 Female     day1  1.26
+## 124      2922 Female     day1  1.44
+## 125      2923   Male     day1  0.55
+## 126      2924 Female     day1  1.75
+## 127      2925 Female     day1  2.08
+## 128      2932   Male     day1  0.85
+## 129      2933 Female     day1  2.52
+## 130      2935 Female     day1  3.00
+## 131      2936 Female     day1  1.41
+## 132      2937 Female     day1  1.08
+## 133      2938   Male     day1  1.20
+## 134      2940   Male     day1  1.94
+## 135      2941 Female     day1  2.26
+## 136      2942   Male     day1  1.41
+## 137      2948 Female     day1  2.50
+## 138      2952   Male     day1  2.17
+## 139      2953   Male     day1  1.82
+## 140      2954 Female     day1  1.44
+## 141      2956 Female     day1  1.66
+## 142      2957   Male     day1  1.82
+## 143      2958   Male     day1  1.26
+## 144      2959 Female     day1  2.67
+## 145      2961 Female     day1  1.47
+## 146      2962 Female     day1  1.84
+## 147      2964 Female     day1  2.58
+## 148      2966   Male     day1  1.73
+## 149      2967   Male     day1  1.23
+## 150      2968   Male     day1  2.32
+## 151      2972 Female     day1  2.67
+## 152      2974 Female     day1  1.02
+## 153      2975 Female     day1  1.66
+## 154      2976 Female     day1  1.88
+## 155      2977 Female     day1  1.91
+## 156      2978 Female     day1  1.64
+## 157      2979   Male     day1  1.34
+## 158      2982   Male     day1  1.85
+## 159      2983   Male     day1  2.08
+## 160      2984   Male     day1  1.02
+## 161      2985 Female     day1  1.79
+## 162      2988 Female     day1  1.94
+## 163      2989 Female     day1  3.26
+## 164      2990   Male     day1  1.14
+## 165      3008 Female     day1  1.50
+## 166      3009 Female     day1  2.03
+## 167      3010 Female     day1  2.24
+## 168      3013 Female     day1  1.11
+## 169      3014 Female     day1  2.21
+## 170      3016   Male     day1  1.94
+## 171      3017   Male     day1  2.41
+## 172      3018   Male     day1  0.88
+## 173      3019 Female     day1  1.17
+## 174      3027   Male     day1  2.23
+## 175      3028 Female     day1  1.64
+## 176      3029 Female     day1  2.14
+## 177      3030   Male     day1  0.11
+## 178      3031   Male     day1  2.17
+## 179      3032 Female     day1  1.67
+## 180      3033 Female     day1  1.00
+## 181      3034 Female     day1  0.88
+## 182      3035   Male     day1  2.20
+## 183      3048   Male     day1  2.17
+## 184      3049 Female     day1  2.32
+## 185      3051   Male     day1  1.64
+## 186      3052 Female     day1  3.00
+## 187      3053 Female     day1  2.38
+## 188      3054 Female     day1  1.60
+## 189      3055 Female     day1  1.58
+## 190      3056 Female     day1  2.61
+## 191      3057   Male     day1  1.44
+## 192      3064   Male     day1  1.57
+## 193      3065 Female     day1  2.32
+## 194      3068 Female     day1  1.14
+## 195      3069   Male     day1  1.93
+## 196      3070   Male     day1  2.47
+## 197      3072 Female     day1  2.29
+## 198      3073 Female     day1  1.00
+## 199      3092 Female     day1  1.58
+## 200      3093   Male     day1  2.44
+## 201      3094 Female     day1  0.83
+## 202      3095   Male     day1  2.71
+## 203      3096 Female     day1  1.73
+## 204      3097   Male     day1  1.58
+## 205      3098   Male     day1  1.50
+## 206      3100 Female     day1  1.05
+## 207      3106   Male     day1  2.05
+## 208      3107 Female     day1  2.63
+## 209      3109   Male     day1  2.55
+## 210      3111 Female     day1  2.00
+## 211      3112   Male     day1  2.00
+## 212      3114 Female     day1  1.32
+## 213      3116 Female     day1  3.14
+## 214      3118   Male     day1  1.44
+## 215      3129   Male     day1  1.85
+## 216      3131 Female     day1  1.41
+## 217      3132 Female     day1  1.94
+## 218      3133   Male     day1  2.91
+## 219      3135 Female     day1  1.85
+## 220      3136   Male     day1  1.70
+## 221      3137 Female     day1  2.23
+## 222      3138   Male     day1  1.11
+## 223      3139 Female     day1  1.47
+## 224      3146 Female     day1  2.20
+## 225      3147   Male     day1  1.82
+## 226      3148 Female     day1  1.42
+## 227      3168 Female     day1  2.44
+## 228      3171 Female     day1  2.66
+## 229      3172   Male     day1  1.52
+## 230      3173 Female     day1  1.35
+## 231      3180 Female     day1  1.29
+## 232      3182 Female     day1  2.32
+## 233      3190   Male     day1  0.78
+## 234      3192 Female     day1  2.84
+## 235      3202   Male     day1  0.97
+## 236      3236 Female     day1  1.52
+## 237      3245 Female     day1  1.70
+## 238      3246 Female     day1  0.94
+## 239      3247   Male     day1  1.41
+## 240      3248   Male     day1  1.79
+## 241      3249   Male     day1  1.08
+## 242      3250   Male     day1  1.47
+## 243      3251 Female     day1  1.79
+## 244      3253   Male     day1  2.00
+## 245      3254 Female     day1  0.76
+## 246      3255   Male     day1  2.20
+## 247      3256 Female     day1  0.94
+## 248      3257 Female     day1  1.38
+## 249      3258 Female     day1  1.38
+## 250      3260   Male     day1  0.32
+## 251      3261   Male     day1  2.58
+## 252      3262   Male     day1  0.51
+## 253      3264 Female     day1  0.32
+## 254      3267 Female     day1  0.91
+## 255      3273   Male     day1  1.51
+## 256      3275 Female     day1  1.47
+## 257      3276 Female     day1  2.50
+## 258      3277 Female     day1  2.26
+## 259      3278 Female     day1  2.81
+## 260      3279 Female     day1  1.87
+## 261      3281 Female     day1  2.00
+## 262      3282 Female     day1  2.23
+## 263      3284   Male     day1  2.00
+## 264      3290 Female     day1  1.41
+## 265      3291   Male     day1  1.64
+## 266      3292   Male     day1  1.64
+## 267      3296   Male     day1  1.26
+## 268      3306 Female     day1  1.52
+## 269      3307   Male     day1  2.44
+## 270      3308 Female     day1  2.18
+## 271      3309 Female     day1  3.02
+## 272      3310 Female     day1  1.02
+## 273      3311 Female     day1  2.88
+## 274      3312   Male     day1  1.54
+## 275      3313 Female     day1  1.64
+## 276      3314 Female     day1  2.44
+## 277      3315 Female     day1  1.29
+## 278      3316 Female     day1  1.61
+## 279      3321 Female     day1  1.77
+## 280      3325   Male     day1  0.91
+## 281      3326 Female     day1  0.85
+## 282      3327   Male     day1  0.85
+## 283      3328 Female     day1  1.50
+## 284      3329   Male     day1  1.05
+## 285      3338 Female     day1  3.38
+## 286      3340 Female     day1  1.42
+## 287      3341 Female     day1  1.85
+## 288      3348 Female     day1  1.91
+## 289      3349   Male     day1  0.82
+## 290      3350 Female     day1  1.32
+## 291      3351 Female     day1  2.23
+## 292      3352 Female     day1  1.47
+## 293      3363 Female     day1  2.70
+## 294      3365   Male     day1  1.58
+## 295      3366   Male     day1  1.00
+## 296      3367 Female     day1  1.44
+## 297      3368 Female     day1  2.00
+## 298      3369   Male     day1  1.60
+## 299      3370 Female     day1  2.32
+## 300      3371 Female     day1  3.41
+## 301      3372 Female     day1  2.02
+## 302      3373   Male     day1  0.64
+## 303      3374   Male     day1  3.58
+## 304      3375   Male     day1  1.50
+## 305      3376   Male     day1  1.08
+## 306      3377 Female     day1  1.52
+## 307      3378   Male     day1  1.26
+## 308      3379 Female     day1  1.68
+## 309      3380   Male     day1  1.47
+## 310      3390 Female     day1  1.47
+## 311      3391 Female     day1  1.67
+## 312      3392 Female     day1  2.47
+## 313      3393   Male     day1  1.82
+## 314      3394 Female     day1  2.17
+## 315      3395 Female     day1  3.21
+## 316      3397 Female     day1  1.60
+## 317      3398 Female     day1  0.32
+## 318      3407 Female     day1  0.55
+## 319      3411 Female     day1  1.42
+## 320      3412   Male     day1  1.14
+## 321      3413 Female     day1  2.64
+## 322      3416 Female     day1  2.58
+## 323      3418 Female     day1  2.02
+## 324      3419   Male     day1  2.00
+## 325      3420 Female     day1  2.90
+## 326      3423   Male     day1  1.82
+## 327      3429 Female     day1  0.50
+## 328      3431   Male     day1  1.53
+## 329      3449 Female     day1  2.48
+## 330      3450 Female     day1  2.05
+## 331      3453   Male     day1  2.52
+## 332      3454 Female     day1  1.88
+## 333      3455   Male     day1  2.73
+## 334      3456 Female     day1  2.88
+## 335      3457 Female     day1  1.67
+## 336      3458 Female     day1  1.93
+## 337      3460 Female     day1  1.67
+## 338      3461   Male     day1  1.20
+## 339      3464 Female     day1  2.75
+## 340      3467 Female     day1  1.94
+## 341      3468 Female     day1  0.59
+## 342      3469 Female     day1  1.50
+## 343      3477   Male     day1  1.58
+## 344      3480 Female     day1  2.23
+## 345      3483 Female     day1  2.35
+## 346      3490 Female     day1  2.55
+## 347      3493   Male     day1  1.55
+## 348      3494 Female     day1  2.31
+## 349      3495   Male     day1  2.23
+## 350      3500 Female     day1  0.67
+## 351      3501   Male     day1  2.51
+## 352      3503   Male     day1  1.08
+## 353      3510 Female     day1  2.44
+## 354      3511 Female     day1  0.23
+## 355      3512 Female     day1  2.17
+## 356      3518   Male     day1  1.90
+## 357      3519 Female     day1  1.67
+## 358      3521 Female     day1  2.00
+## 359      3522 Female     day1  2.44
+## 360      3523   Male     day1  1.44
+## 361      3524   Male     day1  0.82
+## 362      3525 Female     day1  2.50
+## 363      3526   Male     day1  1.82
+## 364      3536 Female     day1  1.97
+## 365      3539 Female     day1  2.52
+## 366      3540 Female     day1  0.05
+## 367      3542 Female     day1  2.08
+## 368      3545 Female     day1  2.39
+## 369      3546   Male     day1  1.45
+## 370      3551   Male     day1  2.58
+## 371      3557 Female     day1  2.12
+## 372      3565 Female     day1  2.02
+## 373      3567   Male     day1  1.78
+## 374      3568   Male     day1  0.73
+## 375      3569 Female     day1  2.26
+## 376      3570 Female     day1  2.79
+## 377      3571   Male     day1  0.43
+## 378      3572   Male     day1  0.52
+## 379      3573 Female     day1  2.32
+## 380      3574   Male     day1  2.22
+## 381      3575   Male     day1  0.58
+## 382      3576   Male     day1  2.00
+## 383      3577 Female     day1  0.70
+## 384      3586   Male     day1  1.00
+## 385      3587   Male     day1  0.30
+## 386      3588   Male     day1  1.52
+## 387      3593 Female     day1  1.58
+## 388      3594   Male     day1  2.34
+## 389      3595 Female     day1  0.79
+## 390      3596 Female     day1  2.26
+## 391      3597   Male     day1  2.35
+## 392      3598 Female     day1  1.70
+## 393      3599 Female     day1  3.09
+## 394      3600 Female     day1  1.52
+## 395      3601 Female     day1  0.35
+## 396      3602 Female     day1  2.70
+## 397      3603 Female     day1  1.64
+## 398      3605   Male     day1  0.82
+## 399      3606   Male     day1  2.73
+## 400      3607 Female     day1  2.23
+## 401      3609 Female     day1  1.06
+## 402      3610   Male     day1  2.05
+## 403      3613 Female     day1  1.73
+## 404      3614 Female     day1  0.93
+## 405      3620 Female     day1  2.50
+## 406      3621   Male     day1  1.44
+## 407      3622 Female     day1  2.88
+## 408      3625 Female     day1  0.67
+## 409      3626   Male     day1  1.85
+## 410      3627 Female     day1  1.21
+## 411      3628   Male     day1  1.06
+## 412      3629   Male     day1  0.61
+## 413      3631 Female     day1  2.00
+## 414      3634 Female     day1  1.17
+## 415      3635 Female     day1  1.48
+## 416      3645 Female     day1  1.55
+## 417      3646 Female     day1  3.29
+## 418      3647   Male     day1  1.47
+## 419      3648   Male     day1  0.96
+## 420      3649   Male     day1  1.00
+## 421      3652   Male     day1  1.47
+## 422      3653 Female     day1  2.55
+## 423      3654 Female     day1  0.44
+## 424      3655 Female     day1  2.35
+## 425      3656 Female     day1  1.71
+## 426      3659   Male     day1  1.84
+## 427      3660 Female     day1  1.11
+## 428      3667 Female     day1  1.38
+## 429      3669   Male     day1  0.88
+## 430      3670 Female     day1  0.94
+## 431      3672 Female     day1  1.91
+## 432      3676   Male     day1  2.76
+## 433      3677   Male     day1  1.55
+## 434      3678   Male     day1  2.67
+## 435      3680 Female     day1  1.03
+## 436      3696 Female     day1  2.50
+## 437      3697   Male     day1  1.64
+## 438      3698 Female     day1  2.26
+## 439      3709 Female     day1  2.14
+## 440      3710   Male     day1  0.52
+## 441      3711   Male     day1  1.08
+## 442      3712   Male     day1  1.69
+## 443      3713   Male     day1  2.73
+## 444      3714   Male     day1  1.91
+## 445      3715   Male     day1  1.73
+## 446      3716 Female     day1  3.21
+## 447      3717 Female     day1  2.11
+## 448      3718 Female     day1  2.05
+## 449      3719   Male     day1  2.17
+## 450      3720 Female     day1  2.17
+## 451      3721 Female     day1  2.30
+## 452      3722 Female     day1  2.56
+## 453      3723 Female     day1  2.11
+## 454      3724   Male     day1  1.70
+## 455      3725 Female     day1  1.23
+## 456      3726 Female     day1  3.20
+## 457      3727 Female     day1  2.02
+## 458      3728 Female     day1  2.64
+## 459      3729   Male     day1  2.52
+## 460      3730   Male     day1  1.61
+## 461      3731   Male     day1  1.50
+## 462      3734   Male     day1  1.15
+## 463      3736   Male     day1  1.82
+## 464      3753 Female     day1  1.50
+## 465      3754 Female     day1  2.32
+## 466      3759 Female     day1  2.92
+## 467      3764   Male     day1  1.41
+## 468      3769   Male     day1  1.35
+## 469      3778   Male     day1  0.61
+## 470      3779 Female     day1  0.73
+## 471      3782 Female     day1  2.23
+## 472      3783 Female     day1  1.32
+## 473      3784 Female     day1  2.94
+## 474      3785   Male     day1  1.61
+## 475      3786 Female     day1  1.00
+## 476      3787 Female     day1  3.15
+## 477      3788 Female     day1  2.88
+## 478      3791 Female     day1  2.09
+## 479      3792 Female     day1  1.32
+## 480      3793   Male     day1  1.47
+## 481      3794   Male     day1  1.61
+## 482      3796   Male     day1  2.20
+## 483      3797 Female     day1  2.78
+## 484      3798 Female     day1  2.06
+## 485      3799 Female     day1  0.47
+## 486      3804 Female     day1  2.87
+## 487      3826   Male     day1  1.14
+## 488      3828 Female     day1  3.32
+## 489      3831 Female     day1  2.08
+## 490      3836 Female     day1  2.38
+## 491      3837 Female     day1  2.08
+## 492      3838   Male     day1  1.85
+## 493      3840   Male     day1  1.38
+## 494      3844   Male     day1  1.14
+## 495      3846   Male     day1  1.58
+## 496      3849   Male     day1  1.23
+## 497      3850 Female     day1  2.53
+## 498      3851   Male     day1  0.67
+## 499      3854 Female     day1  0.73
+## 500      3855 Female     day1  1.34
+## 501      3856 Female     day1  2.14
+## 502      3857 Female     day1  1.00
+## 503      3858   Male     day1  1.35
+## 504      3859   Male     day1  1.94
+## 505      3860   Male     day1  0.50
+## 506      3869 Female     day1  3.08
+## 507      3870 Female     day1  2.88
+## 508      3871 Female     day1  1.91
+## 509      3872   Male     day1  1.41
+## 510      3873   Male     day1  2.02
+## 511      3874 Female     day1  0.76
+## 512      3875   Male     day1  1.94
+## 513      3876   Male     day1  0.67
+## 514      3879 Female     day1  2.41
+## 515      3880 Female     day1  2.17
+## 516      3882 Female     day1  2.67
+## 517      3883   Male     day1  1.94
+## 518      3888 Female     day1  2.05
+## 519      3890   Male     day1  2.17
+## 520      3909   Male     day1  0.47
+## 521      3912   Male     day1  0.62
+## 522      3913 Female     day1  2.00
+## 523      3914   Male     day1  0.45
+## 524      3916 Female     day1  2.29
+## 525      3917 Female     day1  2.55
+## 526      3918 Female     day1  0.82
+## 527      3919 Female     day1  3.12
+## 528      3920   Male     day1  2.50
+## 529      3921   Male     day1  1.79
+## 530      3922 Female     day1  2.28
+## 531      3923   Male     day1  0.58
+## 532      3924 Female     day1  2.50
+## 533      3925 Female     day1  1.41
+## 534      3926 Female     day1  2.14
+## 535      3927   Male     day1  0.76
+## 536      3929   Male     day1  1.79
+## 537      3930   Male     day1  1.02
+## 538      3932 Female     day1  2.62
+## 539      3942   Male     day1  0.88
+## 540      3944   Male     day1  1.58
+## 541      3945 Female     day1  2.20
+## 542      3946 Female     day1  1.14
+## 543      3947   Male     day1  1.47
+## 544      3948 Female     day1  1.41
+## 545      3949   Male     day1  1.44
+## 546      3950 Female     day1  1.23
+## 547      3951 Female     day1  1.82
+## 548      3952 Female     day1  2.44
+## 549      3954 Female     day1  1.94
+## 550      3955   Male     day1  2.41
+## 551      3964 Female     day1  2.27
+## 552      3965   Male     day1  1.79
+## 553      3966   Male     day1  1.88
+## 554      3972   Male     day1  1.85
+## 555      3973 Female     day1  2.21
+## 556      3986   Male     day1  1.97
+## 557      3987 Female     day1  2.51
+## 558      3988 Female     day1  2.05
+## 559      3989 Female     day1  1.29
+## 560      3990 Female     day1  2.05
+## 561      3991 Female     day1  2.23
+## 562      3992 Female     day1  1.76
+## 563      3993   Male     day1  1.05
+## 564      3994   Male     day1  1.79
+## 565      3995 Female     day1  1.02
+## 566      3996 Female     day1  2.76
+## 567      3997 Female     day1  1.67
+## 568      4010   Male     day1  2.85
+## 569      4011 Female     day1  0.23
+## 570      4012 Female     day1  1.90
+## 571      4013   Male     day1  1.23
+## 572      4014   Male     day1  1.97
+## 573      4015 Female     day1  1.50
+## 574      4016 Female     day1  3.69
+## 575      4017 Female     day1  0.50
+## 576      4022 Female     day1  2.18
+## 577      4023 Female     day1  2.17
+## 578      4024 Female     day1  1.58
+## 579      4025   Male     day1  2.88
+## 580      4030   Male     day1  2.52
+## 581      4032 Female     day1  2.20
+## 582      4033   Male     day1  1.73
+## 583      4034 Female     day1  2.23
+## 584      4079   Male     day1  1.97
+## 585      4089   Male     day1  1.20
+## 586      4090   Male     day1  2.00
+## 587      4092 Female     day1  1.91
+## 588      4093   Male     day1  0.81
+## 589      4095 Female     day1  1.31
+## 590      4096 Female     day1  0.38
+## 591      4101 Female     day1  1.97
+## 592      4104 Female     day1  0.38
+## 593      4105 Female     day1  2.11
+## 594      4106 Female     day1  3.20
+## 595      4107 Female     day1  0.02
+## 596      4109 Female     day1  2.56
+## 597      4110 Female     day1  2.02
+## 598      4111 Female     day1  2.30
+## 599      4114   Male     day1  2.02
+## 600      4147 Female     day1  2.05
+## 601      4148 Female     day1  1.70
+## 602      4149   Male     day1  1.61
+## 603      4150   Male     day1  0.73
+## 604      4151   Male     day1  2.50
+## 605      4152 Female     day1  2.18
+## 606      4153 Female     day1  2.46
+## 607      4154 Female     day1  1.50
+## 608      4155 Female     day1  1.73
+## 609      4156   Male     day1  1.44
+## 610      4157   Male     day1  1.64
+## 611      4158 Female     day1  2.02
+## 612      4159 Female     day1  1.20
+## 613      4160   Male     day1  0.38
+## 614      4161 Female     day1  1.58
+## 615      4162 Female     day1  1.67
+## 616      4163 Female     day1  1.00
+## 617      4164 Female     day1  2.58
+## 618      4165 Female     day1  2.82
+## 619      4166 Female     day1  2.29
+## 620      4167 Female     day1  1.14
+## 621      4168 Female     day1  1.64
+## 622      4171 Female     day1  1.82
+## 623      4172 Female     day1  3.32
+## 624      4193   Male     day1  3.32
+## 625      4194   Male     day1  1.85
+## 626      4195   Male     day1  2.29
+## 627      4196 Female     day1  1.47
+## 628      4197   Male     day1  2.08
+## 629      4198   Male     day1  2.20
+## 630      4199 Female     day1  1.06
+## 631      4216 Female     day1  0.97
+## 632      4218   Male     day1  2.00
+## 633      4219 Female     day1  1.67
+## 634      4220 Female     day1  2.94
+## 635      4221 Female     day1  1.55
+## 636      4222   Male     day1  0.88
+## 637      4223 Female     day1  1.35
+## 638      4224 Female     day1  0.61
+## 639      4225   Male     day1  1.00
+## 640      4226 Female     day1  1.52
+## 641      4234   Male     day1  1.00
+## 642      4235   Male     day1  1.76
+## 643      4236 Female     day1  2.52
+## 644      4237 Female     day1  2.00
+## 645      4238 Female     day1  2.63
+## 646      4239 Female     day1  0.73
+## 647      4240   Male     day1  1.58
+## 648      4241 Female     day1  0.58
+## 649      4245 Female     day1  1.67
+## 650      4247 Female     day1  1.47
+## 651      4249 Female     day1  1.81
+## 652      4256   Male     day1  1.91
+## 653      4257   Male     day1  1.06
+## 654      4259   Male     day1  1.47
+## 655      4262   Male     day1  2.52
+## 656      4263 Female     day1  1.85
+## 657      4264   Male     day1  3.44
+## 658      4265 Female     day1  1.55
+## 659      4266 Female     day1  2.29
+## 660      4267 Female     day1  1.76
+## 661      4268   Male     day1  1.90
+## 662      4269   Male     day1  2.52
+## 663      4271 Female     day1  2.52
+## 664      4274 Female     day1  2.82
+## 665      4281 Female     day1  2.02
+## 666      4284 Female     day1  1.29
+## 667      4285   Male     day1  1.26
+## 668      4287 Female     day1  0.94
+## 669      4291 Female     day1  2.00
+## 670      4292 Female     day1  0.73
+## 671      4294   Male     day1  2.26
+## 672      4295 Female     day1  2.23
+## 673      4297   Male     day1  2.35
+## 674      4298 Female     day1  0.55
+## 675      4301 Female     day1  1.85
+## 676      4302   Male     day1  0.67
+## 677      4305   Male     day1  1.85
+## 678      4306   Male     day1  1.23
+## 679      4308 Female     day1  2.35
+## 680      4309   Male     day1  1.35
+## 681      4310 Female     day1  1.94
+## 682      4311   Male     day1  1.55
+## 683      4312 Female     day1  1.29
+## 684      4313   Male     day1  2.17
+## 685      4314 Female     day1  1.91
+## 686      4333 Female     day1  2.88
+## 687      4334 Female     day1  2.36
+## 688      4335 Female     day1  2.36
+## 689      4336 Female     day1  2.20
+## 690      4349 Female     day1  2.17
+## 691      4351   Male     day1  0.52
+## 692      4352   Male     day1  0.32
+## 693      4353 Female     day1  1.52
+## 694      4354   Male     day1  2.00
+## 695      4355   Male     day1  1.32
+## 696      4356 Female     day1  2.05
+## 697      4357 Female     day1  1.73
+## 698      4358   Male     day1  1.94
+## 699      4359 Female     day1  1.81
+## 700      4360   Male     day1  0.90
+## 701      4361   Male     day1  1.58
+## 702      4363 Female     day1  2.29
+## 703      4366 Female     day1  2.57
+## 704      4370 Female     day1  1.58
+## 705      4382 Female     day1  2.33
+## 706      4383 Female     day1  3.15
+## 707      4384 Female     day1  2.29
+## 708      4385 Female     day1  0.82
+## 709      4386 Female     day1  1.93
+## 710      4387 Female     day1  1.82
+## 711      4388 Female     day1  1.96
+## 712      4389 Female     day1  1.32
+## 713      4391 Female     day1  1.02
+## 714      4392 Female     day1  1.14
+## 715      4393 Female     day1  2.32
+## 716      4394   Male     day1  2.16
+## 717      4396 Female     day1  2.42
+## 718      4397 Female     day1  1.14
+## 719      4398   Male     day1  1.55
+## 720      4404 Female     day1  1.17
+## 721      4405 Female     day1  1.00
+## 722      4410 Female     day1  1.05
+## 723      4419 Female     day1  1.38
+## 724      4428 Female     day1  1.93
+## 725      4430 Female     day1  2.73
+## 726      4435 Female     day1  2.02
+## 727      4436 Female     day1  2.81
+## 728      4437 Female     day1  2.47
+## 729      4439   Male     day1  1.35
+## 730      4440   Male     day1  2.08
+## 731      4441 Female     day1  2.50
+## 732      4442 Female     day1  2.45
+## 733      4443 Female     day1  2.17
+## 734      4444   Male     day1  1.70
+## 735      4445   Male     day1  0.70
+## 736      4446   Male     day1  1.51
+## 737      4447 Female     day1  1.23
+## 738      4448 Female     day1  2.14
+## 739      4452   Male     day1  1.14
+## 740      4453 Female     day1  0.96
+## 741      4454   Male     day1  1.52
+## 742      4455   Male     day1  0.52
+## 743      4456   Male     day1  1.56
+## 744      4459 Female     day1  3.29
+## 745      4464   Male     day1  0.45
+## 746      4467 Female     day1  2.63
+## 747      4468 Female     day1  1.70
+## 748      4470   Male     day1  3.11
+## 749      4479 Female     day1  1.82
+## 750      4481 Female     day1  1.58
+## 751      4482 Female     day1  2.73
+## 752      4485 Female     day1  1.50
+## 753      4486   Male     day1  1.78
+## 754      4488 Female     day1  2.02
+## 755      4507   Male     day1  0.67
+## 756      4509 Female     day1  1.41
+## 757      4510   Male     day1  0.90
+## 758      4511 Female     day1  1.23
+## 759      4512 Female     day1  2.70
+## 760      4514 Female     day1  1.97
+## 761      4515   Male     day1  0.84
+## 762      4516   Male     day1  1.79
+## 763      4517 Female     day1  2.84
+## 764      4518   Male     day1  2.02
+## 765      4519   Male     day1  1.64
+## 766      4525 Female     day1  1.08
+## 767      4533 Female     day1  2.97
+## 768      4552 Female     day1  0.94
+## 769      4553 Female     day1  2.97
+## 770      4554 Female     day1  0.97
+## 771      4555   Male     day1  1.47
+## 772      4559 Female     day1  2.61
+## 773      4563 Female     day1  1.73
+## 774      4564 Female     day1  3.38
+## 775      4569   Male     day1  3.17
+## 776      4570 Female     day1  2.20
+## 777      4571 Female     day1  2.14
+## 778      4582   Male     day1  1.29
+## 779      4590 Female     day1  3.21
+## 780      4597   Male     day1  2.67
+## 781      4598   Male     day1  1.85
+## 782      4601 Female     day1  1.35
+## 783      4607 Female     day1  2.14
+## 784      4611   Male     day1  1.24
+## 785      4654 Female     day1  2.02
+## 786      4655 Female     day1  2.32
+## 787      4663   Male     day1  1.08
+## 788      4666   Male     day1  1.14
+## 789      4690 Female     day1  2.14
+## 790      4692 Female     day1  2.88
+## 791      4693   Male     day1  1.35
+## 792      4694   Male     day1  1.00
+## 793      4695   Male     day1  2.02
+## 794      4696 Female     day1  0.64
+## 795      4697   Male     day1  0.29
+## 796      4698 Female     day1  1.73
+## 797      4699 Female     day1  1.82
+## 798      4704 Female     day1  2.11
+## 799      4710 Female     day1  1.23
+## 800      4711   Male     day1  0.64
+## 801      4724   Male     day1  2.23
+## 802      4725 Female     day1  2.44
+## 803      4740   Male     day1  1.17
+## 804      4744 Female     day1  0.61
+## 805      4749 Female     day1  0.52
+## 806      4756 Female     day1  2.91
+## 807      4758 Female     day1  2.61
+## 808      4759 Female     day1  1.47
+## 809      4760   Male     day1  1.28
+## 810      4765 Female     day1  1.26
+## 811      2111   Male     day2  1.35
+## 812      2229 Female     day2  1.41
+## 813      2338   Male     day2    NA
+## 814      2384 Female     day2    NA
+## 815      2401 Female     day2  0.08
+## 816      2405   Male     day2    NA
+## 817      2467 Female     day2    NA
+## 818      2478 Female     day2    NA
+## 819      2490   Male     day2    NA
+## 820      2504 Female     day2  0.44
+## 821      2509   Male     day2    NA
+## 822      2510 Female     day2  0.20
+## 823      2514   Male     day2    NA
+## 824      2515 Female     day2  1.64
+## 825      2520   Male     day2  0.02
+## 826      2521 Female     day2    NA
+## 827      2529   Male     day2    NA
+## 828      2533 Female     day2  2.05
+## 829      2535 Female     day2    NA
+## 830      2538   Male     day2    NA
+## 831      2549   Male     day2  0.70
+## 832      2551 Female     day2    NA
+## 833      2558 Female     day2    NA
+## 834      2562 Female     day2  0.85
+## 835      2565 Female     day2    NA
+## 836      2566 Female     day2    NA
+## 837      2568 Female     day2    NA
+## 838      2586 Female     day2    NA
+## 839      2601   Male     day2    NA
+## 840      2602   Male     day2  0.38
+## 841      2604   Male     day2  0.11
+## 842      2606 Female     day2    NA
+## 843      2609 Female     day2    NA
+## 844      2611 Female     day2    NA
+## 845      2612   Male     day2  0.82
+## 846      2616   Male     day2    NA
+## 847      2624 Female     day2  0.91
+## 848      2633 Female     day2    NA
+## 849      2642 Female     day2    NA
+## 850      2644   Male     day2    NA
+## 851      2662 Female     day2    NA
+## 852      2663   Male     day2    NA
+## 853      2664   Male     day2    NA
+## 854      2669 Female     day2    NA
+## 855      2670   Male     day2    NA
+## 856      2675   Male     day2    NA
+## 857      2676 Female     day2    NA
+## 858      2677   Male     day2  0.38
+## 859      2681   Male     day2    NA
+## 860      2685 Female     day2    NA
+## 861      2686 Female     day2    NA
+## 862      2687   Male     day2    NA
+## 863      2688 Female     day2    NA
+## 864      2689   Male     day2  0.32
+## 865      2692 Female     day2  0.23
+## 866      2698 Female     day2    NA
+## 867      2709 Female     day2    NA
+## 868      2710   Male     day2    NA
+## 869      2712 Female     day2    NA
+## 870      2726 Female     day2  0.14
+## 871      2727 Female     day2    NA
+## 872      2728   Male     day2    NA
+## 873      2730   Male     day2    NA
+## 874      2731 Female     day2  1.90
+## 875      2732 Female     day2    NA
+## 876      2734 Female     day2    NA
+## 877      2735 Female     day2  0.76
+## 878      2736 Female     day2    NA
+## 879      2737 Female     day2  0.70
+## 880      2748 Female     day2  0.55
+## 881      2752   Male     day2    NA
+## 882      2756 Female     day2  0.38
+## 883      2758   Male     day2    NA
+## 884      2759 Female     day2    NA
+## 885      2768   Male     day2    NA
+## 886      2769 Female     day2    NA
+## 887      2770 Female     day2  1.18
+## 888      2771   Male     day2  0.79
+## 889      2772   Male     day2    NA
+## 890      2773 Female     day2    NA
+## 891      2775   Male     day2    NA
+## 892      2779 Female     day2    NA
+## 893      2780   Male     day2    NA
+## 894      2783   Male     day2  2.08
+## 895      2784 Female     day2  1.00
+## 896      2788   Male     day2    NA
+## 897      2789   Male     day2    NA
+## 898      2791 Female     day2    NA
+## 899      2794 Female     day2    NA
+## 900      2796 Female     day2    NA
+## 901      2799   Male     day2    NA
+## 902      2806   Male     day2    NA
+## 903      2807 Female     day2    NA
+## 904      2811 Female     day2    NA
+## 905      2812   Male     day2    NA
+## 906      2813 Female     day2    NA
+## 907      2814 Female     day2  0.14
+## 908      2825 Female     day2  0.58
+## 909      2827   Male     day2    NA
+## 910      2828 Female     day2  1.70
+## 911      2829 Female     day2    NA
+## 912      2830   Male     day2    NA
+## 913      2831 Female     day2  1.06
+## 914      2839   Male     day2    NA
+## 915      2842 Female     day2    NA
+## 916      2857   Male     day2    NA
+## 917      2858   Male     day2    NA
+## 918      2859   Male     day2    NA
+## 919      2862 Female     day2    NA
+## 920      2863 Female     day2  1.58
+## 921      2875 Female     day2    NA
+## 922      2876 Female     day2    NA
+## 923      2883 Female     day2    NA
+## 924      2890   Male     day2    NA
+## 925      2894 Female     day2    NA
+## 926      2895 Female     day2    NA
+## 927      2897 Female     day2    NA
+## 928      2898 Female     day2    NA
+## 929      2899 Female     day2  2.08
+## 930      2900 Female     day2    NA
+## 931      2901   Male     day2    NA
+## 932      2920   Male     day2    NA
+## 933      2921 Female     day2    NA
+## 934      2922 Female     day2    NA
+## 935      2923   Male     day2    NA
+## 936      2924 Female     day2    NA
+## 937      2925 Female     day2    NA
+## 938      2932   Male     day2    NA
+## 939      2933 Female     day2    NA
+## 940      2935 Female     day2    NA
+## 941      2936 Female     day2    NA
+## 942      2937 Female     day2    NA
+## 943      2938   Male     day2  1.38
+## 944      2940   Male     day2  1.44
+## 945      2941 Female     day2  1.73
+## 946      2942   Male     day2    NA
+## 947      2948 Female     day2    NA
+## 948      2952   Male     day2    NA
+## 949      2953   Male     day2  1.11
+## 950      2954 Female     day2  1.14
+## 951      2956 Female     day2    NA
+## 952      2957   Male     day2    NA
+## 953      2958   Male     day2    NA
+## 954      2959 Female     day2    NA
+## 955      2961 Female     day2    NA
+## 956      2962 Female     day2    NA
+## 957      2964 Female     day2    NA
+## 958      2966   Male     day2    NA
+## 959      2967   Male     day2    NA
+## 960      2968   Male     day2    NA
+## 961      2972 Female     day2    NA
+## 962      2974 Female     day2    NA
+## 963      2975 Female     day2  2.12
+## 964      2976 Female     day2    NA
+## 965      2977 Female     day2    NA
+## 966      2978 Female     day2    NA
+## 967      2979   Male     day2    NA
+## 968      2982   Male     day2    NA
+## 969      2983   Male     day2    NA
+## 970      2984   Male     day2    NA
+## 971      2985 Female     day2    NA
+## 972      2988 Female     day2    NA
+## 973      2989 Female     day2  1.97
+## 974      2990   Male     day2  0.58
+## 975      3008 Female     day2  0.70
+## 976      3009 Female     day2    NA
+## 977      3010 Female     day2    NA
+## 978      3013 Female     day2    NA
+## 979      3014 Female     day2    NA
+## 980      3016   Male     day2    NA
+## 981      3017   Male     day2    NA
+## 982      3018   Male     day2    NA
+## 983      3019 Female     day2  1.35
+## 984      3027   Male     day2    NA
+## 985      3028 Female     day2    NA
+## 986      3029 Female     day2    NA
+## 987      3030   Male     day2  0.29
+## 988      3031   Male     day2    NA
+## 989      3032 Female     day2    NA
+## 990      3033 Female     day2    NA
+## 991      3034 Female     day2    NA
+## 992      3035   Male     day2    NA
+## 993      3048   Male     day2    NA
+## 994      3049 Female     day2    NA
+## 995      3051   Male     day2    NA
+## 996      3052 Female     day2    NA
+## 997      3053 Female     day2  0.85
+## 998      3054 Female     day2  1.02
+## 999      3055 Female     day2    NA
+## 1000     3056 Female     day2    NA
+## 1001     3057   Male     day2  0.05
+## 1002     3064   Male     day2    NA
+## 1003     3065 Female     day2    NA
+## 1004     3068 Female     day2    NA
+## 1005     3069   Male     day2    NA
+## 1006     3070   Male     day2    NA
+## 1007     3072 Female     day2    NA
+## 1008     3073 Female     day2    NA
+## 1009     3092 Female     day2    NA
+## 1010     3093   Male     day2    NA
+## 1011     3094 Female     day2    NA
+## 1012     3095   Male     day2  0.78
+## 1013     3096 Female     day2    NA
+## 1014     3097   Male     day2    NA
+## 1015     3098   Male     day2    NA
+## 1016     3100 Female     day2    NA
+## 1017     3106   Male     day2    NA
+## 1018     3107 Female     day2    NA
+## 1019     3109   Male     day2  2.29
+## 1020     3111 Female     day2    NA
+## 1021     3112   Male     day2    NA
+## 1022     3114 Female     day2    NA
+## 1023     3116 Female     day2    NA
+## 1024     3118   Male     day2    NA
+## 1025     3129   Male     day2  0.23
+## 1026     3131 Female     day2  0.44
+## 1027     3132 Female     day2    NA
+## 1028     3133   Male     day2    NA
+## 1029     3135 Female     day2    NA
+## 1030     3136   Male     day2    NA
+## 1031     3137 Female     day2    NA
+## 1032     3138   Male     day2    NA
+## 1033     3139 Female     day2    NA
+## 1034     3146 Female     day2    NA
+## 1035     3147   Male     day2    NA
+## 1036     3148 Female     day2    NA
+## 1037     3168 Female     day2    NA
+## 1038     3171 Female     day2    NA
+## 1039     3172   Male     day2    NA
+## 1040     3173 Female     day2  0.47
+## 1041     3180 Female     day2    NA
+## 1042     3182 Female     day2    NA
+## 1043     3190   Male     day2    NA
+## 1044     3192 Female     day2    NA
+## 1045     3202   Male     day2    NA
+## 1046     3236 Female     day2    NA
+## 1047     3245 Female     day2    NA
+## 1048     3246 Female     day2  1.17
+## 1049     3247   Male     day2    NA
+## 1050     3248   Male     day2    NA
+## 1051     3249   Male     day2  0.44
+## 1052     3250   Male     day2    NA
+## 1053     3251 Female     day2  0.47
+## 1054     3253   Male     day2    NA
+## 1055     3254 Female     day2    NA
+## 1056     3255   Male     day2    NA
+## 1057     3256 Female     day2  0.17
+## 1058     3257 Female     day2    NA
+## 1059     3258 Female     day2  0.85
+## 1060     3260   Male     day2    NA
+## 1061     3261   Male     day2    NA
+## 1062     3262   Male     day2    NA
+## 1063     3264 Female     day2    NA
+## 1064     3267 Female     day2  1.11
+## 1065     3273   Male     day2    NA
+## 1066     3275 Female     day2    NA
+## 1067     3276 Female     day2    NA
+## 1068     3277 Female     day2    NA
+## 1069     3278 Female     day2    NA
+## 1070     3279 Female     day2    NA
+## 1071     3281 Female     day2    NA
+## 1072     3282 Female     day2  0.41
+## 1073     3284   Male     day2  0.76
+## 1074     3290 Female     day2    NA
+## 1075     3291   Male     day2    NA
+## 1076     3292   Male     day2    NA
+## 1077     3296   Male     day2    NA
+## 1078     3306 Female     day2  0.55
+## 1079     3307   Male     day2  1.02
+## 1080     3308 Female     day2    NA
+## 1081     3309 Female     day2    NA
+## 1082     3310 Female     day2    NA
+## 1083     3311 Female     day2    NA
+## 1084     3312   Male     day2    NA
+## 1085     3313 Female     day2    NA
+## 1086     3314 Female     day2  2.50
+## 1087     3315 Female     day2    NA
+## 1088     3316 Female     day2  0.32
+## 1089     3321 Female     day2    NA
+## 1090     3325   Male     day2  0.17
+## 1091     3326 Female     day2  0.20
+## 1092     3327   Male     day2  0.52
+## 1093     3328 Female     day2    NA
+## 1094     3329   Male     day2  0.23
+## 1095     3338 Female     day2    NA
+## 1096     3340 Female     day2  0.52
+## 1097     3341 Female     day2    NA
+## 1098     3348 Female     day2  0.84
+## 1099     3349   Male     day2  0.26
+## 1100     3350 Female     day2  0.76
+## 1101     3351 Female     day2  0.85
+## 1102     3352 Female     day2  1.52
+## 1103     3363 Female     day2    NA
+## 1104     3365   Male     day2    NA
+## 1105     3366   Male     day2    NA
+## 1106     3367 Female     day2    NA
+## 1107     3368 Female     day2    NA
+## 1108     3369   Male     day2    NA
+## 1109     3370 Female     day2  2.53
+## 1110     3371 Female     day2    NA
+## 1111     3372 Female     day2    NA
+## 1112     3373   Male     day2  0.52
+## 1113     3374   Male     day2  3.35
+## 1114     3375   Male     day2    NA
+## 1115     3376   Male     day2    NA
+## 1116     3377 Female     day2    NA
+## 1117     3378   Male     day2    NA
+## 1118     3379 Female     day2    NA
+## 1119     3380   Male     day2  1.08
+## 1120     3390 Female     day2    NA
+## 1121     3391 Female     day2  1.55
+## 1122     3392 Female     day2  1.97
+## 1123     3393   Male     day2    NA
+## 1124     3394 Female     day2    NA
+## 1125     3395 Female     day2    NA
+## 1126     3397 Female     day2  1.38
+## 1127     3398 Female     day2    NA
+## 1128     3407 Female     day2    NA
+## 1129     3411 Female     day2    NA
+## 1130     3412   Male     day2    NA
+## 1131     3413 Female     day2    NA
+## 1132     3416 Female     day2    NA
+## 1133     3418 Female     day2    NA
+## 1134     3419   Male     day2    NA
+## 1135     3420 Female     day2    NA
+## 1136     3423   Male     day2    NA
+## 1137     3429 Female     day2    NA
+## 1138     3431   Male     day2    NA
+## 1139     3449 Female     day2    NA
+## 1140     3450 Female     day2    NA
+## 1141     3453   Male     day2    NA
+## 1142     3454 Female     day2    NA
+## 1143     3455   Male     day2    NA
+## 1144     3456 Female     day2    NA
+## 1145     3457 Female     day2    NA
+## 1146     3458 Female     day2    NA
+## 1147     3460 Female     day2    NA
+## 1148     3461   Male     day2    NA
+## 1149     3464 Female     day2    NA
+## 1150     3467 Female     day2  0.97
+## 1151     3468 Female     day2    NA
+## 1152     3469 Female     day2    NA
+## 1153     3477   Male     day2  0.94
+## 1154     3480 Female     day2  0.11
+## 1155     3483 Female     day2    NA
+## 1156     3490 Female     day2  0.82
+## 1157     3493   Male     day2    NA
+## 1158     3494 Female     day2    NA
+## 1159     3495   Male     day2    NA
+## 1160     3500 Female     day2  0.50
+## 1161     3501   Male     day2    NA
+## 1162     3503   Male     day2  0.58
+## 1163     3510 Female     day2    NA
+## 1164     3511 Female     day2  0.14
+## 1165     3512 Female     day2    NA
+## 1166     3518   Male     day2  1.17
+## 1167     3519 Female     day2  0.44
+## 1168     3521 Female     day2  0.58
+## 1169     3522 Female     day2    NA
+## 1170     3523   Male     day2    NA
+## 1171     3524   Male     day2    NA
+## 1172     3525 Female     day2    NA
+## 1173     3526   Male     day2    NA
+## 1174     3536 Female     day2    NA
+## 1175     3539 Female     day2    NA
+## 1176     3540 Female     day2    NA
+## 1177     3542 Female     day2    NA
+## 1178     3545 Female     day2    NA
+## 1179     3546   Male     day2  0.82
+## 1180     3551   Male     day2    NA
+## 1181     3557 Female     day2    NA
+## 1182     3565 Female     day2  0.76
+## 1183     3567   Male     day2  1.14
+## 1184     3568   Male     day2  0.17
+## 1185     3569 Female     day2  0.90
+## 1186     3570 Female     day2    NA
+## 1187     3571   Male     day2  0.67
+## 1188     3572   Male     day2  0.38
+## 1189     3573 Female     day2    NA
+## 1190     3574   Male     day2    NA
+## 1191     3575   Male     day2    NA
+## 1192     3576   Male     day2    NA
+## 1193     3577 Female     day2    NA
+## 1194     3586   Male     day2    NA
+## 1195     3587   Male     day2    NA
+## 1196     3588   Male     day2    NA
+## 1197     3593 Female     day2  0.35
+## 1198     3594   Male     day2    NA
+## 1199     3595 Female     day2    NA
+## 1200     3596 Female     day2    NA
+## 1201     3597   Male     day2    NA
+## 1202     3598 Female     day2    NA
+## 1203     3599 Female     day2    NA
+## 1204     3600 Female     day2    NA
+## 1205     3601 Female     day2    NA
+## 1206     3602 Female     day2    NA
+## 1207     3603 Female     day2    NA
+## 1208     3605   Male     day2    NA
+## 1209     3606   Male     day2    NA
+## 1210     3607 Female     day2    NA
+## 1211     3609 Female     day2    NA
+## 1212     3610   Male     day2  0.20
+## 1213     3613 Female     day2  1.44
+## 1214     3614 Female     day2  0.91
+## 1215     3620 Female     day2  2.44
+## 1216     3621   Male     day2    NA
+## 1217     3622 Female     day2    NA
+## 1218     3625 Female     day2  0.23
+## 1219     3626   Male     day2  0.35
+## 1220     3627 Female     day2  0.79
+## 1221     3628   Male     day2  0.76
+## 1222     3629   Male     day2  0.26
+## 1223     3631 Female     day2    NA
+## 1224     3634 Female     day2  0.73
+## 1225     3635 Female     day2  0.79
+## 1226     3645 Female     day2    NA
+## 1227     3646 Female     day2    NA
+## 1228     3647   Male     day2    NA
+## 1229     3648   Male     day2    NA
+## 1230     3649   Male     day2  1.11
+## 1231     3652   Male     day2    NA
+## 1232     3653 Female     day2  2.38
+## 1233     3654 Female     day2  0.06
+## 1234     3655 Female     day2  2.41
+## 1235     3656 Female     day2  0.85
+## 1236     3659   Male     day2  0.58
+## 1237     3660 Female     day2  0.23
+## 1238     3667 Female     day2    NA
+## 1239     3669   Male     day2    NA
+## 1240     3670 Female     day2    NA
+## 1241     3672 Female     day2    NA
+## 1242     3676   Male     day2    NA
+## 1243     3677   Male     day2  0.32
+## 1244     3678   Male     day2    NA
+## 1245     3680 Female     day2  0.29
+## 1246     3696 Female     day2    NA
+## 1247     3697   Male     day2    NA
+## 1248     3698 Female     day2    NA
+## 1249     3709 Female     day2    NA
+## 1250     3710   Male     day2    NA
+## 1251     3711   Male     day2    NA
+## 1252     3712   Male     day2    NA
+## 1253     3713   Male     day2    NA
+## 1254     3714   Male     day2    NA
+## 1255     3715   Male     day2    NA
+## 1256     3716 Female     day2    NA
+## 1257     3717 Female     day2    NA
+## 1258     3718 Female     day2    NA
+## 1259     3719   Male     day2    NA
+## 1260     3720 Female     day2    NA
+## 1261     3721 Female     day2    NA
+## 1262     3722 Female     day2    NA
+## 1263     3723 Female     day2  0.41
+## 1264     3724   Male     day2    NA
+## 1265     3725 Female     day2    NA
+## 1266     3726 Female     day2    NA
+## 1267     3727 Female     day2    NA
+## 1268     3728 Female     day2    NA
+## 1269     3729   Male     day2  0.14
+## 1270     3730   Male     day2    NA
+## 1271     3731   Male     day2  1.20
+## 1272     3734   Male     day2  0.45
+## 1273     3736   Male     day2    NA
+## 1274     3753 Female     day2    NA
+## 1275     3754 Female     day2    NA
+## 1276     3759 Female     day2    NA
+## 1277     3764   Male     day2    NA
+## 1278     3769   Male     day2    NA
+## 1279     3778   Male     day2  0.14
+## 1280     3779 Female     day2    NA
+## 1281     3782 Female     day2  1.88
+## 1282     3783 Female     day2  0.91
+## 1283     3784 Female     day2  1.79
+## 1284     3785   Male     day2    NA
+## 1285     3786 Female     day2    NA
+## 1286     3787 Female     day2  3.00
+## 1287     3788 Female     day2    NA
+## 1288     3791 Female     day2  1.21
+## 1289     3792 Female     day2  1.70
+## 1290     3793   Male     day2  0.35
+## 1291     3794   Male     day2    NA
+## 1292     3796   Male     day2  1.50
+## 1293     3797 Female     day2    NA
+## 1294     3798 Female     day2    NA
+## 1295     3799 Female     day2    NA
+## 1296     3804 Female     day2    NA
+## 1297     3826   Male     day2    NA
+## 1298     3828 Female     day2  3.21
+## 1299     3831 Female     day2  1.38
+## 1300     3836 Female     day2  2.50
+## 1301     3837 Female     day2    NA
+## 1302     3838   Male     day2    NA
+## 1303     3840   Male     day2    NA
+## 1304     3844   Male     day2    NA
+## 1305     3846   Male     day2    NA
+## 1306     3849   Male     day2  0.70
+## 1307     3850 Female     day2    NA
+## 1308     3851   Male     day2    NA
+## 1309     3854 Female     day2    NA
+## 1310     3855 Female     day2    NA
+## 1311     3856 Female     day2  0.70
+## 1312     3857 Female     day2    NA
+## 1313     3858   Male     day2    NA
+## 1314     3859   Male     day2  0.79
+## 1315     3860   Male     day2    NA
+## 1316     3869 Female     day2    NA
+## 1317     3870 Female     day2    NA
+## 1318     3871 Female     day2    NA
+## 1319     3872   Male     day2    NA
+## 1320     3873   Male     day2    NA
+## 1321     3874 Female     day2    NA
+## 1322     3875   Male     day2    NA
+## 1323     3876   Male     day2  0.28
+## 1324     3879 Female     day2    NA
+## 1325     3880 Female     day2    NA
+## 1326     3882 Female     day2  0.41
+## 1327     3883   Male     day2  0.64
+## 1328     3888 Female     day2  0.85
+## 1329     3890   Male     day2    NA
+## 1330     3909   Male     day2    NA
+## 1331     3912   Male     day2  0.76
+## 1332     3913 Female     day2    NA
+## 1333     3914   Male     day2    NA
+## 1334     3916 Female     day2  0.91
+## 1335     3917 Female     day2    NA
+## 1336     3918 Female     day2    NA
+## 1337     3919 Female     day2  2.20
+## 1338     3920   Male     day2  2.23
+## 1339     3921   Male     day2    NA
+## 1340     3922 Female     day2    NA
+## 1341     3923   Male     day2  1.05
+## 1342     3924 Female     day2  1.29
+## 1343     3925 Female     day2    NA
+## 1344     3926 Female     day2    NA
+## 1345     3927   Male     day2  0.26
+## 1346     3929   Male     day2  1.11
+## 1347     3930   Male     day2  0.35
+## 1348     3932 Female     day2    NA
+## 1349     3942   Male     day2    NA
+## 1350     3944   Male     day2  0.20
+## 1351     3945 Female     day2    NA
+## 1352     3946 Female     day2    NA
+## 1353     3947   Male     day2  0.52
+## 1354     3948 Female     day2  0.23
+## 1355     3949   Male     day2  1.76
+## 1356     3950 Female     day2  1.17
+## 1357     3951 Female     day2    NA
+## 1358     3952 Female     day2    NA
+## 1359     3954 Female     day2  1.20
+## 1360     3955   Male     day2    NA
+## 1361     3964 Female     day2    NA
+## 1362     3965   Male     day2  0.23
+## 1363     3966   Male     day2    NA
+## 1364     3972   Male     day2  0.64
+## 1365     3973 Female     day2    NA
+## 1366     3986   Male     day2  1.94
+## 1367     3987 Female     day2    NA
+## 1368     3988 Female     day2    NA
+## 1369     3989 Female     day2  1.00
+## 1370     3990 Female     day2    NA
+## 1371     3991 Female     day2    NA
+## 1372     3992 Female     day2    NA
+## 1373     3993   Male     day2    NA
+## 1374     3994   Male     day2    NA
+## 1375     3995 Female     day2  0.73
+## 1376     3996 Female     day2  1.58
+## 1377     3997 Female     day2  0.55
+## 1378     4010   Male     day2    NA
+## 1379     4011 Female     day2  0.84
+## 1380     4012 Female     day2    NA
+## 1381     4013   Male     day2  0.52
+## 1382     4014   Male     day2    NA
+## 1383     4015 Female     day2    NA
+## 1384     4016 Female     day2    NA
+## 1385     4017 Female     day2    NA
+## 1386     4022 Female     day2    NA
+## 1387     4023 Female     day2    NA
+## 1388     4024 Female     day2    NA
+## 1389     4025   Male     day2    NA
+## 1390     4030   Male     day2    NA
+## 1391     4032 Female     day2    NA
+## 1392     4033   Male     day2    NA
+## 1393     4034 Female     day2    NA
+## 1394     4079   Male     day2    NA
+## 1395     4089   Male     day2  0.67
+## 1396     4090   Male     day2    NA
+## 1397     4092 Female     day2    NA
+## 1398     4093   Male     day2    NA
+## 1399     4095 Female     day2    NA
+## 1400     4096 Female     day2    NA
+## 1401     4101 Female     day2    NA
+## 1402     4104 Female     day2    NA
+## 1403     4105 Female     day2  0.76
+## 1404     4106 Female     day2    NA
+## 1405     4107 Female     day2    NA
+## 1406     4109 Female     day2    NA
+## 1407     4110 Female     day2    NA
+## 1408     4111 Female     day2    NA
+## 1409     4114   Male     day2    NA
+## 1410     4147 Female     day2    NA
+## 1411     4148 Female     day2    NA
+## 1412     4149   Male     day2    NA
+## 1413     4150   Male     day2    NA
+## 1414     4151   Male     day2  1.64
+## 1415     4152 Female     day2  1.75
+## 1416     4153 Female     day2  1.08
+## 1417     4154 Female     day2  0.91
+## 1418     4155 Female     day2  0.94
+## 1419     4156   Male     day2    NA
+## 1420     4157   Male     day2  0.32
+## 1421     4158 Female     day2  2.44
+## 1422     4159 Female     day2  0.17
+## 1423     4160   Male     day2  0.02
+## 1424     4161 Female     day2  1.54
+## 1425     4162 Female     day2  0.50
+## 1426     4163 Female     day2  0.48
+## 1427     4164 Female     day2  1.35
+## 1428     4165 Female     day2  2.61
+## 1429     4166 Female     day2  2.05
+## 1430     4167 Female     day2    NA
+## 1431     4168 Female     day2  0.76
+## 1432     4171 Female     day2  0.08
+## 1433     4172 Female     day2  2.91
+## 1434     4193   Male     day2    NA
+## 1435     4194   Male     day2  1.00
+## 1436     4195   Male     day2    NA
+## 1437     4196 Female     day2  0.47
+## 1438     4197   Male     day2  0.70
+## 1439     4198   Male     day2    NA
+## 1440     4199 Female     day2  1.45
+## 1441     4216 Female     day2  0.14
+## 1442     4218   Male     day2    NA
+## 1443     4219 Female     day2  0.38
+## 1444     4220 Female     day2    NA
+## 1445     4221 Female     day2    NA
+## 1446     4222   Male     day2  0.26
+## 1447     4223 Female     day2  2.32
+## 1448     4224 Female     day2  0.20
+## 1449     4225   Male     day2    NA
+## 1450     4226 Female     day2  2.72
+## 1451     4234   Male     day2    NA
+## 1452     4235   Male     day2  0.41
+## 1453     4236 Female     day2    NA
+## 1454     4237 Female     day2  0.88
+## 1455     4238 Female     day2    NA
+## 1456     4239 Female     day2  0.85
+## 1457     4240   Male     day2  0.23
+## 1458     4241 Female     day2    NA
+## 1459     4245 Female     day2    NA
+## 1460     4247 Female     day2    NA
+## 1461     4249 Female     day2    NA
+## 1462     4256   Male     day2    NA
+## 1463     4257   Male     day2    NA
+## 1464     4259   Male     day2  1.23
+## 1465     4262   Male     day2    NA
+## 1466     4263 Female     day2  0.20
+## 1467     4264   Male     day2    NA
+## 1468     4265 Female     day2  1.32
+## 1469     4266 Female     day2  2.70
+## 1470     4267 Female     day2    NA
+## 1471     4268   Male     day2    NA
+## 1472     4269   Male     day2  2.55
+## 1473     4271 Female     day2    NA
+## 1474     4274 Female     day2  0.17
+## 1475     4281 Female     day2    NA
+## 1476     4284 Female     day2    NA
+## 1477     4285   Male     day2    NA
+## 1478     4287 Female     day2    NA
+## 1479     4291 Female     day2  1.13
+## 1480     4292 Female     day2    NA
+## 1481     4294   Male     day2  0.79
+## 1482     4295 Female     day2    NA
+## 1483     4297   Male     day2    NA
+## 1484     4298 Female     day2  0.38
+## 1485     4301 Female     day2    NA
+## 1486     4302   Male     day2    NA
+## 1487     4305   Male     day2  1.00
+## 1488     4306   Male     day2  0.20
+## 1489     4308 Female     day2    NA
+## 1490     4309   Male     day2    NA
+## 1491     4310 Female     day2    NA
+## 1492     4311   Male     day2    NA
+## 1493     4312 Female     day2    NA
+## 1494     4313   Male     day2    NA
+## 1495     4314 Female     day2    NA
+## 1496     4333 Female     day2    NA
+## 1497     4334 Female     day2    NA
+## 1498     4335 Female     day2    NA
+## 1499     4336 Female     day2    NA
+## 1500     4349 Female     day2  0.47
+## 1501     4351   Male     day2    NA
+## 1502     4352   Male     day2    NA
+## 1503     4353 Female     day2  0.55
+## 1504     4354   Male     day2  0.94
+## 1505     4355   Male     day2  1.02
+## 1506     4356 Female     day2    NA
+## 1507     4357 Female     day2    NA
+## 1508     4358   Male     day2    NA
+## 1509     4359 Female     day2    NA
+## 1510     4360   Male     day2  0.64
+## 1511     4361   Male     day2  0.67
+## 1512     4363 Female     day2  1.87
+## 1513     4366 Female     day2    NA
+## 1514     4370 Female     day2    NA
+## 1515     4382 Female     day2  0.82
+## 1516     4383 Female     day2    NA
+## 1517     4384 Female     day2    NA
+## 1518     4385 Female     day2    NA
+## 1519     4386 Female     day2    NA
+## 1520     4387 Female     day2    NA
+## 1521     4388 Female     day2    NA
+## 1522     4389 Female     day2  0.64
+## 1523     4391 Female     day2    NA
+## 1524     4392 Female     day2    NA
+## 1525     4393 Female     day2    NA
+## 1526     4394   Male     day2    NA
+## 1527     4396 Female     day2  1.70
+## 1528     4397 Female     day2    NA
+## 1529     4398   Male     day2  0.79
+## 1530     4404 Female     day2    NA
+## 1531     4405 Female     day2  0.58
+## 1532     4410 Female     day2  0.11
+## 1533     4419 Female     day2    NA
+## 1534     4428 Female     day2  2.42
+## 1535     4430 Female     day2    NA
+## 1536     4435 Female     day2    NA
+## 1537     4436 Female     day2    NA
+## 1538     4437 Female     day2    NA
+## 1539     4439   Male     day2    NA
+## 1540     4440   Male     day2    NA
+## 1541     4441 Female     day2    NA
+## 1542     4442 Female     day2    NA
+## 1543     4443 Female     day2    NA
+## 1544     4444   Male     day2  0.00
+## 1545     4445   Male     day2  0.23
+## 1546     4446   Male     day2    NA
+## 1547     4447 Female     day2    NA
+## 1548     4448 Female     day2  0.85
+## 1549     4452   Male     day2  1.14
+## 1550     4453 Female     day2    NA
+## 1551     4454   Male     day2  1.14
+## 1552     4455   Male     day2    NA
+## 1553     4456   Male     day2    NA
+## 1554     4459 Female     day2  0.26
+## 1555     4464   Male     day2    NA
+## 1556     4467 Female     day2    NA
+## 1557     4468 Female     day2    NA
+## 1558     4470   Male     day2    NA
+## 1559     4479 Female     day2    NA
+## 1560     4481 Female     day2  0.14
+## 1561     4482 Female     day2    NA
+## 1562     4485 Female     day2  1.14
+## 1563     4486   Male     day2  1.02
+## 1564     4488 Female     day2    NA
+## 1565     4507   Male     day2  0.94
+## 1566     4509 Female     day2  0.55
+## 1567     4510   Male     day2    NA
+## 1568     4511 Female     day2  1.11
+## 1569     4512 Female     day2    NA
+## 1570     4514 Female     day2    NA
+## 1571     4515   Male     day2    NA
+## 1572     4516   Male     day2    NA
+## 1573     4517 Female     day2    NA
+## 1574     4518   Male     day2    NA
+## 1575     4519   Male     day2  0.70
+## 1576     4525 Female     day2    NA
+## 1577     4533 Female     day2    NA
+## 1578     4552 Female     day2    NA
+## 1579     4553 Female     day2  1.94
+## 1580     4554 Female     day2    NA
+## 1581     4555   Male     day2    NA
+## 1582     4559 Female     day2    NA
+## 1583     4563 Female     day2  0.20
+## 1584     4564 Female     day2  3.44
+## 1585     4569   Male     day2  1.00
+## 1586     4570 Female     day2  0.91
+## 1587     4571 Female     day2    NA
+## 1588     4582   Male     day2  1.58
+## 1589     4590 Female     day2  2.85
+## 1590     4597   Male     day2    NA
+## 1591     4598   Male     day2  0.79
+## 1592     4601 Female     day2    NA
+## 1593     4607 Female     day2  0.76
+## 1594     4611   Male     day2  0.56
+## 1595     4654 Female     day2  1.78
+## 1596     4655 Female     day2    NA
+## 1597     4663   Male     day2  0.23
+## 1598     4666   Male     day2  1.35
+## 1599     4690 Female     day2  1.82
+## 1600     4692 Female     day2    NA
+## 1601     4693   Male     day2  0.17
+## 1602     4694   Male     day2  1.70
+## 1603     4695   Male     day2    NA
+## 1604     4696 Female     day2  1.32
+## 1605     4697   Male     day2  0.14
+## 1606     4698 Female     day2  0.94
+## 1607     4699 Female     day2  1.52
+## 1608     4704 Female     day2    NA
+## 1609     4710 Female     day2    NA
+## 1610     4711   Male     day2    NA
+## 1611     4724   Male     day2  1.41
+## 1612     4725 Female     day2  0.32
+## 1613     4740   Male     day2  0.58
+## 1614     4744 Female     day2  0.44
+## 1615     4749 Female     day2    NA
+## 1616     4756 Female     day2  0.94
+## 1617     4758 Female     day2  1.44
+## 1618     4759 Female     day2    NA
+## 1619     4760   Male     day2    NA
+## 1620     4765 Female     day2    NA
+## 1621     2111   Male     day3  1.61
+## 1622     2229 Female     day3  0.29
+## 1623     2338   Male     day3    NA
+## 1624     2384 Female     day3    NA
+## 1625     2401 Female     day3    NA
+## 1626     2405   Male     day3    NA
+## 1627     2467 Female     day3    NA
+## 1628     2478 Female     day3    NA
+## 1629     2490   Male     day3    NA
+## 1630     2504 Female     day3  0.55
+## 1631     2509   Male     day3    NA
+## 1632     2510 Female     day3  0.47
+## 1633     2514   Male     day3    NA
+## 1634     2515 Female     day3  1.58
+## 1635     2520   Male     day3    NA
+## 1636     2521 Female     day3    NA
+## 1637     2529   Male     day3    NA
+## 1638     2533 Female     day3    NA
+## 1639     2535 Female     day3    NA
+## 1640     2538   Male     day3    NA
+## 1641     2549   Male     day3  0.76
+## 1642     2551 Female     day3    NA
+## 1643     2558 Female     day3    NA
+## 1644     2562 Female     day3    NA
+## 1645     2565 Female     day3    NA
+## 1646     2566 Female     day3    NA
+## 1647     2568 Female     day3    NA
+## 1648     2586 Female     day3    NA
+## 1649     2601   Male     day3    NA
+## 1650     2602   Male     day3  0.76
+## 1651     2604   Male     day3  0.02
+## 1652     2606 Female     day3    NA
+## 1653     2609 Female     day3    NA
+## 1654     2611 Female     day3    NA
+## 1655     2612   Male     day3  1.67
+## 1656     2616   Male     day3    NA
+## 1657     2624 Female     day3  0.96
+## 1658     2633 Female     day3    NA
+## 1659     2642 Female     day3    NA
+## 1660     2644   Male     day3    NA
+## 1661     2662 Female     day3    NA
+## 1662     2663   Male     day3    NA
+## 1663     2664   Male     day3    NA
+## 1664     2669 Female     day3    NA
+## 1665     2670   Male     day3    NA
+## 1666     2675   Male     day3    NA
+## 1667     2676 Female     day3    NA
+## 1668     2677   Male     day3  0.14
+## 1669     2681   Male     day3    NA
+## 1670     2685 Female     day3    NA
+## 1671     2686 Female     day3    NA
+## 1672     2687   Male     day3    NA
+## 1673     2688 Female     day3    NA
+## 1674     2689   Male     day3  0.52
+## 1675     2692 Female     day3  0.38
+## 1676     2698 Female     day3    NA
+## 1677     2709 Female     day3    NA
+## 1678     2710   Male     day3    NA
+## 1679     2712 Female     day3    NA
+## 1680     2726 Female     day3    NA
+## 1681     2727 Female     day3    NA
+## 1682     2728   Male     day3    NA
+## 1683     2730   Male     day3    NA
+## 1684     2731 Female     day3    NA
+## 1685     2732 Female     day3    NA
+## 1686     2734 Female     day3    NA
+## 1687     2735 Female     day3  0.29
+## 1688     2736 Female     day3    NA
+## 1689     2737 Female     day3    NA
+## 1690     2748 Female     day3    NA
+## 1691     2752   Male     day3    NA
+## 1692     2756 Female     day3    NA
+## 1693     2758   Male     day3    NA
+## 1694     2759 Female     day3    NA
+## 1695     2768   Male     day3    NA
+## 1696     2769 Female     day3    NA
+## 1697     2770 Female     day3    NA
+## 1698     2771   Male     day3    NA
+## 1699     2772   Male     day3    NA
+## 1700     2773 Female     day3    NA
+## 1701     2775   Male     day3    NA
+## 1702     2779 Female     day3    NA
+## 1703     2780   Male     day3    NA
+## 1704     2783   Male     day3  2.11
+## 1705     2784 Female     day3    NA
+## 1706     2788   Male     day3    NA
+## 1707     2789   Male     day3    NA
+## 1708     2791 Female     day3    NA
+## 1709     2794 Female     day3    NA
+## 1710     2796 Female     day3    NA
+## 1711     2799   Male     day3    NA
+## 1712     2806   Male     day3    NA
+## 1713     2807 Female     day3    NA
+## 1714     2811 Female     day3    NA
+## 1715     2812   Male     day3    NA
+## 1716     2813 Female     day3    NA
+## 1717     2814 Female     day3    NA
+## 1718     2825 Female     day3  0.50
+## 1719     2827   Male     day3    NA
+## 1720     2828 Female     day3  1.91
+## 1721     2829 Female     day3    NA
+## 1722     2830   Male     day3    NA
+## 1723     2831 Female     day3  0.76
+## 1724     2839   Male     day3    NA
+## 1725     2842 Female     day3    NA
+## 1726     2857   Male     day3    NA
+## 1727     2858   Male     day3    NA
+## 1728     2859   Male     day3    NA
+## 1729     2862 Female     day3    NA
+## 1730     2863 Female     day3  2.15
+## 1731     2875 Female     day3    NA
+## 1732     2876 Female     day3    NA
+## 1733     2883 Female     day3    NA
+## 1734     2890   Male     day3    NA
+## 1735     2894 Female     day3    NA
+## 1736     2895 Female     day3    NA
+## 1737     2897 Female     day3    NA
+## 1738     2898 Female     day3    NA
+## 1739     2899 Female     day3    NA
+## 1740     2900 Female     day3    NA
+## 1741     2901   Male     day3    NA
+## 1742     2920   Male     day3    NA
+## 1743     2921 Female     day3    NA
+## 1744     2922 Female     day3    NA
+## 1745     2923   Male     day3    NA
+## 1746     2924 Female     day3    NA
+## 1747     2925 Female     day3    NA
+## 1748     2932   Male     day3    NA
+## 1749     2933 Female     day3    NA
+## 1750     2935 Female     day3    NA
+## 1751     2936 Female     day3    NA
+## 1752     2937 Female     day3    NA
+## 1753     2938   Male     day3  1.50
+## 1754     2940   Male     day3    NA
+## 1755     2941 Female     day3  1.73
+## 1756     2942   Male     day3    NA
+## 1757     2948 Female     day3    NA
+## 1758     2952   Male     day3    NA
+## 1759     2953   Male     day3    NA
+## 1760     2954 Female     day3    NA
+## 1761     2956 Female     day3    NA
+## 1762     2957   Male     day3    NA
+## 1763     2958   Male     day3    NA
+## 1764     2959 Female     day3    NA
+## 1765     2961 Female     day3    NA
+## 1766     2962 Female     day3    NA
+## 1767     2964 Female     day3    NA
+## 1768     2966   Male     day3    NA
+## 1769     2967   Male     day3    NA
+## 1770     2968   Male     day3    NA
+## 1771     2972 Female     day3    NA
+## 1772     2974 Female     day3    NA
+## 1773     2975 Female     day3  2.70
+## 1774     2976 Female     day3    NA
+## 1775     2977 Female     day3    NA
+## 1776     2978 Female     day3    NA
+## 1777     2979   Male     day3    NA
+## 1778     2982   Male     day3    NA
+## 1779     2983   Male     day3    NA
+## 1780     2984   Male     day3    NA
+## 1781     2985 Female     day3    NA
+## 1782     2988 Female     day3    NA
+## 1783     2989 Female     day3  1.67
+## 1784     2990   Male     day3  0.11
+## 1785     3008 Female     day3  0.38
+## 1786     3009 Female     day3    NA
+## 1787     3010 Female     day3    NA
+## 1788     3013 Female     day3    NA
+## 1789     3014 Female     day3    NA
+## 1790     3016   Male     day3    NA
+## 1791     3017   Male     day3    NA
+## 1792     3018   Male     day3    NA
+## 1793     3019 Female     day3    NA
+## 1794     3027   Male     day3    NA
+## 1795     3028 Female     day3    NA
+## 1796     3029 Female     day3    NA
+## 1797     3030   Male     day3    NA
+## 1798     3031   Male     day3    NA
+## 1799     3032 Female     day3    NA
+## 1800     3033 Female     day3    NA
+## 1801     3034 Female     day3    NA
+## 1802     3035   Male     day3    NA
+## 1803     3048   Male     day3    NA
+## 1804     3049 Female     day3    NA
+## 1805     3051   Male     day3    NA
+## 1806     3052 Female     day3    NA
+## 1807     3053 Female     day3    NA
+## 1808     3054 Female     day3    NA
+## 1809     3055 Female     day3    NA
+## 1810     3056 Female     day3    NA
+## 1811     3057   Male     day3  0.20
+## 1812     3064   Male     day3    NA
+## 1813     3065 Female     day3    NA
+## 1814     3068 Female     day3    NA
+## 1815     3069   Male     day3    NA
+## 1816     3070   Male     day3    NA
+## 1817     3072 Female     day3    NA
+## 1818     3073 Female     day3    NA
+## 1819     3092 Female     day3    NA
+## 1820     3093   Male     day3    NA
+## 1821     3094 Female     day3    NA
+## 1822     3095   Male     day3  0.33
+## 1823     3096 Female     day3    NA
+## 1824     3097   Male     day3    NA
+## 1825     3098   Male     day3    NA
+## 1826     3100 Female     day3    NA
+## 1827     3106   Male     day3    NA
+## 1828     3107 Female     day3    NA
+## 1829     3109   Male     day3    NA
+## 1830     3111 Female     day3    NA
+## 1831     3112   Male     day3    NA
+## 1832     3114 Female     day3    NA
+## 1833     3116 Female     day3    NA
+## 1834     3118   Male     day3    NA
+## 1835     3129   Male     day3    NA
+## 1836     3131 Female     day3    NA
+## 1837     3132 Female     day3    NA
+## 1838     3133   Male     day3    NA
+## 1839     3135 Female     day3    NA
+## 1840     3136   Male     day3    NA
+## 1841     3137 Female     day3    NA
+## 1842     3138   Male     day3    NA
+## 1843     3139 Female     day3    NA
+## 1844     3146 Female     day3    NA
+## 1845     3147   Male     day3    NA
+## 1846     3148 Female     day3    NA
+## 1847     3168 Female     day3    NA
+## 1848     3171 Female     day3    NA
+## 1849     3172   Male     day3    NA
+## 1850     3173 Female     day3  0.73
+## 1851     3180 Female     day3    NA
+## 1852     3182 Female     day3    NA
+## 1853     3190   Male     day3    NA
+## 1854     3192 Female     day3    NA
+## 1855     3202   Male     day3    NA
+## 1856     3236 Female     day3    NA
+## 1857     3245 Female     day3    NA
+## 1858     3246 Female     day3  1.29
+## 1859     3247   Male     day3    NA
+## 1860     3248   Male     day3    NA
+## 1861     3249   Male     day3  0.44
+## 1862     3250   Male     day3    NA
+## 1863     3251 Female     day3    NA
+## 1864     3253   Male     day3    NA
+## 1865     3254 Female     day3    NA
+## 1866     3255   Male     day3    NA
+## 1867     3256 Female     day3    NA
+## 1868     3257 Female     day3    NA
+## 1869     3258 Female     day3    NA
+## 1870     3260   Male     day3    NA
+## 1871     3261   Male     day3    NA
+## 1872     3262   Male     day3    NA
+## 1873     3264 Female     day3    NA
+## 1874     3267 Female     day3  1.70
+## 1875     3273   Male     day3    NA
+## 1876     3275 Female     day3    NA
+## 1877     3276 Female     day3    NA
+## 1878     3277 Female     day3    NA
+## 1879     3278 Female     day3    NA
+## 1880     3279 Female     day3    NA
+## 1881     3281 Female     day3    NA
+## 1882     3282 Female     day3  1.02
+## 1883     3284   Male     day3    NA
+## 1884     3290 Female     day3    NA
+## 1885     3291   Male     day3    NA
+## 1886     3292   Male     day3    NA
+## 1887     3296   Male     day3    NA
+## 1888     3306 Female     day3  1.88
+## 1889     3307   Male     day3  0.76
+## 1890     3308 Female     day3    NA
+## 1891     3309 Female     day3    NA
+## 1892     3310 Female     day3    NA
+## 1893     3311 Female     day3    NA
+## 1894     3312   Male     day3    NA
+## 1895     3313 Female     day3    NA
+## 1896     3314 Female     day3  1.70
+## 1897     3315 Female     day3    NA
+## 1898     3316 Female     day3  0.26
+## 1899     3321 Female     day3    NA
+## 1900     3325   Male     day3    NA
+## 1901     3326 Female     day3  0.38
+## 1902     3327   Male     day3  0.44
+## 1903     3328 Female     day3    NA
+## 1904     3329   Male     day3    NA
+## 1905     3338 Female     day3    NA
+## 1906     3340 Female     day3  2.00
+## 1907     3341 Female     day3    NA
+## 1908     3348 Female     day3    NA
+## 1909     3349   Male     day3    NA
+## 1910     3350 Female     day3    NA
+## 1911     3351 Female     day3  0.39
+## 1912     3352 Female     day3  0.17
+## 1913     3363 Female     day3    NA
+## 1914     3365   Male     day3    NA
+## 1915     3366   Male     day3    NA
+## 1916     3367 Female     day3    NA
+## 1917     3368 Female     day3    NA
+## 1918     3369   Male     day3    NA
+## 1919     3370 Female     day3  1.67
+## 1920     3371 Female     day3    NA
+## 1921     3372 Female     day3    NA
+## 1922     3373   Male     day3    NA
+## 1923     3374   Male     day3    NA
+## 1924     3375   Male     day3    NA
+## 1925     3376   Male     day3    NA
+## 1926     3377 Female     day3    NA
+## 1927     3378   Male     day3    NA
+## 1928     3379 Female     day3    NA
+## 1929     3380   Male     day3  0.58
+## 1930     3390 Female     day3    NA
+## 1931     3391 Female     day3    NA
+## 1932     3392 Female     day3    NA
+## 1933     3393   Male     day3    NA
+## 1934     3394 Female     day3    NA
+## 1935     3395 Female     day3    NA
+## 1936     3397 Female     day3  1.02
+## 1937     3398 Female     day3    NA
+## 1938     3407 Female     day3    NA
+## 1939     3411 Female     day3    NA
+## 1940     3412   Male     day3    NA
+## 1941     3413 Female     day3    NA
+## 1942     3416 Female     day3    NA
+## 1943     3418 Female     day3    NA
+## 1944     3419   Male     day3    NA
+## 1945     3420 Female     day3    NA
+## 1946     3423   Male     day3    NA
+## 1947     3429 Female     day3    NA
+## 1948     3431   Male     day3    NA
+## 1949     3449 Female     day3    NA
+## 1950     3450 Female     day3    NA
+## 1951     3453   Male     day3    NA
+## 1952     3454 Female     day3    NA
+## 1953     3455   Male     day3    NA
+## 1954     3456 Female     day3    NA
+## 1955     3457 Female     day3    NA
+## 1956     3458 Female     day3    NA
+## 1957     3460 Female     day3    NA
+## 1958     3461   Male     day3    NA
+## 1959     3464 Female     day3    NA
+## 1960     3467 Female     day3    NA
+## 1961     3468 Female     day3    NA
+## 1962     3469 Female     day3    NA
+## 1963     3477   Male     day3  0.94
+## 1964     3480 Female     day3  0.17
+## 1965     3483 Female     day3    NA
+## 1966     3490 Female     day3  0.29
+## 1967     3493   Male     day3    NA
+## 1968     3494 Female     day3    NA
+## 1969     3495   Male     day3    NA
+## 1970     3500 Female     day3    NA
+## 1971     3501   Male     day3    NA
+## 1972     3503   Male     day3  0.61
+## 1973     3510 Female     day3    NA
+## 1974     3511 Female     day3    NA
+## 1975     3512 Female     day3    NA
+## 1976     3518   Male     day3    NA
+## 1977     3519 Female     day3    NA
+## 1978     3521 Female     day3  0.52
+## 1979     3522 Female     day3    NA
+## 1980     3523   Male     day3    NA
+## 1981     3524   Male     day3    NA
+## 1982     3525 Female     day3    NA
+## 1983     3526   Male     day3    NA
+## 1984     3536 Female     day3    NA
+## 1985     3539 Female     day3    NA
+## 1986     3540 Female     day3    NA
+## 1987     3542 Female     day3    NA
+## 1988     3545 Female     day3    NA
+## 1989     3546   Male     day3    NA
+## 1990     3551   Male     day3    NA
+## 1991     3557 Female     day3    NA
+## 1992     3565 Female     day3  0.55
+## 1993     3567   Male     day3  0.44
+## 1994     3568   Male     day3  0.76
+## 1995     3569 Female     day3  1.85
+## 1996     3570 Female     day3    NA
+## 1997     3571   Male     day3  0.14
+## 1998     3572   Male     day3  0.70
+## 1999     3573 Female     day3    NA
+## 2000     3574   Male     day3    NA
+## 2001     3575   Male     day3    NA
+## 2002     3576   Male     day3    NA
+## 2003     3577 Female     day3    NA
+## 2004     3586   Male     day3    NA
+## 2005     3587   Male     day3    NA
+## 2006     3588   Male     day3    NA
+## 2007     3593 Female     day3    NA
+## 2008     3594   Male     day3    NA
+## 2009     3595 Female     day3    NA
+## 2010     3596 Female     day3    NA
+## 2011     3597   Male     day3    NA
+## 2012     3598 Female     day3    NA
+## 2013     3599 Female     day3    NA
+## 2014     3600 Female     day3    NA
+## 2015     3601 Female     day3    NA
+## 2016     3602 Female     day3    NA
+## 2017     3603 Female     day3    NA
+## 2018     3605   Male     day3    NA
+## 2019     3606   Male     day3    NA
+## 2020     3607 Female     day3    NA
+## 2021     3609 Female     day3    NA
+## 2022     3610   Male     day3  0.35
+## 2023     3613 Female     day3    NA
+## 2024     3614 Female     day3    NA
+## 2025     3620 Female     day3    NA
+## 2026     3621   Male     day3    NA
+## 2027     3622 Female     day3    NA
+## 2028     3625 Female     day3  0.44
+## 2029     3626   Male     day3    NA
+## 2030     3627 Female     day3    NA
+## 2031     3628   Male     day3  0.70
+## 2032     3629   Male     day3  0.33
+## 2033     3631 Female     day3    NA
+## 2034     3634 Female     day3  1.17
+## 2035     3635 Female     day3  1.55
+## 2036     3645 Female     day3    NA
+## 2037     3646 Female     day3    NA
+## 2038     3647   Male     day3    NA
+## 2039     3648   Male     day3    NA
+## 2040     3649   Male     day3  1.20
+## 2041     3652   Male     day3    NA
+## 2042     3653 Female     day3    NA
+## 2043     3654 Female     day3    NA
+## 2044     3655 Female     day3    NA
+## 2045     3656 Female     day3    NA
+## 2046     3659   Male     day3  0.70
+## 2047     3660 Female     day3  0.55
+## 2048     3667 Female     day3    NA
+## 2049     3669   Male     day3    NA
+## 2050     3670 Female     day3    NA
+## 2051     3672 Female     day3    NA
+## 2052     3676   Male     day3    NA
+## 2053     3677   Male     day3  0.47
+## 2054     3678   Male     day3    NA
+## 2055     3680 Female     day3  0.72
+## 2056     3696 Female     day3    NA
+## 2057     3697   Male     day3    NA
+## 2058     3698 Female     day3    NA
+## 2059     3709 Female     day3    NA
+## 2060     3710   Male     day3    NA
+## 2061     3711   Male     day3    NA
+## 2062     3712   Male     day3    NA
+## 2063     3713   Male     day3    NA
+## 2064     3714   Male     day3    NA
+## 2065     3715   Male     day3    NA
+## 2066     3716 Female     day3    NA
+## 2067     3717 Female     day3    NA
+## 2068     3718 Female     day3    NA
+## 2069     3719   Male     day3    NA
+## 2070     3720 Female     day3    NA
+## 2071     3721 Female     day3    NA
+## 2072     3722 Female     day3    NA
+## 2073     3723 Female     day3  0.47
+## 2074     3724   Male     day3    NA
+## 2075     3725 Female     day3    NA
+## 2076     3726 Female     day3    NA
+## 2077     3727 Female     day3    NA
+## 2078     3728 Female     day3    NA
+## 2079     3729   Male     day3    NA
+## 2080     3730   Male     day3    NA
+## 2081     3731   Male     day3  0.91
+## 2082     3734   Male     day3  0.44
+## 2083     3736   Male     day3    NA
+## 2084     3753 Female     day3    NA
+## 2085     3754 Female     day3    NA
+## 2086     3759 Female     day3    NA
+## 2087     3764   Male     day3    NA
+## 2088     3769   Male     day3    NA
+## 2089     3778   Male     day3    NA
+## 2090     3779 Female     day3    NA
+## 2091     3782 Female     day3    NA
+## 2092     3783 Female     day3    NA
+## 2093     3784 Female     day3    NA
+## 2094     3785   Male     day3    NA
+## 2095     3786 Female     day3    NA
+## 2096     3787 Female     day3    NA
+## 2097     3788 Female     day3    NA
+## 2098     3791 Female     day3    NA
+## 2099     3792 Female     day3  2.29
+## 2100     3793   Male     day3    NA
+## 2101     3794   Male     day3    NA
+## 2102     3796   Male     day3  1.88
+## 2103     3797 Female     day3    NA
+## 2104     3798 Female     day3    NA
+## 2105     3799 Female     day3    NA
+## 2106     3804 Female     day3    NA
+## 2107     3826   Male     day3    NA
+## 2108     3828 Female     day3    NA
+## 2109     3831 Female     day3    NA
+## 2110     3836 Female     day3    NA
+## 2111     3837 Female     day3    NA
+## 2112     3838   Male     day3    NA
+## 2113     3840   Male     day3    NA
+## 2114     3844   Male     day3    NA
+## 2115     3846   Male     day3    NA
+## 2116     3849   Male     day3  1.02
+## 2117     3850 Female     day3    NA
+## 2118     3851   Male     day3    NA
+## 2119     3854 Female     day3    NA
+## 2120     3855 Female     day3    NA
+## 2121     3856 Female     day3    NA
+## 2122     3857 Female     day3    NA
+## 2123     3858   Male     day3    NA
+## 2124     3859   Male     day3    NA
+## 2125     3860   Male     day3    NA
+## 2126     3869 Female     day3    NA
+## 2127     3870 Female     day3    NA
+## 2128     3871 Female     day3    NA
+## 2129     3872   Male     day3    NA
+## 2130     3873   Male     day3    NA
+## 2131     3874 Female     day3    NA
+## 2132     3875   Male     day3    NA
+## 2133     3876   Male     day3    NA
+## 2134     3879 Female     day3    NA
+## 2135     3880 Female     day3    NA
+## 2136     3882 Female     day3    NA
+## 2137     3883   Male     day3    NA
+## 2138     3888 Female     day3  1.70
+## 2139     3890   Male     day3    NA
+## 2140     3909   Male     day3    NA
+## 2141     3912   Male     day3    NA
+## 2142     3913 Female     day3    NA
+## 2143     3914   Male     day3    NA
+## 2144     3916 Female     day3  1.38
+## 2145     3917 Female     day3    NA
+## 2146     3918 Female     day3    NA
+## 2147     3919 Female     day3    NA
+## 2148     3920   Male     day3  0.41
+## 2149     3921   Male     day3    NA
+## 2150     3922 Female     day3    NA
+## 2151     3923   Male     day3  0.58
+## 2152     3924 Female     day3    NA
+## 2153     3925 Female     day3    NA
+## 2154     3926 Female     day3    NA
+## 2155     3927   Male     day3    NA
+## 2156     3929   Male     day3    NA
+## 2157     3930   Male     day3    NA
+## 2158     3932 Female     day3    NA
+## 2159     3942   Male     day3    NA
+## 2160     3944   Male     day3  0.20
+## 2161     3945 Female     day3    NA
+## 2162     3946 Female     day3    NA
+## 2163     3947   Male     day3  0.35
+## 2164     3948 Female     day3  0.38
+## 2165     3949   Male     day3  1.18
+## 2166     3950 Female     day3    NA
+## 2167     3951 Female     day3    NA
+## 2168     3952 Female     day3    NA
+## 2169     3954 Female     day3    NA
+## 2170     3955   Male     day3    NA
+## 2171     3964 Female     day3    NA
+## 2172     3965   Male     day3    NA
+## 2173     3966   Male     day3    NA
+## 2174     3972   Male     day3  1.32
+## 2175     3973 Female     day3    NA
+## 2176     3986   Male     day3    NA
+## 2177     3987 Female     day3    NA
+## 2178     3988 Female     day3    NA
+## 2179     3989 Female     day3  0.82
+## 2180     3990 Female     day3    NA
+## 2181     3991 Female     day3    NA
+## 2182     3992 Female     day3    NA
+## 2183     3993   Male     day3    NA
+## 2184     3994   Male     day3    NA
+## 2185     3995 Female     day3  0.47
+## 2186     3996 Female     day3    NA
+## 2187     3997 Female     day3    NA
+## 2188     4010   Male     day3    NA
+## 2189     4011 Female     day3    NA
+## 2190     4012 Female     day3    NA
+## 2191     4013   Male     day3    NA
+## 2192     4014   Male     day3    NA
+## 2193     4015 Female     day3    NA
+## 2194     4016 Female     day3    NA
+## 2195     4017 Female     day3    NA
+## 2196     4022 Female     day3    NA
+## 2197     4023 Female     day3    NA
+## 2198     4024 Female     day3    NA
+## 2199     4025   Male     day3    NA
+## 2200     4030   Male     day3    NA
+## 2201     4032 Female     day3    NA
+## 2202     4033   Male     day3    NA
+## 2203     4034 Female     day3    NA
+## 2204     4079   Male     day3    NA
+## 2205     4089   Male     day3  0.91
+## 2206     4090   Male     day3    NA
+## 2207     4092 Female     day3    NA
+## 2208     4093   Male     day3    NA
+## 2209     4095 Female     day3    NA
+## 2210     4096 Female     day3    NA
+## 2211     4101 Female     day3    NA
+## 2212     4104 Female     day3    NA
+## 2213     4105 Female     day3  0.85
+## 2214     4106 Female     day3    NA
+## 2215     4107 Female     day3    NA
+## 2216     4109 Female     day3    NA
+## 2217     4110 Female     day3    NA
+## 2218     4111 Female     day3    NA
+## 2219     4114   Male     day3    NA
+## 2220     4147 Female     day3    NA
+## 2221     4148 Female     day3    NA
+## 2222     4149   Male     day3    NA
+## 2223     4150   Male     day3    NA
+## 2224     4151   Male     day3    NA
+## 2225     4152 Female     day3  1.91
+## 2226     4153 Female     day3  1.91
+## 2227     4154 Female     day3    NA
+## 2228     4155 Female     day3    NA
+## 2229     4156   Male     day3    NA
+## 2230     4157   Male     day3  0.52
+## 2231     4158 Female     day3    NA
+## 2232     4159 Female     day3  0.20
+## 2233     4160   Male     day3    NA
+## 2234     4161 Female     day3  1.76
+## 2235     4162 Female     day3    NA
+## 2236     4163 Female     day3    NA
+## 2237     4164 Female     day3    NA
+## 2238     4165 Female     day3  3.02
+## 2239     4166 Female     day3    NA
+## 2240     4167 Female     day3    NA
+## 2241     4168 Female     day3    NA
+## 2242     4171 Female     day3    NA
+## 2243     4172 Female     day3  3.02
+## 2244     4193   Male     day3    NA
+## 2245     4194   Male     day3  1.50
+## 2246     4195   Male     day3    NA
+## 2247     4196 Female     day3  1.58
+## 2248     4197   Male     day3  0.67
+## 2249     4198   Male     day3    NA
+## 2250     4199 Female     day3    NA
+## 2251     4216 Female     day3  0.02
+## 2252     4218   Male     day3    NA
+## 2253     4219 Female     day3    NA
+## 2254     4220 Female     day3    NA
+## 2255     4221 Female     day3    NA
+## 2256     4222   Male     day3    NA
+## 2257     4223 Female     day3    NA
+## 2258     4224 Female     day3  0.17
+## 2259     4225   Male     day3    NA
+## 2260     4226 Female     day3  0.52
+## 2261     4234   Male     day3    NA
+## 2262     4235   Male     day3  0.88
+## 2263     4236 Female     day3    NA
+## 2264     4237 Female     day3  1.44
+## 2265     4238 Female     day3    NA
+## 2266     4239 Female     day3    NA
+## 2267     4240   Male     day3  1.66
+## 2268     4241 Female     day3    NA
+## 2269     4245 Female     day3    NA
+## 2270     4247 Female     day3    NA
+## 2271     4249 Female     day3    NA
+## 2272     4256   Male     day3    NA
+## 2273     4257   Male     day3    NA
+## 2274     4259   Male     day3  0.94
+## 2275     4262   Male     day3    NA
+## 2276     4263 Female     day3    NA
+## 2277     4264   Male     day3    NA
+## 2278     4265 Female     day3  1.19
+## 2279     4266 Female     day3    NA
+## 2280     4267 Female     day3    NA
+## 2281     4268   Male     day3    NA
+## 2282     4269   Male     day3    NA
+## 2283     4271 Female     day3    NA
+## 2284     4274 Female     day3    NA
+## 2285     4281 Female     day3    NA
+## 2286     4284 Female     day3    NA
+## 2287     4285   Male     day3    NA
+## 2288     4287 Female     day3    NA
+## 2289     4291 Female     day3  0.53
+## 2290     4292 Female     day3    NA
+## 2291     4294   Male     day3    NA
+## 2292     4295 Female     day3    NA
+## 2293     4297   Male     day3    NA
+## 2294     4298 Female     day3    NA
+## 2295     4301 Female     day3    NA
+## 2296     4302   Male     day3    NA
+## 2297     4305   Male     day3    NA
+## 2298     4306   Male     day3    NA
+## 2299     4308 Female     day3    NA
+## 2300     4309   Male     day3    NA
+## 2301     4310 Female     day3    NA
+## 2302     4311   Male     day3    NA
+## 2303     4312 Female     day3    NA
+## 2304     4313   Male     day3    NA
+## 2305     4314 Female     day3    NA
+## 2306     4333 Female     day3    NA
+## 2307     4334 Female     day3    NA
+## 2308     4335 Female     day3    NA
+## 2309     4336 Female     day3    NA
+## 2310     4349 Female     day3  0.38
+## 2311     4351   Male     day3    NA
+## 2312     4352   Male     day3    NA
+## 2313     4353 Female     day3    NA
+## 2314     4354   Male     day3  0.08
+## 2315     4355   Male     day3  1.20
+## 2316     4356 Female     day3    NA
+## 2317     4357 Female     day3    NA
+## 2318     4358   Male     day3    NA
+## 2319     4359 Female     day3    NA
+## 2320     4360   Male     day3    NA
+## 2321     4361   Male     day3    NA
+## 2322     4363 Female     day3  0.91
+## 2323     4366 Female     day3    NA
+## 2324     4370 Female     day3    NA
+## 2325     4382 Female     day3    NA
+## 2326     4383 Female     day3    NA
+## 2327     4384 Female     day3    NA
+## 2328     4385 Female     day3    NA
+## 2329     4386 Female     day3    NA
+## 2330     4387 Female     day3    NA
+## 2331     4388 Female     day3    NA
+## 2332     4389 Female     day3  0.47
+## 2333     4391 Female     day3    NA
+## 2334     4392 Female     day3    NA
+## 2335     4393 Female     day3    NA
+## 2336     4394   Male     day3    NA
+## 2337     4396 Female     day3    NA
+## 2338     4397 Female     day3    NA
+## 2339     4398   Male     day3  1.76
+## 2340     4404 Female     day3    NA
+## 2341     4405 Female     day3  0.32
+## 2342     4410 Female     day3    NA
+## 2343     4419 Female     day3    NA
+## 2344     4428 Female     day3    NA
+## 2345     4430 Female     day3    NA
+## 2346     4435 Female     day3    NA
+## 2347     4436 Female     day3    NA
+## 2348     4437 Female     day3    NA
+## 2349     4439   Male     day3    NA
+## 2350     4440   Male     day3    NA
+## 2351     4441 Female     day3    NA
+## 2352     4442 Female     day3    NA
+## 2353     4443 Female     day3    NA
+## 2354     4444   Male     day3    NA
+## 2355     4445   Male     day3  0.45
+## 2356     4446   Male     day3    NA
+## 2357     4447 Female     day3    NA
+## 2358     4448 Female     day3    NA
+## 2359     4452   Male     day3    NA
+## 2360     4453 Female     day3    NA
+## 2361     4454   Male     day3  1.26
+## 2362     4455   Male     day3    NA
+## 2363     4456   Male     day3    NA
+## 2364     4459 Female     day3    NA
+## 2365     4464   Male     day3    NA
+## 2366     4467 Female     day3    NA
+## 2367     4468 Female     day3    NA
+## 2368     4470   Male     day3    NA
+## 2369     4479 Female     day3    NA
+## 2370     4481 Female     day3    NA
+## 2371     4482 Female     day3    NA
+## 2372     4485 Female     day3    NA
+## 2373     4486   Male     day3    NA
+## 2374     4488 Female     day3    NA
+## 2375     4507   Male     day3  0.91
+## 2376     4509 Female     day3    NA
+## 2377     4510   Male     day3    NA
+## 2378     4511 Female     day3  0.76
+## 2379     4512 Female     day3    NA
+## 2380     4514 Female     day3    NA
+## 2381     4515   Male     day3    NA
+## 2382     4516   Male     day3    NA
+## 2383     4517 Female     day3    NA
+## 2384     4518   Male     day3    NA
+## 2385     4519   Male     day3    NA
+## 2386     4525 Female     day3    NA
+## 2387     4533 Female     day3    NA
+## 2388     4552 Female     day3    NA
+## 2389     4553 Female     day3    NA
+## 2390     4554 Female     day3    NA
+## 2391     4555   Male     day3    NA
+## 2392     4559 Female     day3    NA
+## 2393     4563 Female     day3  0.91
+## 2394     4564 Female     day3  3.41
+## 2395     4569   Male     day3  1.73
+## 2396     4570 Female     day3    NA
+## 2397     4571 Female     day3    NA
+## 2398     4582   Male     day3  0.81
+## 2399     4590 Female     day3    NA
+## 2400     4597   Male     day3    NA
+## 2401     4598   Male     day3    NA
+## 2402     4601 Female     day3    NA
+## 2403     4607 Female     day3    NA
+## 2404     4611   Male     day3    NA
+## 2405     4654 Female     day3  2.55
+## 2406     4655 Female     day3    NA
+## 2407     4663   Male     day3    NA
+## 2408     4666   Male     day3  1.02
+## 2409     4690 Female     day3    NA
+## 2410     4692 Female     day3    NA
+## 2411     4693   Male     day3  0.44
+## 2412     4694   Male     day3    NA
+## 2413     4695   Male     day3    NA
+## 2414     4696 Female     day3    NA
+## 2415     4697   Male     day3    NA
+## 2416     4698 Female     day3    NA
+## 2417     4699 Female     day3    NA
+## 2418     4704 Female     day3    NA
+## 2419     4710 Female     day3    NA
+## 2420     4711   Male     day3    NA
+## 2421     4724   Male     day3  2.11
+## 2422     4725 Female     day3    NA
+## 2423     4740   Male     day3    NA
+## 2424     4744 Female     day3    NA
+## 2425     4749 Female     day3    NA
+## 2426     4756 Female     day3    NA
+## 2427     4758 Female     day3    NA
+## 2428     4759 Female     day3    NA
+## 2429     4760   Male     day3    NA
+## 2430     4765 Female     day3    NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(df.stack)[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"day"}\NormalTok{,}\StringTok{"score"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Histogram}\FloatTok{.3}\NormalTok{days }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack,}\FunctionTok{aes}\NormalTok{(score)) }\SpecialCharTok{+} 
+                  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth=}\FloatTok{0.4}\NormalTok{, }\AttributeTok{color=}\StringTok{"black"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"yellow"}\NormalTok{) }\SpecialCharTok{+} 
+                  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Score"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Counts"}\NormalTok{) }\SpecialCharTok{+} 
+                  \FunctionTok{facet\_grid}\NormalTok{(gender}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}
+
+\NormalTok{Histogram}\FloatTok{.3}\NormalTok{days}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing non-finite values (stat_bin).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\hypertarget{stripchart}{%
+\subsection{Stripchart}\label{stripchart}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Scatterplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack,}\FunctionTok{aes}\NormalTok{(gender,score))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}
+\NormalTok{Scatterplot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Scatterplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack, }\FunctionTok{aes}\NormalTok{(gender, score, }\AttributeTok{colour=}\NormalTok{gender))}\SpecialCharTok{+}
+              \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position=}\StringTok{"jitter"}\NormalTok{) }\SpecialCharTok{+} 
+              \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}
+
+\NormalTok{Scatterplot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Scatterplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack,}\FunctionTok{aes}\NormalTok{(gender,score, }\AttributeTok{colour=}\NormalTok{gender)) }\SpecialCharTok{+} 
+              \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position=}\StringTok{"jitter"}\NormalTok{) }\SpecialCharTok{+} 
+              \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}\SpecialCharTok{+}
+              \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"darkorange"}\NormalTok{, }\StringTok{"darkorchid4"}\NormalTok{))}
+
+\NormalTok{Scatterplot }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{alpha=}\DecValTok{0}\NormalTok{, }\AttributeTok{colour=}\StringTok{"black"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing non-finite values (stat_boxplot).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\hypertarget{boxplots}{%
+\subsection{BoxPlots}\label{boxplots}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Boxplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack, }\FunctionTok{aes}\NormalTok{(gender,score))}\SpecialCharTok{+}
+          \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+          \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}
+
+\NormalTok{Boxplot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing non-finite values (stat_boxplot).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Boxplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack, }\FunctionTok{aes}\NormalTok{(gender,score,}\AttributeTok{fill=}\NormalTok{gender))}\SpecialCharTok{+}
+          \FunctionTok{geom\_boxplot}\NormalTok{()}\SpecialCharTok{+}
+          \FunctionTok{stat\_boxplot}\NormalTok{(}\AttributeTok{geom=}\StringTok{"errorbar"}\NormalTok{) }\SpecialCharTok{+} 
+          \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"turquoise4"}\NormalTok{,}\StringTok{"darkgoldenrod2"}\NormalTok{))}\SpecialCharTok{+}
+          \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}
+
+\NormalTok{Boxplot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing non-finite values (stat_boxplot).
+
+## Warning: Removed 1233 rows containing non-finite values (stat_boxplot).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Boxplot }\SpecialCharTok{+} \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{limits=}\FunctionTok{c}\NormalTok{(}\StringTok{"Male"}\NormalTok{,}\StringTok{"Female"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing non-finite values (stat_boxplot).
+
+## Warning: Removed 1233 rows containing non-finite values (stat_boxplot).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+\hypertarget{violinbean-plot}{%
+\subsection{Violin/Bean Plot}\label{violinbean-plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Violinplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack, }\FunctionTok{aes}\NormalTok{(gender,score)) }\SpecialCharTok{+} 
+            \FunctionTok{geom\_violin}\NormalTok{()}\SpecialCharTok{+}\FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}
+\NormalTok{Violinplot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing non-finite values (stat_ydensity).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Violinplot }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(df.stack, }\FunctionTok{aes}\NormalTok{(gender,score))}\SpecialCharTok{+}
+             \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fill=}\StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}
+             \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{day)}
+\NormalTok{Violinplot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1233 rows containing non-finite values (stat_ydensity).
+\end{verbatim}
+
+\includegraphics{19MID0020_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\end{document}

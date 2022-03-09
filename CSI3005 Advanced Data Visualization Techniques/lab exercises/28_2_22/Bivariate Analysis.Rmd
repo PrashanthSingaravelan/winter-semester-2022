@@ -1,0 +1,166 @@
+---
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+# Prashanth.S 19MID0020
+## Bivariate Analysis
+
+## Importing the libraries
+```{r}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(tidyr)
+library(reshape2)
+library(RColorBrewer)
+library(ggrepel)
+library(ggthemes)
+library(GGally)
+library(plotly)
+```
+
+## Importing the data-sets
+```{r}
+df = read.csv('pokemon.csv')
+head(df)
+```
+
+### PreProcessing
+
+```{r}
+cat("Number of instances  : ",nrow(df))
+cat("\nNumber of attributes : ",ncol(df))
+```
+
+```{r}
+str(df)
+```
+
+```{r}
+summary(df)
+```
+```{r}
+for ( col in 1:ncol(df)) { 
+  cat(colnames(df)[col])
+  cat(" --> ")
+  print(sum(is.na(df[,col])))
+}
+```
+
+From the above observation, it seems that there are no missing values.
+But there are more empty values(i.e missing values) in the data-set
+
+Converting the empty values in missing values
+```{r}
+df[df == ""] <- NA
+```
+
+```{r}
+for ( col in 1:ncol(df)) { 
+  cat(colnames(df)[col])
+  cat(" --> ")
+  print(sum(is.na(df[,col])))
+}
+```
+
+```{r}
+print("Percentage of Missing values in Type.2 attribute")
+print((abs(nrow(df) - sum(is.na(df['Type.2'])))) / nrow(df))
+```
+There are 51% missing values in 'Type-2' attribute
+
+## 1)Bar Chart
+```{r}
+ggplot(df, 
+       aes(x = Type.1, fill = Legendary)) + 
+       geom_bar(position = "stack", color='black') + 
+       labs(x = "Type-1", y = "Count", title  = "Contribution of Type-1 and Legendary") + 
+       coord_flip() 
+
+```
+
+Number of Pokemon by Type-1
+```{r}
+df %>%
+  group_by(Type.1) %>% summarise(number = n()) %>%
+  ggplot(aes(x = reorder(Type.1, number), y = number , fill = Type.1)) +
+  geom_bar(stat = 'identity', color='black') +
+  labs(x = "Type-1 of Pokemon", y = "Number of Pokemon", title  = "Number of Pokemon by Type-1") + 
+  coord_flip() + geom_text(aes(label = number), hjust = -1.0)
+```
+
+Number of Pokemon by Type-2
+```{r}
+df %>%filter(Type.2 != '') %>% group_by(Type.2) %>% summarise(number = n()) %>%
+  ggplot(aes(x = reorder(Type.2, number), y = number , fill = Type.2)) +
+  geom_bar(stat = 'identity', color='black') +
+  labs(x = "Type-2 of Pokemon", y = "Number of Pokemon", title  = "Number of Pokemon by Type-2") + 
+  coord_flip() + geom_text(aes(label = number), hjust = -1.0)
+```
+
+## 2)Scatter plot
+Pokemons with higher attack ratings are faster.
+```{r}
+ggplot(df, aes(Attack, Defense)) + geom_jitter(aes(col=Speed)) + 
+        scale_color_gradient(low="blue", high="darkorange") + 
+        ggtitle("Defense vs Attack wrt Speed")
+```
+
+### Correlation Matrix
+```{r}
+ggpairs(df, columns = c('Attack', 'Defense', 'HP', 'Sp..Atk', 'Sp..Def', 'Speed')) +
+         theme_bw() +labs(title = 'Correlation Matrix of Pokemon Stats')
+```
+
+
+## 3)Density Plot(Univariate analysis)
+```{r}
+density_hp =  ggplot(data=df, aes(HP)) + 
+              geom_density(col="white",fill="pink", alpha=0.8) + 
+              ggtitle("Density Plot of HP")
+
+density_speed = ggplot(data=df, aes(Speed)) + 
+                geom_density(col="white", fill="darkorchid", alpha=0.8) + 
+                ggtitle("Density Plot of Speed Characterstics")
+
+density_attack = ggplot(data=df, aes(Attack)) + 
+                 geom_density(col="white", fill="orange", alpha=0.7) + 
+                 ggtitle("Density Plot of Attack Characterstics")
+
+density_defense = ggplot(data=df, aes(Defense)) + 
+                  geom_density(col="white", fill="firebrick", alpha=0.7) + 
+                  ggtitle("Density Plot of Defense Characterstics")
+
+grid.arrange(density_hp, density_speed, density_attack, density_defense, ncol=2)
+```
+
+## 4)Box-Plot(Multi-variate Analysis)
+
+Score of Pokemon by generation
+```{r}
+## HP(Highest Power) --> Key
+## Speed --> Value
+
+df %>% gather(key, value, HP:Speed) %>% ggplot(aes(x = Generation, y = value, fill = as.factor(Generation))) +
+       geom_boxplot() + facet_grid(~key) + labs(x="Generation", y="Score", title="Various score based on Generation flag") 
+```
+
+Score of Pokemon by Legendary type
+```{r}
+## HP(Highest Power) --> Key
+## Speed --> Value
+df %>% gather(key, value, HP:Speed) %>% ggplot(aes(x=Legendary, y=value, fill=as.factor(Legendary))) +
+       geom_boxplot() + facet_grid(~key) + labs(x="Lengendry", y="Score", title="Various score based on Lengendry flag")
+```
+
+## 5) Pie-Chart(Multi-Variate Analysis)
+```{r}
+df1 = data.frame(unique(df$Type.1),aggregate(df,by=list(df$Type.1),FUN=median)["HP"])
+plot_ly(df1,labels=~unique.df.Type.1.,values =~HP,type ="pie")
+```
+
+

@@ -1,0 +1,213 @@
+---
+title: "19MID0020 24/1/22 Intro to GGplot"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+Importing the packages
+```{r}
+library(ggplot2)
+```
+
+```{r}
+df = msleep
+df
+```
+
+```{r}
+?df
+```
+
+```{r}
+head(df)
+```
+
+```{r}
+str(df)
+```
+```{r}
+cat("Number of Rows : ",nrow(df))
+cat("\nNumber of Columns : ",ncol(df))
+```
+
+Scatter Plot
+```{r}
+scatterplot = ggplot(data=df, aes(x=bodywt, y=sleep_total))+
+              geom_point()
+
+scatterplot
+```
+
+```{r}
+scatterplot = ggplot(data=df, aes(x=bodywt, y=sleep_total, col=vore)) + 
+             geom_point()
+
+scatterplot
+```
+
+```{r}
+scatterplot = ggplot(data=df, aes(x=log(bodywt), y=sleep_total, col=vore)) + geom_point()
+scatterplot
+```
+
+```{r}
+Scatterplot = scatterplot + geom_point(size=5)+
+              xlab("Log Body Weight") + 
+              ylab("Total Hours Sleep")+
+              ggtitle("Some Sleep Data")
+
+Scatterplot
+```
+
+
+```{r}
+scatterplot + scale_colour_brewer(palette="Set1")+
+              theme(plot.title=element_text(vjust=+2))+
+              scale_x_continuous(breaks=-5:10) # x-scale --> -5 to 10 (in-steps of 1)
+```
+
+
+```{r}
+scatterplot + scale_colour_brewer(palette="Set1")+
+              theme(plot.title=element_text(vjust=+2))+
+              scale_x_continuous(breaks=seq(-5, 10, 2)) # x-scale --> -5 to 10 (in-steps of 2)
+```
+
+## Strip Chart
+```{r}
+stripchart = ggplot(df, aes(vore, sleep_total))+
+             geom_point()
+
+stripchart
+```
+```{r}
+stripchart = ggplot(df,aes(vore,sleep_total,col=vore))+ 
+             geom_point(size=3,position="jitter")
+
+stripchart
+```
+
+```{r}
+stripchart = ggplot(msleep, aes(vore,sleep_total,col=vore))+ 
+             geom_jitter(position = position_jitter(width = 0.2),size=3)
+
+stripchart
+```
+
+```{r}
+setwd("/Users/prashanthsingaravelan/Desktop/github/winter_semester-2022/CSI3005 Advanced Data Visualization Techniques/lab exercises/24_1_22")
+df = read.table("Festival.dat", sep="\t", header=T)
+```
+
+```{r}
+head(df)
+```
+
+
+```{r}
+cat("Number of Rows : ",nrow(df))
+cat("\nNumber of Columns : ",ncol(df))
+```
+
+## Histogram
+```{r}
+Day1Histogram = ggplot(df, aes(day1))+
+                geom_histogram()
+
+Day1Histogram
+```
+```{r}
+Day1Histogram = ggplot(df, aes(day1))+ geom_histogram()
+Day1Histogram = Day1Histogram + geom_histogram(binwidth=0.3,color="black",fill="yellow")
+Day1Histogram = Day1Histogram + labs(x="Score", y="Counts") + ggtitle("Hygiene at Day 1")
+
+Day1Histogram
+```
+```{r}
+library(reshape2)
+```
+
+```{r}
+df.stack = melt(df, id = c("ticknumb","gender"))
+df.stack
+```
+```{r}
+colnames(df.stack)[3:4] = c("day","score")
+```
+
+```{r}
+Histogram.3days = ggplot(df.stack,aes(score)) + 
+                  geom_histogram(binwidth=0.4, color="black", fill="yellow") + 
+                  labs(x="Score", y="Counts") + 
+                  facet_grid(gender~day)
+
+Histogram.3days
+```
+
+## Stripchart
+```{r}
+Scatterplot = ggplot(df.stack,aes(gender,score))+geom_point() + facet_grid(~day)
+Scatterplot
+```
+
+
+```{r}
+Scatterplot = ggplot(df.stack, aes(gender, score, colour=gender))+
+              geom_point(position="jitter") + 
+              facet_grid(~day)
+
+Scatterplot
+```
+
+
+```{r}
+Scatterplot = ggplot(df.stack,aes(gender,score, colour=gender)) + 
+              geom_point(position="jitter") + 
+              facet_grid(~day)+
+              scale_colour_manual(values=c("darkorange", "darkorchid4"))
+
+Scatterplot + geom_boxplot(alpha=0, colour="black")
+```
+
+## BoxPlots
+```{r}
+Boxplot = ggplot(df.stack, aes(gender,score))+
+          geom_boxplot() + 
+          facet_grid(~day)
+
+Boxplot
+```
+
+
+```{r}
+Boxplot = ggplot(df.stack, aes(gender,score,fill=gender))+
+          geom_boxplot()+
+          stat_boxplot(geom="errorbar") + 
+          scale_fill_manual(values=c("turquoise4","darkgoldenrod2"))+
+          facet_grid(~day)
+
+Boxplot
+```
+
+
+```{r}
+Boxplot + scale_x_discrete(limits=c("Male","Female"))
+```
+
+## Violin/Bean Plot
+```{r}
+Violinplot = ggplot(df.stack, aes(gender,score)) + 
+            geom_violin()+facet_grid(~day)
+Violinplot
+```
+
+
+```{r}
+Violinplot = ggplot(df.stack, aes(gender,score))+
+             geom_violin(trim = FALSE, fill="black")+
+             facet_grid(~day)
+Violinplot
+```

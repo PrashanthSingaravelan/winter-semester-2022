@@ -1,0 +1,4 @@
+https://www.geeksforgeeks.org/types-of-environments-in-ai/
+https://www.javatpoint.com/agent-environment-in-ai
+https://levelup.gitconnected.com/minimax-algorithm-explanation-using-tic-tac-toe-game-22668694aa13
+

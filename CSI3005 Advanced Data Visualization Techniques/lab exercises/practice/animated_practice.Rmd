@@ -1,0 +1,55 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+data("iris")
+colnames(iris)
+```
+
+
+```{r}
+library(ggplot2)
+library(gganimate)
+library(gifski)
+p <- ggplot(iris,aes(x=Petal.Width,y=Sepal.Length,color = Species))+
+  geom_point()+
+  transition_states(Species)
+animate(p,renderer = gifski_renderer())
+```
+
+```{r}
+animate(p,renderer = gifski_renderer(),width = 400, height = 400)
+```
+
+```{r}
+ggplot(iris,aes(x=Petal.Width,y=Sepal.Length,color = Species))+
+  geom_point()+
+  transition_states(Species)+
+  ease_aes(y='bounce-in')
+```
+
+```{r}
+library(plotly)
+parts <- c("Beverages", "Vegetables","Diary","Fruits")
+Sales <- c(400,2000,3000,1000)
+df <- data.frame(parts,Sales)
+x <-plot_ly(df,type="pie",labels=~parts,values=~Sales,textinfo = 'label+percent', insidetextorientation = 'radial')
+x
+```
+
+```{r}
+plot_ly(labels=~parts,values=~Sales,textinfo='label+percent')%>% add_pie(hole=0.3)
+```
+
+```{r}
+plot_ly(z=~volcano,type = "surface")
+```
+
+
+```{r}
+library(igraph)
+g <- graph(edges = c("a"))
+plot(g)
+```
+

@@ -1,0 +1,162 @@
+---
+title: "Plotly Plots"
+output: html_notebook
+---
+
+```{r}
+library(plotly)
+library(RColorBrewer)
+library(ggplot2)
+```
+
+```{r}
+head(iris)
+```
+
+
+```{r}
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers')
+```
+
+
+```{r}
+## rgba --> red, green, blue, alpha
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', 
+        marker=list(size=10, color='rgba(255,170,190,.9)'))
+```
+
+
+```{r}
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', 
+        marker=list(
+            size=10, color='rgba(255,100,100,.9)',
+            line = list(color='rgba(200,0,0,0.9)',width=2)
+            )
+        )
+```
+
+```{r}
+---
+title: "Plotly Plots"
+output: html_notebook
+---
+
+```{r}
+library(plotly)
+```
+
+```{r}
+head(iris)
+```
+
+
+```{r}
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers')
+```
+
+
+```{r}
+## rgba --> red, green, blue, alpha
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', 
+        marker=list(size=10, color='rgba(255,170,190,.9)'))
+```
+
+
+```{r}
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', color = ~Species)
+```
+
+```{r}
+par(mar=c(3,4,1,1))
+display.brewer.all(
+)
+```
+```{r}
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', color=~Species, colors='Set1')
+```
+
+```{r}
+col = c("red", "blue", "green")
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', color=~Species, colors=col)
+```
+
+```{r}
+## Now virginica->red, setosa->blue, versicolor->green
+col = c("red", "blue", "green")
+col = setNames(col, c("virginica", "setosa", "versicolor"))
+plot_ly(data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', color=~Species, colors=col)
+```
+
+```{r}
+## Now virginica->red, setosa->blue, versicolor->green
+col = c("red", "blue", "green")
+col = setNames(col, c("virginica", "setosa", "versicolor"))
+plot_ly(
+        data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', 
+        color=~Species, colors=col, 
+        symbol=~Species, symbols=c('circle', 'x', 'pentagon')
+      )
+```
+
+```{r}
+col = c("red", "blue", "green")
+col = setNames(col, c("virginica", "setosa", "versicolor"))
+plot_ly(
+        data=iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', marker=list(size=10),
+        text=~paste("Sepal-Width : ",Sepal.Width,"Petal-Width : ",Petal.Width),
+        color=~Species, colors=col, 
+        symbol=~Species, symbols=c('circle', 'x', 'pentagon')
+      )
+```
+
+## Line Plot
+```{r}
+day = c(1:30)
+num = rnorm(n=30, mean=3)
+df = data.frame(day, num)
+
+head(df)
+```
+
+```{r}
+plot_ly(df, x=~day, y=~num, type='scatter')
+```
+
+```{r}
+plot_ly(df, x=~day, y=~num, type='scatter', mode='lines')
+```
+
+
+```{r}
+plot_ly(df, x=~day, y=~num, type='scatter', mode='lines+markers', line=list(color='red', width=2))
+```
+
+
+```{r}
+```
+
+## ggplot to plotly plot
+```{r}
+p = ggplot(iris, aes(x=Sepal.Length, y=Petal.Length)) + geom_point() ## ggplot
+ggplotly(p) ## plotly plot
+```
+
+## Bar-Graph
+```{r}
+fruits = c("apple", "banana", "orange")
+count_c = c(200,150,300)
+count_b = c(100,250,150)
+
+df1 = data.frame(fruits, count_c, count_b)
+head(df1)
+```
+
+```{r}
+plot_ly(df1, x=~fruits, y=~count_c, type='bar')
+```
+### using add_trace
+```{r}
+p = plot_ly(df1, x=~fruits, y=~count_c, type='bar', name='location-1')
+p%>%add_trace(y=count_b, name='location-2')
+```
+
