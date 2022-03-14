@@ -1,0 +1,165 @@
+---
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+# Prashanth.S 19MID0020
+## Univariate Analysis
+```{r}
+library(plotly)
+library(RColorBrewer)
+library(ggplot2)
+library(dplyr)
+library(plyr)
+```
+
+### 1) Summary Statistics --> Determines the value’s center and spread.
+### 2) Frequency Table    --> Determines how frequently various values occur.
+### 3) Charts --> Visual representation of the distribution of values.
+
+## Diamond Data-Set
+```{r}
+df1 = diamonds
+head(df1)
+```
+
+### PreProcessing
+```{r}
+cat("Number of instances  : ",nrow(df1))
+cat("\nNumber of attributes : ",ncol(df1))
+```
+
+```{r}
+str(df1)
+```
+
+```{r}
+summary(df1)
+```
+
+### Bar-Chart
+```{r}
+table(df1$cut)
+```
+
+```{r}
+ggplot(df1, aes(x=factor(cut),fill = factor(cut))) +
+        geom_bar(color='black') + 
+        labs(x = "Cut", y = "Count", title  = "Count of the quality of the Cut")
+```
+
+```{r}
+ggplot(df1, 
+       aes(x = factor(cut), y = ..count.. / sum(..count..),fill = factor(cut))) + 
+       geom_bar(color='black') +
+       labs(x = "Cut", y = "Percentage of Cuts", title  = "Percentage of the quality of the Cut") +
+       scale_y_continuous(labels = scales::percent)
+```
+
+### Pie-Chart
+```{r}
+
+```
+
+### Kernel Density Plot
+```{r}
+ggplot(df1, aes(x = price)) +
+       geom_density(fill = "indianred3") + 
+       labs(title = "Participants by price")
+```
+
+## MPG data-set
+```{r}
+df2 = mpg
+head(df2)
+```
+### PreProcessing
+
+```{r}
+cat("Number of instances  : ",nrow(df2))
+cat("\nNumber of attributes : ",ncol(df2))
+```
+
+```{r}
+str(df2)
+```
+
+```{r}
+summary(df2)
+```
+
+```{r}
+df2 %>%
+    summarize(variable = "cty",
+              q0.2 = quantile(cty, 0.2), ## 20% city values
+              q0.4 = quantile(cty, 0.4), ## 40% cty values
+              q0.6 = quantile(cty, 0.6), ## 60% cty values
+              q0.8 = quantile(cty, 0.8)) ## 80% cty values
+```
+
+```{r}
+df2 %>%
+    summarize(
+      variable = "cty", 
+      mean = mean(cty), 
+      variance = var(cty),
+      standard_deviation = sd(cty),
+      Inter_Quartile_Range = IQR(cty)
+)
+```
+
+```{r}
+df2 %>%
+    group_by(drv) %>%
+    summarize(mean_cty = mean(cty), Standard_Deviation_cty = sd(cty))
+```
+
+### Barchart
+```{r}
+ggplot(df2, 
+       aes(x = factor(cyl), y = ..count.. / sum(..count..),fill = factor(cyl))) + 
+       geom_bar(color='black') + 
+       labs(x = "Cylinders", y = "Percentage of Cylinders", title  = "Role of Number of Cylinders") +
+       scale_y_continuous(labels = scales::percent)
+```
+
+```{r}
+ggplot(df2, aes(factor(manufacturer),fill = factor(manufacturer))) +
+      geom_bar(color='black') +
+      labs(x = "Count", y = "Manufactures", title  = "Participation of Manufactures") + 
+      coord_flip()
+```
+
+### Kernel Density Plot
+```{r}
+ggplot(df2, aes(x = year)) +
+       geom_density(fill = "indianred3") + 
+       labs(title = "Participants by Year")
+```
+
+### bivariate analysis
+```{r}
+df2 %>%
+    ggplot(aes(cty)) +
+    geom_histogram(binwidth = 1.25, color = "black",fill = "grey") +
+    labs(
+        title = "Distribution of cty",
+         x = "city",
+         y = "Number of cars"
+    ) 
+```
+
+```{r}
+df2 %>%
+    ggplot(aes(drv,cty)) +
+    geom_boxplot() +
+    labs(title = "Distribution of cty relative to Driving Mode",
+         x = "Driving Mode",
+         y = "cty-value")
+```
+
+
+
+
