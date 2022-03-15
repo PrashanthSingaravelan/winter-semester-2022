@@ -7,6 +7,11 @@ output:
 ---
 # Prashanth.S 19MID0020
 ## Univariate Analysis
+### 1) Summary Statistics --> Determines the value’s center and spread.
+### 2) Frequency Table    --> Determines how frequently various values occur.
+### 3) Charts --> Visual representation of the distribution of values.
+
+## Loading the libraries
 ```{r}
 library(plotly)
 library(RColorBrewer)
@@ -14,10 +19,6 @@ library(ggplot2)
 library(dplyr)
 library(plyr)
 ```
-
-### 1) Summary Statistics --> Determines the value’s center and spread.
-### 2) Frequency Table    --> Determines how frequently various values occur.
-### 3) Charts --> Visual representation of the distribution of values.
 
 ## Diamond Data-Set
 ```{r}
@@ -32,11 +33,22 @@ cat("\nNumber of attributes : ",ncol(df1))
 ```
 
 ```{r}
-str(df1)
+## entire description of the data-set
+?diamonds
 ```
 
+
+```{r}
+str(df1)
+```
+## Summary Statistics
 ```{r}
 summary(df1)
+```
+## Frequency Table
+```{r}
+df_cut = data.frame(table(df1$cut))
+df_cut
 ```
 
 ### Bar-Chart
@@ -45,14 +57,21 @@ table(df1$cut)
 ```
 
 ```{r}
-ggplot(df1, aes(x=factor(cut),fill = factor(cut))) +
-        geom_bar(color='black') + 
-        labs(x = "Cut", y = "Count", title  = "Count of the quality of the Cut")
+## Normal Count of the cut
+ggplot(df1, 
+       aes(x=factor(cut),fill = factor(cut))) +
+       geom_bar(color='black') + 
+       labs(x = "Cut", y = "Count", title  = "Count of the quality of the Cut")
 ```
 
 ```{r}
+count(df1$cut)
+```
+
+```{r}
+## Percentage of the Count of the cut
 ggplot(df1, 
-       aes(x = factor(cut), y = ..count.. / sum(..count..),fill = factor(cut))) + 
+       aes(x = cut, y = ..count.. / sum(..count..),fill = factor(cut))) + 
        geom_bar(color='black') +
        labs(x = "Cut", y = "Percentage of Cuts", title  = "Percentage of the quality of the Cut") +
        scale_y_continuous(labels = scales::percent)

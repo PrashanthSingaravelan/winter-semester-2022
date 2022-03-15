@@ -1,0 +1,105 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(ggplot2)
+```
+
+```{r}
+gender_vector = c("Male", "Female", "Female", "Male", "Male")
+cat(class(gender_vector))
+```
+
+```{r}
+cat(levels(gender_vector))
+```
+
+### After factorizing 
+```{r}
+factor_gender_vector = factor(gender_vector)
+cat(class(factor_gender_vector))
+```
+
+```{r}
+print(levels(factor_gender_vector))
+```
+
+```{r}
+print(nlevels(factor_gender_vector))
+```
+
+
+## Nominal Categorical variable
+A categorical variable has several values but the order does not matter. For instance, male or female. Categorical variables in R does not have ordering.
+```{r}
+# Create a color vector
+color_vector = c('blue', 'red', 'green', 'white', 'black', 'yellow')
+
+# Convert the vector to factor
+factor_color = factor(color_vector)
+factor_color
+```
+
+## Ordinal Categorical variable
+Ordinal categorical variables do have a natural ordering. 
+We can specify the order, from the lowest to the highest with order = TRUE and highest to lowest with order = FALSE.
+```{r}
+# Create Ordinal categorical vector 
+day_vector = c('evening', 'morning', 'afternoon', 'midday', 'midnight', 'evening')
+
+# Convert `day_vector to a factor with ordered level
+factor_day = factor(day_vector, order = TRUE, levels =c('morning', 'midday', 'afternoon', 'evening', 'midnight'))
+```
+
+
+```{r}
+summary(factor_day)
+```
+
+
+```{r}
+?mtcars
+```
+
+```{r}
+mtcars$vs
+```
+
+```{r}
+factor(mtcars$vs)
+```
+
+
+```{r}
+ggplot(mtcars, aes(x=vs)) + geom_bar(color='black') 
+```
+```{r}
+ggplot(mtcars, aes(x=factor(vs))) + geom_bar(color='black') 
+```
+
+```{r}
+?mtcars
+```
+
+```{r}
+?ToothGrowth
+```
+
+
+```{r}
+```
+
+
+```{r}
+colnames(ToothGrowth)
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
