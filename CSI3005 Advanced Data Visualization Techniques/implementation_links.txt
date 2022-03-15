@@ -1,0 +1,9 @@
+
+https://rpubs.com/jcross/msleep
+
+
+Plotly plots
+scatterplot --> https://plotly.com/r/line-and-scatter/
+piechart --> https://plotly.com/r/pie-charts/
+barcharts --> https://plotly.com/ggplot2/bar-charts/
+density plots --> https://plotly.com/ggplot2/geom_density/
