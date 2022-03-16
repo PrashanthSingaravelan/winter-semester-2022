@@ -1,0 +1,94 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Importing the libraries
+```{r}
+library(ggplot2)
+library(plotly)
+```
+
+## records creation
+```{r}
+name    = c("Prashanth", "Sam", "Rohan", "Daniel", "Siraj", "Dhoni", "Yuvraj", "Rohith")
+age     = c(20, 15, 30, 40, 30, 25, 43, 37)
+weight  = c(57, 69, 75, 70, 83, 53, 83, 90)
+height  = c(177, 163, 163, 183, 164, 190, 179, 182)
+branch = c("Data Analytics", "Machine Learning Engineer", "Data Analytics", "Data Analytics", "Machine Learning Engineer",
+           "Business Intelligence Engineer", "Data warehousing Engineer", "Business Intelligence Engineer")
+address = c("Chennai", "Madurai", "Punjab", "Salem", "Madurai", "Punjab", "Chennai", "Salem")
+score   = c(80, 90, 75, 60, 80, 95, 99, 56)
+```
+
+## data-frame creation
+```{r}
+df = data.frame (row.names = name, age, weight, height, branch, address, score)
+head(df)
+```
+
+## Bar Plot
+```{r}
+bar_plot = ggplot(data=df, aes(x = branch, y = ..count.. / sum(..count..),fill = factor(branch))) + 
+           geom_bar(color='black') +
+           labs(y = "Percentage of Branches chosen", title  = "Percentage of the quality of the Branch") +
+           scale_y_continuous(labels = scales::percent) +
+           coord_flip()
+
+ggplotly(bar_plot)
+```
+
+
+## Histogram
+```{r}
+histogram_plot = ggplot(data=df, aes(x=weight)) + 
+                 geom_histogram(color = "black",fill = "grey") +
+                 labs(x = "Total Weight", y="Count", title="Count of Total Time asleep per day(h)") +
+                 scale_x_discrete(labels =labs)
+
+ggplotly(histogram_plot)
+```
+
+## Kernel Density Plot
+```{r}
+density_plot = ggplot(data=df, aes(x = height)) +
+               geom_density(fill = "indianred3") + 
+               labs(x = "height", y="density", title="Kernal density of the height")
+
+ggplotly(density_plot)
+```
+
+## Scatter plot
+```{r}
+t <- list(family = "Helvetica",size = 14,color = "blue")
+t1 <- list(family = "Times New Roman",color = "red")
+t2 <- list(family = "Courier New",size = 14,color = "green")
+t3 <- list(family = 'Arial')
+```
+
+```{r}
+fig_sp = plot_ly(data = df, x=height, y=weight, color = ~name,
+                  type = 'scatter', mode = 'markers')%>%
+                          layout(title= list(text = "Body weight vs Brain weight",font = t1), font=t, 
+                          legend = list(title=list(text='Animals',font = t2)), 
+                          xaxis  = list(title = list(text ='Brain Weight', font = t3)),
+                          yaxis  = list(title = list(text ='Body Weight', font = t3)),
+                          plot_bgcolor='#e5ecf6')
+
+fig_sp
+```
+
+## Pie-Chart
+```{r}
+df_order = data.frame(table(df$address))
+print(df_order)
+```
+
+```{r}
+fig_order = plot_ly(type='pie', labels=df_order$Var1, values=df_order$Freq, 
+                    textinfo='label+percent',insidetextorientation='radial')
+fig_order
+```
+
