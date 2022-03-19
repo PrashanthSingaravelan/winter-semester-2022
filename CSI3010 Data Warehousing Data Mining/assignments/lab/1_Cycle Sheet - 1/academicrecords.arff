@@ -1,0 +1,20 @@
+@relation academicrecords
+
+@attribute Coursecode {CSI2006, CSI3002, CSI3003,CSI3005,CSI3010,CSI3017,HUM1002,ESP1001,STS3022}
+
+@attribute CAT1 numeric
+@attribute CAT2 numeric
+@attribute FAT Integer
+@attribute GRADE {S,A,B,C,D,F}
+
+@data
+CSI2006, 80, 70, 90, A
+CSI3002, 60, 50, 89, C
+CSI3003, 90, 20, 54, F
+CSI3005, 80, 65, 70, C
+CSI3010, 89, 93, 70, B
+CSI3017, 40, 50, 52, F
+HUM1002, 80, 85, 92, S
+ESP1001, 60, 90, 89, A
+STS3022, 70, 70, 85, B
+

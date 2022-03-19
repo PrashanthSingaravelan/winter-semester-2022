@@ -1,0 +1,113 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+## Importing the necessary libraries
+```{r}
+library(ggplot2)
+library(ggthemes)
+library(lubridate)
+library(dplyr)
+library(tidyr)
+library(tidyverse) # metapackage of all tidyverse packages
+library(DT)
+library(scales)
+```
+## Importing the data-set
+```{r}
+apr_data <- read.csv("Uber-dataset//uber-raw-data-apr14.csv")
+may_data <- read.csv("Uber-dataset//uber-raw-data-may14.csv")
+jun_data <- read.csv("Uber-dataset//uber-raw-data-jun14.csv")
+jul_data <- read.csv("Uber-dataset//uber-raw-data-jul14.csv")
+aug_data <- read.csv("Uber-dataset//uber-raw-data-aug14.csv")
+sep_data <- read.csv("Uber-dataset//uber-raw-data-sep14.csv")
+
+data_2014 <- rbind(apr_data,may_data, jun_data, jul_data, aug_data, sep_data)
+
+head(data_2014)
+```
+
+## Data PreProcessing
+### DataTime Formating
+```{r}
+data_2014$Date.Time = as.POSIXct(data_2014$Date.Time, format = "%m/%d/%Y %H:%M:%S")
+
+## creating a time attribute
+data_2014$Time      = format(as.POSIXct(data_2014$Date.Time, format = "%m/%d/%Y %H:%M:%S"), format="%H:%M:%S")
+data_2014$Date.Time = ymd_hms(data_2014$Date.Time)
+
+head(data_2014)
+```
+
+Lets see the Data.Time feature 
+
+```{r}
+data_2014$day   = factor(day(data_2014$Date.Time))
+data_2014$month = factor(month(data_2014$Date.Time, label = TRUE))
+data_2014$year  = factor(year(data_2014$Date.Time))
+data_2014$dayofweek = factor(wday(data_2014$Date.Time, label = TRUE))
+data_2014$hour <- factor(hour(hms(data_2014$Time)))
+data_2014$minute <- factor(minute(hms(data_2014$Time)))
+data_2014$second <- factor(second(hms(data_2014$Time)))
+
+head(data_2014)
+```
+
+
+```{r}
+print(paste("Attributes of the data-set"))
+colnames(data_2014)
+```
+
+
+```{r}
+str(data_2014)
+```
+
+## Exploratory Data Analysis
+Plotting the trips by the hours in a day
+```{r}
+## In a particular hour, how many trips have covered
+hour_data <- data_2014 %>%
+                group_by(hour) %>%
+                    dplyr::summarize(Total = n()) 
+
+datatable(hour_data)
+```
+We observe that the number of trips are higher in the evening around 5:00 and 6:00 PM with a jump of 60,000 trips which is a hud jump.
+The peak is maintained between 6 PM to 8PM and gradually drops at 9PM.
+
+## 1) ggplot2
+
+```{r}
+## In a particular month, how many trips have covered [time by time]
+month_hour <- data_2014 %>%
+          group_by(month, hour) %>%
+             dplyr::summarize(Total = n())
+
+datatable(month_hour)
+```
+
+### Bar Plot
+```{r}
+ggplot(data=month_hour, aes(x=hour, y=Total, fill = month)) + geom_bar( stat = "identity") +
+       ggtitle("Trips by Hour and Month") + scale_y_continuous(labels = comma)
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
