@@ -90,19 +90,23 @@ This is shows a clear linear relation-ship between Body weight and Brain weight
 ## Barplot
 ```{r}
 # Define labels for the bars
-labs = c('herbi'='Herbivore',
-         'carni'='Carnivore',
-         'omni'='Omnivore',
-         'insecti'='Insectivore')
+new_name = c('herbi'='Herbivore',
+             'carni'='Carnivore',
+             'omni'='Omnivore',
+             'insecti'='Insectivore')
+```
 
+```{r}
 bar_plot = ggplot(data=msleep, aes(x = vore, y = ..count.. / sum(..count..),fill = factor(vore))) + 
            geom_bar(color='black') +
            labs(x = "Vore", y = "Percentage of Vore", title  = "Percentage of the quality of the Vore") +
-           scale_x_discrete(labels =labs)
+           scale_x_discrete(labels = new_name)
            scale_y_continuous(labels = scales::percent)
 
 ggplotly(bar_plot)
 ```
+
+
 ## Histogram
 ```{r}
 histogram_plot = ggplot(data=msleep, aes(x = sleep_total)) + 

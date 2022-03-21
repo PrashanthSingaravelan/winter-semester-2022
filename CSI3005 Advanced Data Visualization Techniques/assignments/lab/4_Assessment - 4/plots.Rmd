@@ -1,0 +1,139 @@
+---
+title: "19MID0020 Plots"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2) ## msleep is included in ggplot-2
+library(plotly)
+library(data.table)
+```
+
+```{r}
+df = msleep
+```
+
+
+```{r}
+print(paste("Attributes of the data-set"))
+colnames(df)
+```
+
+
+```{r}
+str(df)
+```
+
+## 1) Scatter Plot
+```{r}
+scatter_plot = plot_ly(data=msleep, x=~(-log10(bodywt)), y=~(-log10(brainwt)),  color = ~name,
+                       type='scatter',mode='markers') %>%
+                       layout(
+                          title= list(text = "<b>Body weight vs Brain weight"),
+                          legend = list(title = list(text ='<b>Animals')), 
+                          xaxis  = list(title = list(text ='<b>Brain Weight')),
+                          yaxis  = list(title = list(text ='<b>Body Weight')))
+scatter_plot
+```
+## 2) Barchart
+
+```{r}
+head(df)
+```
+
+### 2) a) Regular Barchart
+```{r}
+r_barchart = plot_ly(data=df, y=~order, type="bar") %>%
+                  layout(
+                          title= list(text = "<b>Total sleep time of Animals based on Vore"),
+                          legend = list(title = list(text= '<b>Vore')),
+                          xaxis  = list(title = list(text ='<b>sleep total', tickformat = "%")),
+                          yaxis  = list(title = list(text ='<b>Count')))
+r_barchart
+```
+
+### 2) b) Stacked Barchart
+```{r}
+r_stack_barchart = data.table::melt(df, id.vars='vore') %>%
+plot_ly(x = ~vore, y = ~value, type = 'bar', name = ~variable, color = ~variable) %>%
+      layout(
+          title= list(text = "<b>Total Distribution based on Vore"),
+          legend = list(title = list(text= '<b>Aniamal Feature')),
+          xaxis  = list(title = list(text ='<b>Vores')),
+          yaxis = list(title='Count', text='<b>Count'), barmode = 'stack')
+r_stack_barchart
+```
+### 2) c) Grouped Barchart
+```{r}
+r_group_barchart = data.table::melt(df, id.vars='vore') %>%
+plot_ly(x = ~vore, y = ~value, type = 'bar', name = ~variable, color = ~variable) %>%
+      layout(
+          title= list(text = "<b>Total Distribution based on Vore"),
+          legend = list(title = list(text= '<b>Aniamal Feature')),
+          xaxis  = list(title = list(text ='<b>Vores')),
+          yaxis = list(title='Count', text='<b>Count'), barmode = 'group')
+r_group_barchart
+```
+
+## 3) Histogram
+```{r}
+# Define labels for the bars
+labs = c('herbi'='Herbivore',
+         'carni'='Carnivore',
+         'omni'='Omnivore',
+         'insecti'='Insectivore')
+```
+
+```{r}
+histogram_plot = plot_ly(data = df, x = ~sleep_total, name=~vore,type="histogram") %>%
+                  layout(
+                          title= list(text = "<b>Total sleep time of Animals based on Vore"),
+                          legend = list(title = list(text= '<b>Vore')),
+                          xaxis  = list(title = list(text ='<b>sleep total')),
+                          yaxis  = list(title = list(text ='<b>Count')))
+histogram_plot
+```
+
+## 4)Pie-Chart
+```{r}
+df_order = data.frame(table(msleep$order))
+df_order
+```
+
+```{r}
+pie_chart = plot_ly(type='pie', labels=df_order$Var1, values=df_order$Freq, 
+                    textinfo='label+percent',insidetextorientation='radial') %>%
+                    layout(
+                          title= list(text = "<b>Order Distributions"),
+                          legend = list(title = list(text= '<b>Order')))
+
+pie_chart
+```
+
+## 5) Donut Chart / Open Pie-Chart
+```{r}
+df_vore = data.frame(table(msleep$vore))
+df_vore
+```
+
+```{r}
+donut_chart = plot_ly(labels=df_vore$Var1, values=df_vore$Freq, 
+                    textinfo='label+percent') %>%
+                    add_pie(hole = 0.6) %>%
+                    layout(
+                          title= list(text = "<b>Order Distributions"),
+                          legend = list(title = list(text= '<b>Order')))
+
+donut_chart 
+```
+
+## 6) Box Plot
+```{r}
+box_plot=plot_ly(data=msleep, y=~sleep_total, color=~vore, type='box') %>%
+          layout(
+                title= list(text = "<b>Total sleep time Distribution in Vore Basis"),
+                legend = list(title = list(text= '<b>Vore')),
+                xaxis  = list(title = list(text ='<b>Vore')),
+                yaxis  = list(title = list(text ='<b>Sleep Total Distribution')))
+box_plot
+```
