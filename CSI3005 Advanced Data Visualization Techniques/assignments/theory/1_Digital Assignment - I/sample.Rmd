@@ -1,0 +1,100 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Importing the libraries
+```{r}
+library(tidyverse)
+library(plotly)
+```
+
+## Importing the data-set
+```{r}
+# National Parks in California
+ca = read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/ca.csv") 
+
+head(ca)
+```
+
+```{r}
+# Acadia National Park
+acadia <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/acadia.csv")
+
+head(acadia)
+```
+
+```{r}
+
+# Southeast US National Parks
+se <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/se.csv")
+
+head(se)
+```
+
+```{r}
+# 2016 Visitation for all Pacific West National Parks
+visit_16 <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/visit_16.csv")
+
+head(visit_16)
+```
+
+```{r}
+# All Nationally designated sites in Massachusetts
+mass <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/mass.csv")
+
+head(mass)
+```
+
+## ggplot
+```{r}
+scatter_plot = plot_ly(data=ca, x=~year, y=~visitors,color = ~park_name, type='scatter',mode='markers') %>%
+                       layout(
+                          title= list(text = "<b>Body weight vs Brain weight"),
+                          legend = list(title = list(text ='<b>Animals')), 
+                          xaxis  = list(title = list(text ='<b>Brain Weight')),
+                          yaxis  = list(title = list(text ='<b>Body Weight')))
+scatter_plot
+```
+
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```

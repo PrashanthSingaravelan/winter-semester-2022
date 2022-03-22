@@ -1,0 +1,69 @@
+---
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+# S.THARUN-19MID0031
+
+```{r}
+options(warn=-1)
+library(plotly)
+library(datasets)
+```
+
+### 1. Scatter plot
+
+```{r}
+plot_ly(data=diamonds,x=~depth,y=~price,mode="markers",
+ color=~cut, colors ='Set1')%>%layout(title="Price Vs Depth")
+```
+
+### 2a) Regular Barplot
+
+```{r}
+plot_ly(data=diamonds,x=~cut,y=~price,type="bar",color=~cut)%>%
+  layout(title="Price Vs Cut")
+```
+
+### 2b) Stacked Barchart
+
+```{r}
+plot_ly(data=diamonds,x=~cut,y=~price,name=~color,color=~color,type="bar") %>% layout(barmode="stack")%>%layout(title="Price Vs Cut Vs color")
+```
+
+### 2c) Grouped Barchart
+
+```{r}
+plot_ly(data=diamonds,x=~cut,y=~price,name=~color,color=~color,
+        colors ='Set2',type="bar") %>% 
+  layout(barmode="group",title="Price Vs Cut Vs color")
+```
+
+### Histogram
+
+```{r}
+plot_ly(data=diamonds,x=~cut,type="histogram",color=~cut,colors="Set3")%>% 
+  layout(title="Attribute X")
+```
+
+### Pie chart
+
+```{r}
+plot_ly(data=diamonds,labels=~cut,values=~price,type="pie")%>% 
+  layout(title="Price Vs Cut")
+```
+
+### Donut chart
+
+```{r}
+plot_ly(data=diamonds,labels=~cut,values=~price)%>%add_pie(hole=0.6)%>% 
+  layout(title="Price Vs Cut")
+```
+
+### Boxplot
+
+```{r}
+plot_ly(data=diamonds,x=~cut,y=~price,type="box",color=~cut)%>% 
+  layout(title="Price Vs Cut")
+```
