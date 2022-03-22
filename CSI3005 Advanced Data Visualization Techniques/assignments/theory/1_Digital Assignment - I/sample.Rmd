@@ -46,7 +46,8 @@ mass <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-less
 head(mass)
 ```
 
-## ggplot
+## Plot-2 --> ggplot
+### Scatter plot
 ```{r}
 scatter_plot = plot_ly(data=ca, x=~year, y=~visitors,color = ~park_name, type='scatter',mode='markers') %>%
                        layout(
@@ -57,17 +58,58 @@ scatter_plot = plot_ly(data=ca, x=~year, y=~visitors,color = ~park_name, type='s
 scatter_plot
 ```
 
-
+### Barchart
 ```{r}
+r_group_barchart = data.table::melt(ca, id.vars='park_name') %>%
+plot_ly(x = ~park_name, y = ~value, type = 'bar', name = ~variable, color = ~variable) %>%
+      layout(
+          title= list(text = "<b>Total Distribution based on Vore"),
+          legend = list(title = list(text= '<b>Aniamal Feature')),
+          xaxis  = list(title = list(text ='<b>Vores')),
+          yaxis = list(title='Count', text='<b>Count'), barmode = 'group')
+r_group_barchart
+```
+### pie-chart
+```{r}
+df_order = data.frame(table(ca$park_name))
+df_order
 ```
 
 ```{r}
+pie_chart = plot_ly(type='pie', labels=df_order$Var1, values=df_order$Freq, 
+                    textinfo='label+percent',insidetextorientation='radial') %>%
+                    layout(
+                          title= list(text = "<b>Order Distributions"),
+                          legend = list(title = list(text= '<b>Order')))
+
+pie_chart
 ```
 
 ```{r}
+histogram_plot = plot_ly(data = ca, x = ~(log(visitors)), name=~code,type="histogram") %>%
+                  layout(
+                          title= list(text = "<b>Total sleep time of Animals based on Vore"),
+                          legend = list(title = list(text= '<b>Vore')),
+                          xaxis  = list(title = list(text ='<b>Visitors')),
+                          yaxis  = list(title = list(text ='<b>Count')))
+histogram_plot
+```
+
+### Donut Chart / Open Pie-Chart
+```{r}
+df_vore = data.frame(table(ca$code))
+df_vore
 ```
 
 ```{r}
+donut_chart = plot_ly(labels=df_vore$Var1, values=df_vore$Freq, 
+                    textinfo='label+percent') %>%
+                    add_pie(hole = 0.6) %>%
+                    layout(
+                          title= list(text = "<b>Order Distributions"),
+                          legend = list(title = list(text= '<b>Order')))
+
+donut_chart
 ```
 
 ```{r}
