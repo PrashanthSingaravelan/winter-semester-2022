@@ -7,6 +7,8 @@ output: html_notebook
 ```{r}
 library(tidyverse)
 library(plotly)
+
+require(devtools)
 ```
 
 ## Importing the data-set
@@ -17,44 +19,69 @@ ca = read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-
 head(ca)
 ```
 
+## Analysing the data-type of the data
 ```{r}
-# Acadia National Park
-acadia <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/acadia.csv")
-
-head(acadia)
+colnames(ca)
 ```
 
 ```{r}
-
-# Southeast US National Parks
-se <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/se.csv")
-
-head(se)
+str(ca)
 ```
+
+## Plot-1 --> ggplot2
+### Bar Plot
+```{r}
+labs = c(
+         'CHIS'='Channel Islands National Park',
+         'DEVA'='Death Valley National Park',
+         'JOTR'='Joshua Tree National Park',
+         'KICA'='Kings Canyon National Park',
+         'LAVO'='Lassen Volcanic National Park',
+         'YOSE'='Yosemite National Park',
+         'SEQU'='Sequoia National Park',
+         'REDW'='Redwood National Park',
+         'PINN'='Pinnacles National Park'
+         )
+```
+
 
 ```{r}
-# 2016 Visitation for all Pacific West National Parks
-visit_16 <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/visit_16.csv")
-
-head(visit_16)
+bar_plot = ggplot(data=ca, aes(x = code, y = ..count.. / sum(..count..),fill = factor(code))) +
+           geom_bar(color='black') + 
+           labs(x = "National Parks", y = "Percentage of National Parks in the data-set", 
+                title = "Occurence of the National Parks in the data-set") +
+  
+           scale_x_discrete(labels =labs)
+           scale_y_continuous(labels = scales::percent)
+           
+bar_plot + coord_flip()
 ```
 
+### Kernel Density Plot
 ```{r}
-# All Nationally designated sites in Massachusetts
-mass <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/mass.csv")
-
-head(mass)
+density_plot = ggplot(data=ca, aes(x =log10(visitors))) +
+                geom_density(fill = "indianred3") +
+                labs(x = "brain weight", y="density", title="Kernal density of the brain weight")
+density_plot       
 ```
-
-## Plot-2 --> ggplot
+## Plot-2 --> plotly
 ### Scatter plot
+
+```{r}
+t <- list(family = "Helvetica",size = 14,color = "blue")
+t1 <- list(family = "Times New Roman",color = "red")
+t2 <- list(family = "Courier New",size = 14,color = "green")
+t3 <- list(family = 'Arial')
+```
+
 ```{r}
 scatter_plot = plot_ly(data=ca, x=~year, y=~visitors,color = ~park_name, type='scatter',mode='markers') %>%
                        layout(
                           title= list(text = "<b>Body weight vs Brain weight"),
                           legend = list(title = list(text ='<b>Animals')), 
                           xaxis  = list(title = list(text ='<b>Brain Weight')),
-                          yaxis  = list(title = list(text ='<b>Body Weight')))
+                          yaxis  = list(title = list(text ='<b>Body Weight')),
+                          plot_bgcolor='#e5ecf6')
 scatter_plot
 ```
 
@@ -69,7 +96,8 @@ plot_ly(x = ~park_name, y = ~value, type = 'bar', name = ~variable, color = ~var
           yaxis = list(title='Count', text='<b>Count'), barmode = 'group')
 r_group_barchart
 ```
-### pie-chart
+
+### Pie-chart
 ```{r}
 df_order = data.frame(table(ca$park_name))
 df_order
@@ -85,6 +113,7 @@ pie_chart = plot_ly(type='pie', labels=df_order$Var1, values=df_order$Freq,
 pie_chart
 ```
 
+### Histogram Plots
 ```{r}
 histogram_plot = plot_ly(data = ca, x = ~(log(visitors)), name=~code,type="histogram") %>%
                   layout(
@@ -134,31 +163,66 @@ d
 ```
 
 ```{r}
-line_plot = ggplot(d, aes(x=year, y=visitors, group=code, color=code)) + 
-                   geom_line() + geom_point() + 
-                   transition_reveal(year)
+#line_plot = ggplot(d, aes(x=year, y=visitors, group=code, color=code)) + 
+#                   geom_line() + geom_point() + 
+#                   transition_reveal(year)
 
-animate(line_plot, width=300, height=300, renderer = gifski_renderer())
+#animate(line_plot, width=300, height=300, renderer = gifski_renderer())
 ```
 Visitors started to visit Channel Islands National Park in 1960's (latest among) has very low visitors till date.
 Joshua Tree National Park has a continuous growth of visitors without a big drop.
 Death Valley National Park has a continuous growth of visitors in 2010's and a gradual pick-up.
+
 ```{r}
+library(dplyr)
 ```
 
 ```{r}
+state_map = map_data('state')
+head(state_map)
 ```
 
 ```{r}
+data = state.x77
+data = as.data.frame(data)
+data$region = tolower(rownames(data))
+head(data)
 ```
 
 ```{r}
+data_join = left_join(state_map, data, by='region')
+head(data_join)
 ```
 
-
 ```{r}
+ggplot(data=data_join) + 
+       geom_ploygon(aes(x=long, y=lat), group=group, color='white', fill=population)
 ```
 
+```{r}
+
+```
 
 ```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
 ```
