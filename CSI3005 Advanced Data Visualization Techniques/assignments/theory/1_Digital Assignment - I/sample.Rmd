@@ -195,8 +195,10 @@ head(data_join)
 ```
 
 ```{r}
-ggplot(data=data_join) + 
-       geom_ploygon(aes(x=long, y=lat), group=group, color='white', fill=population)
+ggplot(data=data_join, aes(x=long, y=lat, group=group),
+       color='white', fill=population) + 
+       geom_polygon() + 
+       scale_fill_viridis_d(option='A')
 ```
 
 ```{r}

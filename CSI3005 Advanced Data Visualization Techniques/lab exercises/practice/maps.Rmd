@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+state_map = map_data('state')
+head(state_map)
+```
+
+```{r}
+data = state.x77
+data = as.data.frame(data)
+data$region = tolower(rownames(data))
+head(data)
+```
+
+```{r}
+data_join = left_join(state_map, data, by='region')
+head(data_join)
+```
+
+```{r}
+ggplot(data=data_join, aes(x=long, y=lat, group=group),
+       color='white', fill=population) + 
+       geom_polygon() + 
+       scale_fill_viridis_d(option='A')
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
