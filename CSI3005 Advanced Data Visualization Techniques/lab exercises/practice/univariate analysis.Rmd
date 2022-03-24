@@ -169,6 +169,10 @@ df2 %>%
          y = "Number of cars"
     ) 
 ```
+```{r}
+df2$cty
+```
+
 
 ```{r}
 df2 %>%

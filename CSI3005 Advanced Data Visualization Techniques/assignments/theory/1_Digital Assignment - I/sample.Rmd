@@ -210,7 +210,8 @@ ggplot(data=data_join, aes(x=long, y=lat, group=group),
 ```
 
 ```{r}
-
+df = read.csv('zomato.csv')
+head(df)
 ```
 
 ```{r}
