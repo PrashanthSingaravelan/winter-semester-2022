@@ -1,7 +1,19 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
+
+Advanced Data Visualization Theory DA-1
+Prashanth.S 
+19MID0020
+
+Data-sets used 
+data-set1 : https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/ca.csv
+
+dat-set 2: https://www.kaggle.com/code/adhok93/zomato-eda-in-r/data?select=zomato.csv
+
 
 ## Importing the libraries
 ```{r}
@@ -10,6 +22,7 @@ library(plotly)
 
 require(devtools)
 ```
+## US National Parks data-set
 
 ## Importing the data-set
 ```{r}
@@ -56,12 +69,13 @@ bar_plot = ggplot(data=ca, aes(x = code, y = ..count.. / sum(..count..),fill = f
            
 bar_plot + coord_flip()
 ```
+Yosemite National Parks and Sequoia National Park occurs more often in the data-set
 
 ### Kernel Density Plot
 ```{r}
 density_plot = ggplot(data=ca, aes(x =log10(visitors))) +
                 geom_density(fill = "indianred3") +
-                labs(x = "brain weight", y="density", title="Kernal density of the brain weight")
+                labs(x = "Number of visitors", y="density", title="Kernal density of Visitors")
 density_plot       
 ```
 ## Plot-2 --> plotly
@@ -77,25 +91,27 @@ t3 <- list(family = 'Arial')
 ```{r}
 scatter_plot = plot_ly(data=ca, x=~year, y=~visitors,color = ~park_name, type='scatter',mode='markers') %>%
                        layout(
-                          title= list(text = "<b>Body weight vs Brain weight"),
-                          legend = list(title = list(text ='<b>Animals')), 
-                          xaxis  = list(title = list(text ='<b>Brain Weight')),
-                          yaxis  = list(title = list(text ='<b>Body Weight')),
+                          title= list(text = "<b>Year and Visitors"),
+                          legend = list(title = list(text ='<b>National Parks')), 
+                          xaxis  = list(title = list(text ='<b>Year')),
+                          yaxis  = list(title = list(text ='<b>Visitors')),
                           plot_bgcolor='#e5ecf6')
 scatter_plot
 ```
+Yosemite National Park secures a more number of visitors than any-other national parks.
 
 ### Barchart
 ```{r}
 r_group_barchart = data.table::melt(ca, id.vars='park_name') %>%
 plot_ly(x = ~park_name, y = ~value, type = 'bar', name = ~variable, color = ~variable) %>%
       layout(
-          title= list(text = "<b>Total Distribution based on Vore"),
-          legend = list(title = list(text= '<b>Aniamal Feature')),
-          xaxis  = list(title = list(text ='<b>Vores')),
+          title= list(text = "<b>Total Distribution based on the Data-Set"),
+          legend = list(title = list(text= '<b>Attribute')),
+          xaxis  = list(title = list(text ='<b>Parks')),
           yaxis = list(title='Count', text='<b>Count'), barmode = 'group')
 r_group_barchart
 ```
+Kings Canyon National Park secures the top in terms of region, state, national park.
 
 ### Pie-chart
 ```{r}
@@ -124,6 +140,8 @@ histogram_plot = plot_ly(data = ca, x = ~(log(visitors)), name=~code,type="histo
 histogram_plot
 ```
 
+SEQU and LAVO national parks has more number of visitors
+
 ### Donut Chart / Open Pie-Chart
 ```{r}
 df_vore = data.frame(table(ca$code))
@@ -141,6 +159,76 @@ donut_chart = plot_ly(labels=df_vore$Var1, values=df_vore$Freq,
 donut_chart
 ```
 
+SEQU, YOSE and KICA national parks has more number of visitors with respect to pie-chart.
+
+## Zomato data-set
+
+## Importing the data-set
+```{r}
+library(dplyr)
+```
+
+## Importing the data-set
+```{r}
+df = read.csv('zomato.csv')
+head(df)
+```
+
+## Analysing the data-type of the data
+```{r}
+names(df)
+```
+
+```{r}
+str(df)
+```
+
+```{r}
+bar_plot = ggplot(data=df, aes(x = `Rating.color`, y = ..count.. / sum(..count..),fill = factor(`Rating.color`))) +
+           geom_bar(color='black') + 
+           labs(x = "National Parks", y = "Percentage of National Parks in the data-set", 
+                title = "Occurence of the National Parks in the data-set") +
+  
+           scale_y_continuous(labels = scales::percent)
+           
+bar_plot + coord_flip()
+```
+
+```{r}
+df %>%
+  filter(Country.Code == 1) %>%
+  select(Restaurant.ID) %>%
+  unique() %>%
+  nrow()
+```
+There are 8652 restaurants operating in India
+
+```{r}
+df %>% filter(Country.Code == 1) %>% select(Restaurant.ID,City) %>% unique() %>% group_by(City) %>% summarise(n=n()) %>%
+  ggplot(aes(x=reorder(`City`,n),y=n))+ geom_bar(stat = 'identity',fill='#cb202d') +
+  coord_flip() +
+  theme(panel.background = element_blank(),
+        strip.background = element_blank(),
+        axis.title = element_text(color = '#2d2d2d'),
+        strip.text.x = element_text(color='#2d2d2d',face='bold',size=10),
+        plot.title = element_text(hjust=0.5,face='bold',size=15))+
+        labs(x='City',y='Number of Restaurants',title="Number of Restaurants by City")
+```
+
+There are more restaurants in Delhi which operates with Zomato
+
+```{r}
+df_india = df %>% filter(Country.Code == 1 & City == 'Agra')
+head(df_india)
+```
+
+```{r}
+ggplot(data=df_india, aes(x=Longitude, y=Latitude),
+       color='white') + 
+       geom_polygon() + 
+       scale_fill_viridis_d(option='A')
+```
+
 ## Plot-4 --> gganimate
 ```{r}
 library(gganimate)
@@ -149,9 +237,10 @@ library(gifski)
 
 ### Animate --> Scatter Plot
 ```{r}
-#scatter_plot_animate = ggplot(data=ca, aes(year, visitors)) + geom_point() +                
-#                       transition_states(park_name)
-#animate(scatter_plot_animate, renderer = gifski_renderer())
+scatter_plot_animate = ggplot(data=ca, aes(year, visitors)) + geom_point() +                
+                       transition_states(park_name)
+
+animate(scatter_plot_animate, renderer = gifski_renderer())
 ```
 
 ### Animate --> Line Plot
@@ -163,69 +252,13 @@ d
 ```
 
 ```{r}
-#line_plot = ggplot(d, aes(x=year, y=visitors, group=code, color=code)) + 
-#                   geom_line() + geom_point() + 
-#                   transition_reveal(year)
+line_plot = ggplot(d, aes(x=year, y=visitors, group=code, color=code)) + 
+                   geom_line() + geom_point() + 
+                   transition_reveal(year)
 
-#animate(line_plot, width=300, height=300, renderer = gifski_renderer())
+animate(line_plot, width=300, height=300, renderer = gifski_renderer())
 ```
+
 Visitors started to visit Channel Islands National Park in 1960's (latest among) has very low visitors till date.
 Joshua Tree National Park has a continuous growth of visitors without a big drop.
 Death Valley National Park has a continuous growth of visitors in 2010's and a gradual pick-up.
-
-```{r}
-library(dplyr)
-```
-
-```{r}
-state_map = map_data('state')
-head(state_map)
-```
-
-```{r}
-data = state.x77
-data = as.data.frame(data)
-data$region = tolower(rownames(data))
-head(data)
-```
-
-```{r}
-data_join = left_join(state_map, data, by='region')
-head(data_join)
-```
-
-```{r}
-ggplot(data=data_join, aes(x=long, y=lat, group=group),
-       color='white', fill=population) + 
-       geom_polygon() + 
-       scale_fill_viridis_d(option='A')
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-df = read.csv('zomato.csv')
-head(df)
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
