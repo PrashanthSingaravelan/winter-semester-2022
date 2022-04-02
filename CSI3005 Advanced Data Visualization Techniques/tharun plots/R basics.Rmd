@@ -1,0 +1,79 @@
+# S.PRASHANTH-19MID0020
+
+---
+title: "R Notebook"
+Date: 10-01-2022
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+allom <- read.csv("df_Allometry.csv")
+head(allom)
+```
+
+1.  Create a new column ratio of height
+
+```{r}
+allom$ratio = with(allom,height/diameter)
+head(allom)
+```
+
+2.  Rename column name of 4th Column
+
+```{r}
+names(allom)[4] = "lfarea"
+head(allom)
+```
+
+3.  Select the values \>3 and \<15
+
+```{r}
+n1 <- c(1,5,3,86,4,75,24,73,24,15,8,6)
+n1[n1>3 & n1<15]
+```
+
+4.  Select the rows which have a leaf area \>100 and branchmass\>500
+
+```{r}
+allom[allom$lfarea>100 & allom$branchmass>500,]
+subset(allom,lfarea>100 & branchmass>500)
+```
+
+5.  Read the rain.csv file
+
+```{r}
+rain = read.csv("df_rain.csv")
+head(rain)
+```
+
+6.  Take the subset of data where rain\>20
+
+```{r}
+head(rain[rain>20,])
+```
+
+7.  What is the mean rainfall for the days where the rain was at least 5
+
+```{r}
+mean(rain[rain$Rain>=5,"Rain"])
+```
+
+8.  List the day of the year(DOY) where the rain was exactly 0 or 0.7
+
+```{r}
+head(rain[rain$Rain==0 | rain$Rain==0.7,c("DOY","Rain")])
+```
+
+9.  What is the maximum value of rain
+
+```{r}
+rain[which.max(rain$Rain),]
+```
+
+10. Display the DOY on which we had maximum rain
+
+```{r}
+rain[which.max(rain$Rain),c("DOY","Rain")]
+```

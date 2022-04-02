@@ -1,0 +1,77 @@
+```{r}
+library(igraph)
+g1<-graph(edges=c(1,2, 2,3, 3,1),n=3,directed="F")
+g1
+```
+
+```{r}
+plot(g1)
+```
+
+```{r}
+g3<-graph(c("A","B","B","C","C","A"))
+plot(g3)
+```
+
+```{r}
+g4<-graph(c("A","B","B","C","C","A"),isolates = c("D","E","F","G"))
+plot(g4)
+```
+
+```{r}
+plot(g4, edge.arrow.size=0.5,vertex.color="red",vertex.label.color="white",
+     edge.curved=.3)
+```
+
+```{r}
+plot(graph_from_literal(a--b,b--c))
+```
+
+```{r}
+plot(graph_from_literal(a--+b,b+--c))
+```
+
+```{r}
+plot(graph_from_literal(a+--+b,b+--+c))
+```
+
+```{r}
+plot(graph_from_literal(a-b-c-d-e-f,a-g-h-b,h-e:f,j))
+```
+
+```{r}
+set.seed(10)
+data<-matrix(sample(0:2,25,replace=TRUE),nrow=5)
+colnames(data)=rownames(data)=LETTERS[1:5]
+data
+```
+
+```{r}
+n<-graph_from_adjacency_matrix(data)
+plot(n)
+```
+
+```{r}
+df<-data.frame(source=c("A","A","A","A","A","F","B"),target=c("B","B","C","D","F","A","E"))
+plot(graph_from_data_frame(df,directed = F))
+```
+
+```{r}
+ns<-simplify(n,remove.multiple = T,remove.loops = T,edge.attr.comb = c(weight="sum"))
+ns
+```
+
+```{r}
+e<-make_empty_graph(30)
+plot(e,vertex.size=10,vertex.label="No")
+```
+
+```{r}
+e<-make_full_graph(n=30)
+plot(e,vertex.size=10)
+```
+
+```{r}
+e<-make_ring(n=30)
+plot(e,vertex.size=10)
+```

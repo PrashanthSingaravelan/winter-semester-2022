@@ -239,7 +239,14 @@ library(gifski)
 ```{r}
 scatter_plot_animate = ggplot(data=ca, aes(year, visitors)) + geom_point() +                
                        transition_states(park_name)
+```
 
+
+```{r}
+```
+
+
+```{r}
 animate(scatter_plot_animate, renderer = gifski_renderer())
 ```
 
@@ -262,3 +269,42 @@ animate(line_plot, width=300, height=300, renderer = gifski_renderer())
 Visitors started to visit Channel Islands National Park in 1960's (latest among) has very low visitors till date.
 Joshua Tree National Park has a continuous growth of visitors without a big drop.
 Death Valley National Park has a continuous growth of visitors in 2010's and a gradual pick-up.
+
+```{r}
+data.frame(table(iris$Species))
+```
+
+
+
+```{r}
+head(iris)
+```
+
+
+```{r}
+library(cartography)
+library(sp)
+
+library(ggplot2)
+library(dplyr)
+```
+
+
+
+```{r}
+head(nuts0.df)
+```
+
+```{r}
+plot(nuts0.spdf,border=NA,bg="#A6CAE0")
+plot(world.spdf,border=NA,col="#E3DEBF",add=TRUE)
+```
+
+```{r}
+#plot(nuts0.spdf,border="grey",add=TRUE,col="#D1914D")
+propSymbolsLayer(spdf=nuts0.spdf,df=nuts0.df,var="pop1999",symbols = "circle",col="#920000")
+```
+
+```{r}
+plot(nuts0.spdf,border="grey",add=TRUE,col="#D1914D")
+```

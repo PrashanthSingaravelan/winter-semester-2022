@@ -1,0 +1,63 @@
+```{r}
+library(gganimate)
+library(gifski)
+library(ggplot2)
+```
+
+```{r}
+p<-ggplot(iris,aes(x=Petal.Width,y=Petal.Length))+geom_point()+
+  transition_states(Species,transition_length = 2,state_length = 1)
+animate(p,renderer=gifski_renderer())
+```
+
+```{r}
+p<-ggplot(iris,aes(x=Petal.Width,y=Petal.Length))+geom_point()+
+  transition_states(Species,transition_length = 2,state_length = 1)
+animate(p,width=300,height=300,renderer=gifski_renderer())
+```
+
+```{r}
+p<-ggplot(iris,aes(x=Petal.Width,y=Petal.Length))+geom_point()+
+  transition_states(Species,transition_length = 2,state_length = 1)
+animate(p,width=300,height=300,renderer=gifski_renderer("new.gif"))
+```
+
+```{r}
+p<-ggplot(iris,aes(x=Petal.Width,y=Petal.Length))+geom_point()+
+  transition_states(Species,transition_length = 2,
+                    state_length = 1)+ease_aes("cubic_in_out")
+animate(p,width=300,height=300,renderer=gifski_renderer())
+```
+
+```{r}
+library(babynames)
+library(dplyr)
+head(babynames)
+```
+
+```{r}
+d<-babynames%>%filter(name%in%c("Patrica","Helen","Ashley"))%>%filter(sex=='F')
+d
+```
+
+```{r}
+ggplot(d,aes(x=year,y=n,group=name,color=name))+geom_line()+geom_point()
+```
+
+```{r}
+p<-ggplot(d,aes(x=year,y=n,group=name,color=name))+geom_line()+geom_point()+
+  transition_reveal(year)
+animate(p,width=300,height=300,renderer=gifski_renderer())
+```
+
+```{r}
+p<-ggplot(d,aes(x=year,y=n,group=name,color=name))+geom_line()+geom_point()+
+  transition_reveal(year)+ease_aes('cubic-in-out')
+animate(p,width=300,height=300,renderer=gifski_renderer())
+```
+
+```{r}
+p<-ggplot(d,aes(x=year,y=n,group=name,color=name))+geom_line()+geom_point()+
+  transition_reveal(year)+ease_aes(y="bounce-out")
+animate(p,width=300,height=300,renderer=gifski_renderer())
+```

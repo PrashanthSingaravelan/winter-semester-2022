@@ -1,69 +1,193 @@
----
-output:
-  word_document: default
-  html_document: default
-  pdf_document: default
----
 # S.THARUN-19MID0031
 
 ```{r}
-options(warn=-1)
 library(plotly)
-library(datasets)
+head(iris)
 ```
 
-### 1. Scatter plot
-
 ```{r}
-plot_ly(data=diamonds,x=~depth,y=~price,mode="markers",
- color=~cut, colors ='Set1')%>%layout(title="Price Vs Depth")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length)
 ```
 
-### 2a) Regular Barplot
-
 ```{r}
-plot_ly(data=diamonds,x=~cut,y=~price,type="bar",color=~cut)%>%
-  layout(title="Price Vs Cut")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers")
 ```
 
-### 2b) Stacked Barchart
-
 ```{r}
-plot_ly(data=diamonds,x=~cut,y=~price,name=~color,color=~color,type="bar") %>% layout(barmode="stack")%>%layout(title="Price Vs Cut Vs color")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers"
+        ,marker=list(size=10,color='rgba(255,170,190,0.7)'))
+# rgba=red green blue alpha
 ```
 
-### 2c) Grouped Barchart
-
 ```{r}
-plot_ly(data=diamonds,x=~cut,y=~price,name=~color,color=~color,
-        colors ='Set2',type="bar") %>% 
-  layout(barmode="group",title="Price Vs Cut Vs color")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        marker=list(size=10,color='rgba(255,170,190,0.7)'),
+        line=list(color='rgba(200,0,0,0.9)'))
 ```
 
-### Histogram
-
 ```{r}
-plot_ly(data=diamonds,x=~cut,type="histogram",color=~cut,colors="Set3")%>% 
-  layout(title="Attribute X")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        marker=list(size=10,color='rgba(255,170,190,0.7)',
+        line=list(color='rgba(200,0,0,0.7)',width = 2)))
 ```
 
-### Pie chart
-
 ```{r}
-plot_ly(data=diamonds,labels=~cut,values=~price,type="pie")%>% 
-  layout(title="Price Vs Cut")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",color=~Species)
 ```
 
-### Donut chart
-
 ```{r}
-plot_ly(data=diamonds,labels=~cut,values=~price)%>%add_pie(hole=0.6)%>% 
-  layout(title="Price Vs Cut")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        color=~Species, colors ='Set1')
 ```
 
-### Boxplot
+```{r}
+library(RColorBrewer)
+par(mar=c(3,4,1,1))
+display.brewer.all()
+```
 
 ```{r}
-plot_ly(data=diamonds,x=~cut,y=~price,type="box",color=~cut)%>% 
-  layout(title="Price Vs Cut")
+col<-c("red","blue","green")
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        color=~Species, colors =col)
+```
+
+```{r}
+col<-c("red","blue","green")
+col<-setNames(col,c("virginica","setosa","versicolor"))
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        color=~Species, colors =col)
+```
+
+```{r}
+col<-c("red","blue","green")
+col<-setNames(col,c("virginica","setosa","versicolor"))
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        color=~Species, colors =col, symbol =~ Species)
+```
+
+```{r}
+col<-c("red","blue","green")
+col<-setNames(col,c("virginica","setosa","versicolor"))
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        color=~Species, colors =col, symbol =~ Species, symbols=c('circle','x','o'))
+# symbols=hash,pentagon,x,o,circle
+```
+
+```{r}
+col<-c("red","blue","green")
+col<-setNames(col,c("virginica","setosa","versicolor"))
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        marker=list(size=10),color=~Species, colors =col, symbol =~ Species, 
+        symbols=c('circle','x','o'))
+```
+
+```{r}
+col<-c("red","blue","green")
+col<-setNames(col,c("virginica","setosa","versicolor"))
+plot_ly(data=iris,x=~Sepal.Length,y=~Petal.Length,mode="markers",
+        marker=list(size=10),color=~Species, colors =col, symbol =~ Species, 
+        symbols=c('circle','x','o'),text=~paste("Width:",Sepal.Width))
+```
+
+```{r}
+day<-1:30
+num<-rnorm(30,mean=3)
+df<-data.frame(day,num)
+head(df)
+```
+
+```{r}
+plot_ly(df,x=~day,y=~num,type="scatter",mode="lines")
+```
+
+```{r}
+plot_ly(df,x=~day,y=~num,type="scatter",mode="lines+markers")
+```
+
+```{r}
+plot_ly(df,x=~day,y=~num,type="scatter",mode="lines+markers",
+        line=list(color="red",width=4,dash="dash"))
+# dash = dash,dot
+```
+
+```{r}
+library(ggplot2)
+p<-ggplot(iris,aes(x=Sepal.Length,y=Petal.Length))+geom_point()
+ggplotly(p)
+```
+
+```{r}
+fruits<-c("apple","banana","orange")
+count_c<-c(200,150,300)
+count_b<-c(100,250,150)
+df1<-data.frame(fruits,count_c,count_b)
+plot_ly(df1,x=~fruits,y=~count_c,type="bar")
+```
+
+```{r}
+fruits<-c("apple","banana","orange")
+count_c<-c(200,150,300)
+count_b<-c(100,250,150)
+df1<-data.frame(fruits,count_c,count_b)
+p<-plot_ly(df1,x=~fruits,y=~count_c,type="bar")
+p%>%add_trace(y=count_b)
+```
+
+```{r}
+fruits<-c("apple","banana","orange")
+count_c<-c(200,150,300)
+count_b<-c(100,250,150)
+df1<-data.frame(fruits,count_c,count_b)
+p<-plot_ly(df1,x=~fruits,y=~count_c,type="bar")
+p<-p%>%add_trace(y=count_b,name="location2")
+p%>%layout(barmode="group")
+```
+
+```{r}
+fruits<-c("apple","banana","orange")
+count_c<-c(200,150,300)
+count_b<-c(100,250,150)
+df1<-data.frame(fruits,count_c,count_b)
+p<-plot_ly(df1,x=~fruits,y=~count_c,type="bar")
+p<-p%>%add_trace(y=count_b)
+p%>%layout(barmode="stack")
+```
+
+```{r}
+plot_ly(iris,x=~Sepal.Length,type="histogram")
+```
+
+```{r}
+parts<-c("Beverage","Vegetables","diary","Fruits")
+sales<-c(4000,2000,3000,1000)
+df<-data.frame(parts,sales)
+plot_ly(df,type="pie",labels=~parts,values=~sales)
+```
+
+```{r}
+parts<-c("Beverage","Vegetables","diary","Fruits")
+sales<-c(4000,2000,3000,1000)
+df<-data.frame(parts,sales)
+plot_ly(df,type="pie",labels=~parts,values=~sales,textinfo="label+percent")
+```
+
+```{r}
+parts<-c("Beverage","Vegetables","diary","Fruits")
+sales<-c(4000,2000,3000,1000)
+df<-data.frame(parts,sales)
+plot_ly(df,type="pie",labels=~parts,values=~sales,textinfo="label+percent",
+        insidetextorientation="radial")
+```
+
+```{r}
+plot_ly(lables=~parts,values=~sales)%>%add_pie(hole=0.6)
+```
+
+```{r}
+head(volcano)
+```
+
+```{r}
+plot_ly(z=~volcano,type="surface")
 ```

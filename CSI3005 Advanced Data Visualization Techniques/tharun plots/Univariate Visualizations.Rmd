@@ -1,0 +1,166 @@
+# S.THARUN-19MID0031
+
+## Load Libraries
+
+```{r}
+library(ggplot2)
+library(plotly)
+options (warn = - 1)
+```
+
+## Data set : Diamonds
+
+```{r}
+head(diamonds)
+```
+
+### Visualization of Attributes
+
+#### carat
+
+```{r}
+plot_ly(data=diamonds, x=~carat)
+```
+
+#### Cut
+
+```{r}
+cutfreq = data.frame(table(diamonds$cut))
+plot_ly(data=cutfreq, x=~Var1, y=~Freq, type = "bar")
+```
+
+#### Color
+
+```{r}
+ggplot(diamonds, aes(x=color))+geom_bar(fill="yellow", col="red")
+```
+
+#### Clarity
+
+```{r}
+ggplot(diamonds, aes(x=color))+geom_bar()+coord_polar()
+```
+
+#### Clarity
+
+```{r}
+clarityfreq = data.frame(table(diamonds$clarity))
+ggplot(clarityfreq, aes(x=Var1,fill=Var1))+geom_bar()+coord_polar()
+```
+
+#### X
+
+```{r}
+plot_ly(data=diamonds, x=~x,type="box")
+```
+
+#### Y
+
+```{r}
+plot_ly(data=diamonds, x=~y,type="box",color = "red")
+```
+
+#### Z
+
+```{r}
+plot_ly(data=diamonds, x=~y,type="box",color = "red")
+```
+
+#### Depth
+
+```{r}
+ggplot(diamonds, aes(x=price))+geom_histogram(col="red",fill="green")
+```
+
+### Table
+
+```{r}
+ggplot(diamonds, aes(x=price))+geom_histogram(col="red",fill="yellow")+coord_polar()
+```
+
+#### Price
+
+```{r}
+ggplot(diamonds, aes(x=price))+geom_boxplot(col="blue",fill="red")
+```
+
+## Data set : mpg
+
+```{r}
+head(mpg)
+```
+
+### Visualization of Attributes
+
+#### Manufacturer
+
+```{r}
+manfctfreq = data.frame(table(mpg$manufacturer))
+ggplot(manfctfreq, aes(x=Var1,fill=Var1))+geom_bar()+coord_polar()
+```
+
+**Model**
+
+```{r}
+modelfreq = data.frame(table(mpg$model))
+plot_ly(data=modelfreq, x=~Var1, y=~Freq, type = "bar")
+```
+
+**trans**
+
+```{r}
+transfreq = data.frame(table(mpg$trans))
+plot_ly(data=modelfreq, x=~Var1, y=~Freq, type = "bar")
+```
+
+#### displ
+
+```{r}
+plot_ly(data=mpg, x=~displ, type = "histogram", alpha=0.4)
+```
+
+#### year
+
+```{r}
+plot_ly(data=mpg, x=~displ, type = "histogram", color = "red")
+```
+
+#### cyl
+
+```{r}
+cylfreq = data.frame(table(mpg$cyl))
+plot_ly(data=cylfreq, x=~Var1, y=~Freq, type = "bar",alpha = 0.4)
+```
+
+#### drv
+
+```{r}
+drvfreq = data.frame(table(mpg$drv))
+ggplot(drvfreq, aes(x=Var1,fill=Var1))+geom_bar()+coord_polar()
+```
+
+#### cty
+
+```{r}
+ggplot(mpg, aes(x=cty))+geom_histogram(col="red",fill="yellow")+coord_polar()
+```
+
+#### hwy
+
+```{r}
+plot_ly(data=mpg, x=~hwy, type = "box",alpha = 0.4,color ="green")
+```
+
+#### fl
+
+```{r}
+flfreq = data.frame(table(mpg$fl))
+plot_ly(data=flfreq, labels=~Var1, values=~Freq, type = "pie")
+```
+
+#### compact
+
+```{r}
+classfreq = data.frame(table(mpg$class))
+plot_ly(data=classfreq, labels=~Var1, values=~Freq, type = "pie", colors = "Spectral")
+```
