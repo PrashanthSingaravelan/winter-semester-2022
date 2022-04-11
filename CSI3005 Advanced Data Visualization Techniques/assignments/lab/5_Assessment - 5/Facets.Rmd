@@ -1,0 +1,106 @@
+---
+title: "Facets"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Importing the libraries
+```{r}
+library(reshape2)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+scatter_plot = ggplot(tips, aes(x=total_bill, y = (tip/total_bill))) + geom_point(shape=1)
+```
+
+```{r}
+## FACET GRID
+horizontal = scatter_plot + facet_grid(. ~ sex)  ## horizontal stack
+vertical   = scatter_plot + facet_grid(sex ~ .)  ## vertical stack
+```
+
+```{r}
+horizontal
+```
+
+```{r}
+vertical
+```
+
+## Facet Wrap
+```{r}
+# Divide by day, going horizontally and wrapping with 2 columns
+scatter_plot + facet_wrap( ~ day, ncol=2)
+```
+
+```{r}
+## sex -> vertical and day -> horizontal)
+fig3 = scatter_plot + facet_grid(sex ~ day) + 
+            theme(
+                strip.text.x = element_text(size=8, angle=75, face='bold'),
+                strip.text.y = element_text(size=12, face='bold'),
+                strip.background = element_rect(color='red', fill='#CCCCFF')
+            )
+
+fig3
+
+```
+
+```{r}
+## Renaming Male, Female == Men, Women
+df = tips
+df = mutate(df, sex = ifelse(sex == 'Male', "Men", "Women"))
+```
+
+## Reversing the string
+```{r}
+sp2 <- ggplot(df, aes(x=total_bill, y=tip/total_bill)) + geom_point(shape=1)
+sp2 + facet_grid(. ~ sex)
+```
+
+```{r}
+# Reverse each strings in a character vector
+reverse <- function(strings) {
+    strings <- strsplit(strings, "")
+    vapply(strings, function(x) {
+        paste(rev(x), collapse = "")
+    }, FUN.VALUE = character(1))
+}
+sp2 + facet_grid(. ~ sex, labeller=labeller(sex = reverse))
+```
+
+```{r}
+## sex -> vertical and day -> horizontal)
+fig3 = scatter_plot + facet_grid(sex ~ day) + 
+            theme(
+                strip.text.x = element_text(size=8, angle=75, face='bold'),
+                strip.text.y = element_text(size=12, face='bold'),
+                strip.background = element_rect(color='red', fill='#CCCCFF')
+            )
+fig3
+```
+
+## Free Scales
+```{r}
+### A histogram of bill sizes
+hp <- ggplot(tips, aes(x=total_bill)) + geom_histogram(binwidth=2,colour="white")
+hp
+```
+
+```{r}
+### Histogram of total_bill, divided by sex and smoker
+hp + facet_grid(sex ~ smoker)
+```
+
+```{r}
+### Same as above, with scales="free_y"
+hp + facet_grid(sex ~ smoker, scales="free_y")
+```
+
+```{r}
+### With panels that have the same scaling, but different range (and therefore different physical sizes)
+hp + facet_grid(sex ~ smoker, scales="free", space="free")
+```

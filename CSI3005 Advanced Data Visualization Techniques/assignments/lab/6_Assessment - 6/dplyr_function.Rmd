@@ -1,0 +1,68 @@
+---
+title: "Data Manipulation - Dplyr"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+## Importing the libraries
+```{r}
+library(dplyr)
+```
+
+## Importing the data-sets
+```{r}
+df = read.csv('Allometry.csv')
+head(df)
+```
+
+## 1) Select the first three columns
+```{r}
+ans1 <- data.frame(df %>% select(c(1:3)))
+head(ans1)
+```
+
+## 2) Select all columns except the species column
+```{r}
+ans2 <- data.frame(df %>% select(-species))
+head(ans2)
+```
+
+## 3) Select all the rows where both diameter and height are greater than 20
+```{r}
+ans3 <- (df %>% filter(diameter > 20 & height > 20))
+head(ans3)
+```
+
+## 4) Arrange the rows by height
+```{r}
+ans4 = df %>% arrange(height)
+head(ans4)
+```
+
+## 5) Arrange the rows by Species and then by height
+```{r}
+ans5 = df %>% arrange(species, height)
+head(ans5)
+```
+
+## 6) Create a new column by dividing the leafarea with branchmass
+```{r}
+ans6 = df %>% mutate(leftarea_divide_branchmass = leafarea / branchmass)
+head(ans6)
+```
+
+## 7) Find the average diameter for each species
+```{r}
+ans7 = df %>% group_by(species) %>% summarize(avg_diameter = mean(diameter)) 
+head(ans7)
+```
+
+## 8) Create a new data frame containing 10th to 35th rows of the data
+```{r}
+ans8 = df %>% slice(10:35)
+head(ans8)
+```
+
+
+
