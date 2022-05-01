@@ -1,0 +1,77 @@
+---
+title: "19MID0020 Lab Final Exam"
+output: html_notebook
+---
+ 
+## Importing the libraries
+```{r}
+library(datasets)
+library(ggplot2)
+
+library(caTools)
+library(class)
+
+library(dplyr)
+library(ClusterR)
+library(cluster)
+
+library(arules)
+library(arulesViz)
+library(RColorBrewer)
+```
+
+## Importing the data-set
+```{r}
+df = read.csv('data.csv')
+head(df)
+```
+
+## Knowing about the data-set
+```{r}
+nrow(df)
+ncol(df)
+```
+
+```{r}
+## Data-Type of all the attributes
+str(df)
+```
+
+## Model Building
+```{r}
+## using apriori() function
+rules = apriori(df, parameter = list(supp = 0.01, conf = 0.2))
+rules
+```
+
+```{r}
+rules
+```
+
+## Accuracy
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+

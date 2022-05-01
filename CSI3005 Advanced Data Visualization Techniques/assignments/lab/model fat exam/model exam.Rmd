@@ -1,0 +1,210 @@
+---
+title: "Model Exam"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r}
+library(ggplot2)
+library(plotly)
+library(GGally)
+```
+
+```{r}
+df = read.csv('cps.csv')
+head(df)
+```
+
+```{r}
+cat("Number of instances : ",nrow(df))
+cat("\nNumber of attributes : ",ncol(df))
+```
+
+```{r}
+str(df)
+```
+# 1) From the given cps dataset,
+## a)Find the distribution of wage
+```{r}
+## Kernel Density Plot
+density_plot = ggplot(df, aes(wage)) + geom_density(fill='indianred3') + 
+              labs(x = 'wage', y = 'density', title = 'Kernal density of the brain weight')
+
+density_plot
+```
+
+## b)Find the distribution of wage with respect to race 
+```{r}
+## Bar-plot
+bar_plot = plot_ly(data=df, x=~race, y=~wage, type='bar')
+bar_plot
+```
+
+## c)Is there a correlation between age and wage ??
+```{r}
+x = df$wage ## numeric
+y = df$age  ## integer
+cat(cor(x, y, method = c("pearson")))
+```
+
+```{r}
+color = c('red', 'blue', 'green')
+color_species = setNames(color, c("virginica", "setosa", "versicolor"))
+
+scatter_plot = plot_ly(data = iris, x=~Sepal.Length, y=~Petal.Length, mode='markers', color=~Species, colors = color_species)
+scatter_plot
+```
+
+## d)Does the wage differ with marital status ??
+```{r}
+## Bar-plot
+bar_plot = plot_ly(data=df, x=~married, y=~wage, color=~sex, type='bar')
+bar_plot %>% layout(
+                title = 'Age vs Wage',
+```
+
+
+```{r}
+```
+
+
+```{r}
+legend = list(text = 'Gender'),
+                xaxis = list(title = 'Age'),
+                yaxis = list(title = 'Wage')
+          )
+```
+
+# 2) Using Iris Data-Set
+## a)  Plot the relation between sepal length and sepal width. 
+Differentiate the different species and also show the variation in the sepal length in the graph
+```{r}
+df2 = iris
+plot = ggplot(data = df2, aes(x=Sepal.Length, y=Sepal.Width, color=Sepal.Length, shape=Species)) + geom_point() +
+      labs(title = 'Sepal Length and Sepal Width',
+           x = 'Sepal Length',
+           y = 'Sepal Width')
+plot
+```
+
+## b) Use subplots and plot the relationship between the different species and the other attributes
+```{r}
+ggpairs(df2, columns=1:4, aes(color=Species)) + ggtitle('IRIS')
+```
+
+# 4) Using the iris data-set
+## a) Create a new column for Sepal Length to Petal Length ratio
+```{r}
+df4 = iris
+
+df4 %>% mutate(ratio = Sepal.Length / Petal.Length)
+head(df4)
+```
+## b) Select all the columns except Species column
+```{r}
+df4 %>% select(-Species)
+```
+
+## c) Select only the rows where Sepal width is greater than 
+```{r}
+df4 %>% filter(Sepal.Width > 3.5)
+```
+
+```{r}
+plot_ly(data = iris, x=~Sepal.Length, y=~Petal.Length, color=~Species, mode='line')
+```
+
+```{r}
+ggplot(data = iris, aes(x=Sepal.Length, y=Petal.Length, color=Species, fill=Species, alpha=0.1)) + geom_boxplot(width=1)
+```
+
+```{r}
+bar_plot = ggplot(data=msleep, aes(x = vore, y = ..count.. / sum(..count..),fill = factor(vore))) +
+           geom_bar(color='black') +
+           labs(x = "Vore", y = "Percentage of Vore", title = "Percentage of the quality of the Vore")
+           
+bar_plot
+```
+
+```{r}
+bar_plot = ggplot(data=msleep, aes(x=vore,y=order,fill = vore)) +
+           geom_col(aes(fill = genus)) + 
+           labs(x = "Vore", y = "Percentage of Vore", title = "Percentage of the quality of the Vore") + coord_flip()
+          
+bar_plot
+```
+
+```{r}
+str(msleep)
+```
+```{r}
+library(ggplot2)
+data(Salaries, package="carData")
+```
+
+```{r}
+ggplot(Salaries,aes(x = yrs.since.phd, y = salary)) +
+  geom_point(color= "green") +
+  geom_smooth(method = "lm",color='red')
+```
+```{r}
+head(diamonds)
+```
+```{r}
+df1 = data.frame(table(diamonds$cut))
+head(df1)
+```
+
+```{r}
+ggplot(diamonds,aes(x=cut))+geom_bar()+coord_polar(start=0)
+#ggplot(iris, aes(x=Species)) + geom_bar() + coord_polar()
+```
+
+```{r}
+library(ggplot2)
+plot_ly(data=msleep, x = ~vore, y = ~value, type = 'bar', name = ~variable, color = ~variable) %>%
+layout(title= list(text = "<b>Total Distribution based on Vore"),
+       legend = list(title = list(text= '<b>Aniamal Feature')),
+       xaxis = list(title = list(text ='<b>Vores')),
+       yaxis = list(title='Count', text='<b>Count'), barmode = 'stack')
+```
+
+```{r}
+df = msleep
+head(df)
+```
+
+```{r}
+
+plot1 = plot_ly(data=df, x=~sleep_total, y=~sleep_rem ,color = ~vore, mode='markers', type='scatter' ) %>%
+  layout(title = list(text='Majortitle'), 
+  xaxis = list(title = 'x-axis'),
+  yaxis = list(title = 'y-axis'))
+plot1
+
+```
+```{r}
+plot1 = plot_ly(data=df, x=~sleep_total, type='histogram' ) %>%
+  layout(title = list(text='Majortitle'), 
+  xaxis = list(title = 'x-axis'),
+  yaxis = list(title = 'y-axis'))
+plot1
+```
+```{r}
+df_vore = data.frame(table(df$vore))
+plot1 = plot_ly(labels=df_vore$Var1, values=df_vore$Freq,
+        textinfo='label+percent') %>%
+        add_pie(hole = 0.6)
+
+plot1
+```
+
+```{r}
+plot1 = plot_ly(data=df, x=~vore, y=~sleep_rem ,name =~order, type='bar' ) %>%
+  layout(title = list(text='Majortitle'), 
+  xaxis = list(title = 'x-axis'),
+  yaxis = list(title = 'y-axis'), barmode='stack')
+plot1
+```
