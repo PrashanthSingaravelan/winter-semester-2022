@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(shiny)
+require(shinydashboard)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+recommendation <- read.csv('recommendation.csv',stringsAsFactors = F,header=T)
+head(recommendation)
+header <- dashboardHeader(title = "CMP Dashboard")
+```
+
+
+```{r}
+## Sidebar content of the dashboard
+sidebar <- dashboardSidebar(
+  sidebarMenu(
+    menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Visit-us", icon = icon("send",lib='glyphicon'), href = "https://www.salesforce.com")
+  )
+)
+
+sidebar
+```
+
+```{r}
+frow1 <- fluidRow(valueBoxOutput("value1"),valueBoxOutput("value2"),valueBoxOutput("value3"))
+
+frow1
+```
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+frow2 <- fluidRow(
+box(
+title = "Revenue per Account"
+,status = "primary"
+,solidHeader = TRUE
+,collapsible = TRUE
+,plotOutput("revenuebyPrd", height = "300px")
+```
+
+
+```{r}
+)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
